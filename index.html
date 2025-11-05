@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuzen Chen - IT SRE & Full Stack Developer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 粒子背景 -->
+    <div id="particles-canvas"></div>
+    
+    <!-- 導航欄 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">yuzen.dev</span>
+                <div class="logo-cursor"></div>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">首頁</a></li>
+                <li><a href="#about" class="nav-link">關於我</a></li>
+                <li><a href="#services" class="nav-link">服務項目</a></li>
+                <li><a href="#portfolio" class="nav-link">作品集</a></li>
+                <li><a href="#contact" class="nav-link">聯絡我</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主頁面 -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="glitch-wrapper">
+                    <h1 class="glitch-text" data-text="Yuzen Chen">Yuzen Chen</h1>
+                </div>
+                <div class="typing-container">
+                    <h2 class="typing-text">IT SRE & Full Stack Developer</h2>
+                </div>
+                <p class="hero-description">
+                    專精於網站開發、系統可靠性工程與DevOps自動化<br>
+                    打造高效能、高可用性的技術解決方案
+                </p>
+                <div class="hero-buttons">
+                    <a href="#services" class="btn btn-primary">
+                        <span>探索服務</span>
+                        <div class="btn-hover-effect"></div>
+                    </a>
+                    <a href="#portfolio" class="btn btn-secondary">
+                        <span>查看作品</span>
+                        <div class="btn-hover-effect"></div>
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-elements">
+                    <div class="code-block floating-item">
+                        <div class="code-header">
+                            <div class="code-dots">
+                                <span></span><span></span><span></span>
+                            </div>
+                        </div>
+                        <div class="code-content">
+                            <span class="code-line"><span class="keyword">const</span> developer = {</span>
+                            <span class="code-line">  name: <span class="string">'Yuzen Chen'</span>,</span>
+                            <span class="code-line">  skills: [<span class="string">'Python'</span>, <span class="string">'JavaScript'</span>],</span>
+                            <span class="code-line">  passion: <span class="string">'Innovation'</span></span>
+                            <span class="code-line">};</span>
+                        </div>
+                    </div>
+                    <div class="tech-icon floating-item">🐍</div>
+                    <div class="tech-icon floating-item">⚛️</div>
+                    <div class="tech-icon floating-item">🐳</div>
+                    <div class="tech-icon floating-item">☸️</div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- 關於我 -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">關於我</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>專業技術人員，致力於創新解決方案</h3>
+                    <p>
+                        身為一名IT SRE工程師，我專精於確保系統的高可用性與可靠性。
+                        擁有豐富的Web開發經驗，熟悉現代化的開發工具與流程。
+                    </p>
+                    <div class="skill-stats">
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="5">0</div>
+                            <div class="stat-label">年以上經驗</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="50">0</div>
+                            <div class="stat-label">完成專案</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number" data-target="99">0</div>
+                            <div class="stat-label">系統可用性%</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skills-grid">
+                    <div class="skill-category">
+                        <h4>後端開發</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Flask</span>
+                            <span class="skill-tag">FastAPI</span>
+                            <span class="skill-tag">Redis</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h4>前端開發</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">JavaScript</span>
+                            <span class="skill-tag">HTML/CSS</span>
+                            <span class="skill-tag">PixiJS</span>
+                            <span class="skill-tag">動畫特效</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h4>DevOps & SRE</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">Docker</span>
+                            <span class="skill-tag">Kubernetes</span>
+                            <span class="skill-tag">Linux</span>
+                            <span class="skill-tag">監控系統</span>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h4>自動化工具</h4>
+                        <div class="skill-tags">
+                            <span class="skill-tag">n8n</span>
+                            <span class="skill-tag">GitHub Actions</span>
+                            <span class="skill-tag">API整合</span>
+                            <span class="skill-tag">工作流程</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服務項目 -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">服務項目</h2>
+                <div class="section-line"></div>
+                <p class="section-description">提供全方位的技術服務，從網站開發到系統維運</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🌐</div>
+                    <h3>網站開發</h3>
+                    <p>響應式網站、Web應用程式、API開發，使用現代化技術棧打造高品質的數位體驗</p>
+                    <ul class="service-features">
+                        <li>前後端整合開發</li>
+                        <li>資料庫設計與優化</li>
+                        <li>第三方服務整合</li>
+                        <li>效能優化與SEO</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">⚙️</div>
+                    <h3>系統可靠性工程 (SRE)</h3>
+                    <p>確保系統高可用性、監控告警、故障排除，建立穩定可靠的服務架構</p>
+                    <ul class="service-features">
+                        <li>系統監控與告警</li>
+                        <li>容量規劃與擴展</li>
+                        <li>故障分析與修復</li>
+                        <li>服務可用性優化</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🚀</div>
+                    <h3>DevOps 自動化</h3>
+                    <p>CI/CD流程建立、容器化部署、基礎設施即代碼，提升開發與部署效率</p>
+                    <ul class="service-features">
+                        <li>Docker容器化</li>
+                        <li>Kubernetes編排</li>
+                        <li>自動化部署</li>
+                        <li>工作流程優化</li>
+                    </ul>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>技術諮詢</h3>
+                    <p>架構設計、技術選型、專案規劃，提供專業的技術建議與解決方案</p>
+                    <ul class="service-features">
+                        <li>技術架構規劃</li>
+                        <li>程式碼審查</li>
+                        <li>效能調優建議</li>
+                        <li>團隊技術培訓</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作品集 -->
+    <section id="portfolio" class="portfolio">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">精選作品</h2>
+                <div class="section-line"></div>
+            </div>
+            <div class="portfolio-grid">
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <div class="project-placeholder">
+                            <div class="placeholder-icon">🎮</div>
+                            <div class="placeholder-text">CRAZY DOGS<br>老虎機遊戲</div>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-info">
+                                <h3>CRAZY DOGS 老虎機</h3>
+                                <p>使用PixiJS開發的網頁遊戲，具備精美動畫效果</p>
+                                <div class="portfolio-tags">
+                                    <span>JavaScript</span>
+                                    <span>PixiJS</span>
+                                    <span>遊戲開發</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <div class="project-placeholder">
+                            <div class="placeholder-icon">☯️</div>
+                            <div class="placeholder-text">周易占卜<br>網站系統</div>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-info">
+                                <h3>周易占卜系統</h3>
+                                <p>Python Flask + Redis，結合AI分析的現代化占卜網站</p>
+                                <div class="portfolio-tags">
+                                    <span>Python</span>
+                                    <span>Flask</span>
+                                    <span>Redis</span>
+                                    <span>AI整合</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <div class="project-placeholder">
+                            <div class="placeholder-icon">🐍</div>
+                            <div class="placeholder-text">Snake Game<br>經典重製</div>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-info">
+                                <h3>復古風貪食蛇</h3>
+                                <p>響應式設計的經典遊戲，支援移動端操作</p>
+                                <div class="portfolio-tags">
+                                    <span>JavaScript</span>
+                                    <span>HTML5 Canvas</span>
+                                    <span>響應式</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="portfolio-image">
+                        <div class="project-placeholder">
+                            <div class="placeholder-icon">🔧</div>
+                            <div class="placeholder-text">DevOps<br>自動化工具</div>
+                        </div>
+                        <div class="portfolio-overlay">
+                            <div class="portfolio-info">
+                                <h3>n8n 工作流程</h3>
+                                <p>企業級自動化解決方案，提升營運效率</p>
+                                <div class="portfolio-tags">
+                                    <span>n8n</span>
+                                    <span>Docker</span>
+                                    <span>自動化</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 聯絡我 -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">聯絡我</h2>
+                <div class="section-line"></div>
+                <p class="section-description">準備開始您的專案？讓我們一起討論!</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <h4>位置</h4>
+                            <p>台北, 台灣</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">✉️</div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p>b97170098@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">💼</div>
+                        <div class="contact-details">
+                            <h4>LinkedIn</h4>
+                            <p>yuzen-chen</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">🐙</div>
+                        <div class="contact-details">
+                            <h4>GitHub</h4>
+                            <p>github.com/yuzenchen</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" required>
+                            <label for="name">姓名</label>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" required>
+                            <label for="email">Email</label>
+                        </div>
+                        <div class="form-group">
+                            <select id="service" name="service" required>
+                                <option value="">選擇服務類型</option>
+                                <option value="web-development">網站開發</option>
+                                <option value="sre">系統可靠性工程</option>
+                                <option value="devops">DevOps自動化</option>
+                                <option value="consulting">技術諮詢</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                            <label for="message">專案詳情</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <span>發送訊息</span>
+                            <div class="btn-hover-effect"></div>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁尾 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <p>&copy; 2025 Yuzen Chen. 版權所有</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#privacy">隱私政策</a>
+                    <a href="#terms">服務條款</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
