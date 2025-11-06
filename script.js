@@ -1,3 +1,5 @@
+console.log('script.js loaded!');
+
 // 使用後端API發送Telegram訊息版本
 // DOM 載入完成後執行
 document.addEventListener('DOMContentLoaded', function() {
@@ -274,7 +276,8 @@ function initCounters() {
     });
 }
 
-// 聯絡表單處理（改為呼叫後端 API）
+// 聯絡表單處理（改為呼叫後端 API）//
+console.log('initContactForm setup!'); 
 function initContactForm() {
     const form = document.getElementById('contact-form');
     if (!form) return;
@@ -301,7 +304,7 @@ function initContactForm() {
         submitBtn.disabled = true;
         
         try {
-            const resp = await fetch('/api/send-telegram', {
+            const resp = await fetch('https://yuzen.life/api/send-telegram', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(data)
