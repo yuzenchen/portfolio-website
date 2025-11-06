@@ -1,20 +1,29 @@
-# Multi-stage build for small image
-FROM python:3.11-slim AS base
+FROM python:3.11-slim
+
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
+
 WORKDIR /app
-COPY backend/requirements.txt ./
+
+# 安裝必要系統套件（可選）
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates curl && \
+    rm -rf /var/lib/apt/lists/*
+
+# 安裝Python依賴
+COPY backend/requirements.txt ./requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
+
+# 複製程式碼
 COPY backend ./backend
 
-# Runtime image
-FROM gcr.io/distroless/python3-debian12
-WORKDIR /app
-COPY --from=base /usr/local/lib/python3.11 /usr/local/lib/python3.11
-COPY --from=base /usr/local/bin/gunicorn /usr/local/bin/gunicorn
-COPY --from=base /app/backend ./backend
+# 環境變數（部署時需設定）
 ENV TELEGRAM_BOT_TOKEN="" \
     TELEGRAM_CHAT_ID="" \
     PORT=8000
+
 EXPOSE 8000
-CMD ["/usr/local/bin/gunicorn", "-w", "2", "-b", "0.0.0.0:8000", "backend.app:app"]
+
+# gunicorn 啟動 Flask app
+CMD ["gunicorn", "-w", "2", "-b", "0.0.0.0:8000", "backend.app:app"]
+
