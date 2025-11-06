@@ -1,3 +1,4 @@
+// 使用後端API發送Telegram訊息版本
 // DOM 載入完成後執行
 document.addEventListener('DOMContentLoaded', function() {
     // 初始化所有功能
@@ -117,12 +118,13 @@ function initParticles() {
     }
     
     function drawParticles() {
+        const ctx = canvas.getContext('2d');
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         
         particles.forEach(particle => {
             ctx.beginPath();
             ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(0, 217, 255, ${particle.opacity})`;
+            ctx.fillStyle = `rgba(255, 255, 255, ${particle.opacity})`;
             ctx.fill();
         });
         
@@ -137,7 +139,7 @@ function initParticles() {
                     ctx.beginPath();
                     ctx.moveTo(particle.x, particle.y);
                     ctx.lineTo(otherParticle.x, otherParticle.y);
-                    ctx.strokeStyle = `rgba(0, 217, 255, ${0.1 * (1 - distance / 120)})`;
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${0.08 * (1 - distance / 120)})`;
                     ctx.lineWidth = 1;
                     ctx.stroke();
                 }
@@ -272,15 +274,14 @@ function initCounters() {
     });
 }
 
-// 聯絡表單處理
+// 聯絡表單處理（改為呼叫後端 API）
 function initContactForm() {
     const form = document.getElementById('contact-form');
     if (!form) return;
     
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // 獲取表單資料
         const formData = new FormData(form);
         const data = {
             name: formData.get('name'),
@@ -289,24 +290,36 @@ function initContactForm() {
             message: formData.get('message')
         };
         
-        // 簡單驗證
         if (!data.name || !data.email || !data.message) {
             showNotification('請填寫所有必要欄位', 'error');
             return;
         }
         
-        // 模擬發送過程
         const submitBtn = form.querySelector('button[type="submit"]');
         const originalText = submitBtn.querySelector('span').textContent;
         submitBtn.querySelector('span').textContent = '發送中...';
         submitBtn.disabled = true;
         
-        setTimeout(() => {
-            showNotification('訊息已發送！我會盡快回覆您。', 'success');
-            form.reset();
+        try {
+            const resp = await fetch('/api/send-telegram', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const result = await resp.json();
+            if (resp.ok && result.status === 'success') {
+                showNotification('訊息已成功送出（Telegram）', 'success');
+                form.reset();
+            } else {
+                showNotification('發送失敗，請稍後再試', 'error');
+            }
+        } catch (err) {
+            console.error(err);
+            showNotification('網路錯誤，請稍後再試', 'error');
+        } finally {
             submitBtn.querySelector('span').textContent = originalText;
             submitBtn.disabled = false;
-        }, 2000);
+        }
     });
 }
 
