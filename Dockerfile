@@ -5,9 +5,16 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Build-time env. Pass with: docker build --build-arg PUBLIC_FORMSPREE_ENDPOINT=...
+# Build-time env.
+#  - PUBLIC_FORMSPREE_ENDPOINT: contact form target
+#  - BASE_PATH: site base path. Default "/" so the image serves at the root
+#    (matches our nginx config). For GH Pages pass "/portfolio-website".
 ARG PUBLIC_FORMSPREE_ENDPOINT=""
+ARG BASE_PATH="/"
+ARG SITE="http://localhost"
 ENV PUBLIC_FORMSPREE_ENDPOINT=$PUBLIC_FORMSPREE_ENDPOINT
+ENV BASE_PATH=$BASE_PATH
+ENV SITE=$SITE
 
 COPY package.json package-lock.json ./
 RUN npm ci

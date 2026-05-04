@@ -79,17 +79,32 @@ order: 5
 
 build 時若 frontmatter 缺欄位或型別不符，`astro check` 會擋下。
 
-## 部署
+## 部署 (GitHub Pages)
 
-預設透過 GitHub Actions 推到 Cloudflare Pages。需要在 repo Secrets 設定：
+`.github/workflows/deploy.yml` 在 push 到 `main` 時自動 build + 推到 GH Pages，目前接 project page，網址為：
 
-| Secret | 用途 |
-|---|---|
-| `CLOUDFLARE_API_TOKEN` | CF Pages deploy token (Account → API Tokens) |
-| `CLOUDFLARE_ACCOUNT_ID` | CF dashboard 右下角 Account ID |
-| `PUBLIC_FORMSPREE_ENDPOINT` | `https://formspree.io/f/<id>` |
+> https://yuzenchen.github.io/portfolio-website/
 
-或者更簡單：直接在 Cloudflare Pages dashboard 接 GitHub repo，CF 會自動偵測 Astro，build command `npm run build`、output `dist`，把 `PUBLIC_FORMSPREE_ENDPOINT` 設成環境變數即可，這時候可以把 workflow 裡的 `deploy` job 整段拿掉。
+### 一次性設定
+
+1. Repo **Settings → Pages → Build and deployment → Source**: `GitHub Actions`
+2. Repo **Settings → Secrets and variables → Actions** 加：
+   - `PUBLIC_FORMSPREE_ENDPOINT` = `https://formspree.io/f/<id>`
+
+### Base path / 自訂網域
+
+`astro.config.mjs` 從環境變數讀 base，所以同一份 code 可以服侍三種情境：
+
+| 情境 | `BASE_PATH` | `SITE` |
+|---|---|---|
+| GH Pages project page (預設, workflow 自動帶) | `/portfolio-website` | `https://yuzenchen.github.io` |
+| Custom domain `yuzen.life` | `/` | `https://yuzen.life` |
+| Local Docker smoke test | `/` (Dockerfile ARG 預設) | `http://localhost` |
+
+切到 custom domain 時：
+1. 在 repo 加一份 `public/CNAME` 檔，內容是 `yuzen.life`
+2. workflow 裡 `BASE_PATH: /` 與 `SITE: https://yuzen.life`
+3. DNS 設 `CNAME yuzen.life → yuzenchen.github.io`（或四筆 A record）
 
 ## 從舊版遷移的重點
 

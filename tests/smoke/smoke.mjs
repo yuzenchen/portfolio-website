@@ -4,7 +4,7 @@
 // Usage:  npm run test:smoke
 // Override port:  PORT=9090 npm run test:smoke
 
-import { spawn, spawnSync } from 'node:child_process';
+import { spawnSync } from 'node:child_process';
 import { setTimeout as sleep } from 'node:timers/promises';
 
 const IMAGE = 'portfolio-website:smoke';
