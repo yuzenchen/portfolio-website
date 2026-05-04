@@ -44,3 +44,6 @@ jobs:
           user_name: 'github-actions[bot]'
           user_email: 'github-actions[bot]@users.noreply.github.com'
           commit_message: ${{ github.event.head_commit.message }}
+          # Always force-push a single-commit gh-pages so empty/no-diff
+          # builds still trigger GitHub's pages build & deployment.
+          force_orphan: true
