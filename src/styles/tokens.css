@@ -1,0 +1,42 @@
+/* Design tokens — single source of truth for colors, spacing, typography */
+:root {
+  /* Brand */
+  --color-cyan: #00d9ff;
+  --color-pink: #ff6b9d;
+  --color-yellow: #ffff6b;
+  --color-green: #6bff6b;
+
+  /* Surfaces */
+  --color-bg: #0a0a0a;
+  --color-bg-soft: #1a1a1a;
+  --color-bg-panel: rgba(20, 20, 20, 0.8);
+  --color-bg-panel-soft: rgba(20, 20, 20, 0.5);
+  --color-bg-nav: rgba(10, 10, 10, 0.9);
+  --color-bg-nav-scrolled: rgba(10, 10, 10, 0.95);
+
+  /* Text */
+  --color-text: #ffffff;
+  --color-text-muted: #cccccc;
+
+  /* Borders / overlays */
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-border-strong: rgba(0, 217, 255, 0.3);
+  --color-cyan-soft: rgba(0, 217, 255, 0.1);
+  --color-cyan-soft-2: rgba(0, 217, 255, 0.2);
+
+  /* Gradients */
+  --gradient-brand: linear-gradient(45deg, var(--color-cyan), var(--color-pink));
+  --gradient-bg: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+
+  /* Layout */
+  --container-max: 1200px;
+  --nav-height: 70px;
+
+  /* Transitions */
+  --t-fast: 0.3s ease;
+  --t-slow: 0.5s ease;
+
+  /* Fonts */
+  --font-sans: 'Noto Sans TC', 'JetBrains Mono', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}

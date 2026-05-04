@@ -1,152 +1,122 @@
-# 個人技術服務網站
+# yuzen.life — 個人作品集
 
-Yuzen Chen 的專業技術服務形象網站，展示 IT SRE、Full Stack 開發與 DevOps 自動化服務。
+Yuzen Chen 的個人技術服務網站，使用 [Astro](https://astro.build) + TypeScript 重構。
+靜態輸出，部署於 Cloudflare Pages，聯絡表單交給 Formspree。
 
-## 🌟 特色功能
+## 技術棧
 
-### 🎨 視覺特效
-- **粒子動畫背景**：動態粒子系統，支援滑鼠互動
-- **故障文字效果**：主標題採用 Glitch 效果
-- **打字機動畫**：多重文字輪播打字效果
-- **浮動元素**：程式碼區塊與技術圖示的3D浮動
-- **漸變色彩**：現代化的藍-粉色系漸變設計
+- **Astro 4** — 0 JS by default、Islands Architecture
+- **TypeScript** — strict mode
+- **CSS Variables** — 設計 tokens 集中於 `src/styles/tokens.css`
+- **Content Collections** — 作品集用 markdown 管理（Zod schema 驗證）
+- **Formspree** — 聯絡表單（無自架後端）
 
-### 💻 技術實現
-- **純原生技術**：HTML5 + CSS3 + Vanilla JavaScript
-- **響應式設計**：適配桌面、平板、手機各種螢幕
-- **效能優化**：防抖節流、IntersectionObserver API
-- **無障礙設計**：語意化標籤、鍵盤導航支援
+## 開發
 
-### 🔧 互動功能
-- **平滑滾動導航**：點擊導航自動滾動到對應區塊
-- **動畫觀察器**：滾動時元素漸入動畫
-- **數字計數器**：統計數據動態計數展示
-- **表單驗證**：聯絡表單即時驗證與回饋
-- **通知系統**：優雅的浮動通知訊息
-
-## 📱 網站架構
-
-### 首頁 (Hero Section)
-- 故障效果主標題
-- 打字機副標題
-- 浮動程式碼區塊
-- 技術圖示動畫
-- 行動召喚按鈕
-
-### 關於我 (About)
-- 專業介紹
-- 技能統計計數器
-- 技術標籤雲
-- 四大技能分類展示
-
-### 服務項目 (Services)
-- 網站開發
-- 系統可靠性工程 (SRE)
-- DevOps 自動化
-- 技術諮詢
-
-### 作品集 (Portfolio)
-- CRAZY DOGS 老虎機遊戲
-- 周易占卜系統
-- 復古風貪食蛇
-- n8n 工作流程自動化
-
-### 聯絡我 (Contact)
-- 聯絡資訊展示
-- 互動式聯絡表單
-- 即時表單驗證
-
-## 🚀 部署方式
-
-### 1. GitHub Pages 部署
 ```bash
-# 啟用 GitHub Pages
-# Settings > Pages > Source: Deploy from a branch
-# Branch: main / (root)
+npm install
+cp .env.example .env   # 填入 PUBLIC_FORMSPREE_ENDPOINT
+npm run dev            # http://localhost:4321
 ```
 
-### 2. Docker 容器化部署
+## Build / Preview
+
 ```bash
-# 建立 Dockerfile
-docker build -t portfolio-website .
-docker run -p 80:80 portfolio-website
+npm run build          # astro check + astro build → dist/
+npm run preview        # 預覽 production bundle
 ```
 
-### 3. 靜態託管服務
-- Netlify
-- Vercel
-- Firebase Hosting
-- AWS S3 + CloudFront
+## 測試
 
-## 🛠️ 技術棧
-
-### 前端技術
-- **HTML5**: 語意化標籤、無障礙設計
-- **CSS3**: Grid/Flexbox 布局、動畫、變數
-- **JavaScript**: ES6+、模組化、效能優化
-
-### 設計系統
-- **字體**: JetBrains Mono + Noto Sans TC
-- **色彩**: 藍色 (#00d9ff) + 粉色 (#ff6b9d)
-- **動畫**: CSS動畫 + JavaScript互動
-
-### 開發工具
-- Git 版本控制
-- VS Code 開發環境
-- Chrome DevTools 除錯
-- Lighthouse 效能測試
-
-## 📊 效能指標
-
-### Core Web Vitals
-- **LCP** (Largest Contentful Paint): < 2.5s
-- **FID** (First Input Delay): < 100ms
-- **CLS** (Cumulative Layout Shift): < 0.1
-
-### 最佳化措施
-- 圖片 WebP 格式
-- CSS/JS 壓縮
-- 字體預載入
-- 關鍵資源優先載入
-
-## 🔧 自訂設定
-
-### 修改個人資訊
-1. 編輯 `index.html` 中的個人資訊
-2. 更新 `styles.css` 中的品牌色彩
-3. 替換 `script.js` 中的動畫參數
-
-### 新增作品項目
-```html
-<div class="portfolio-item">
-    <div class="portfolio-image">
-        <!-- 專案預覽圖 -->
-    </div>
-    <div class="portfolio-overlay">
-        <!-- 專案資訊 -->
-    </div>
-</div>
+```bash
+npm run test:unit      # vitest — debounce / throttle 等純邏輯
+npm run test:smoke     # 在本機 Docker 內 build + 跑 nginx 容器 + curl 驗證 (需 Docker Desktop)
+npm test               # 上面兩個一起跑
 ```
 
-### 客製化動畫
-```javascript
-// 修改粒子系統參數
-function initParticles() {
-    const particleCount = 80; // 粒子數量
-    const connectionDistance = 120; // 連接距離
-    const mouseInfluence = 100; // 滑鼠影響範圍
-}
+`test:smoke` 會：build production image → 起 container 在 :8088 → 對 `/` 與 fingerprinted CSS 做 12 項斷言（HTML 內容、cache header、SPA fallback）→ 自動 teardown。可用 `PORT=9090 npm run test:smoke` 換 port。
+
+## 專案結構
+
+```
+src/
+├── pages/index.astro          # 首頁
+├── layouts/BaseLayout.astro   # head/meta、引入 global CSS 與 main.ts
+├── components/                # 6 個 section + Footer
+├── content/
+│   ├── config.ts              # portfolio collection schema
+│   └── portfolio/*.md         # 4 個作品（新增作品只要加新 .md）
+├── scripts/                   # 客戶端 TS 模組
+│   ├── main.ts                # 入口（DOMContentLoaded）
+│   ├── nav.ts
+│   ├── particles.ts
+│   ├── typing.ts
+│   ├── counters.ts
+│   ├── reveal.ts              # IntersectionObserver fade-in
+│   ├── contact-form.ts        # Formspree 提交
+│   ├── notify.ts
+│   ├── hover.ts               # hero 視差
+│   └── utils.ts               # debounce / throttle
+└── styles/
+    ├── tokens.css             # 色票、間距、字體、漸變
+    ├── animations.css         # 所有 @keyframes
+    └── global.css             # 主樣式
 ```
 
-## 📞 技術支援
+## 新增作品
 
-如需客製化開發或技術諮詢，歡迎聯絡：
-- **Email**: b97170098@gmail.com
-- **GitHub**: [yuzenchen](https://github.com/yuzenchen)
-- **LinkedIn**: yuzen-chen
+```bash
+# 在 src/content/portfolio/ 新增一份 .md
+---
+title: 新作品標題
+placeholderTitle: "簡短標題<br>副標"
+icon: "🚀"
+description: 一段話描述
+tags: [Tech1, Tech2]
+order: 5
+---
+```
 
-## 📄 授權資訊
+build 時若 frontmatter 缺欄位或型別不符，`astro check` 會擋下。
 
-© 2025 Yuzen Chen. 版權所有。
+## 部署 (GitHub Pages)
 
-本專案採用 MIT 授權，歡迎 Fork 與客製化使用。
+`.github/workflows/deploy.yml` 在 push 到 `main` 時自動 build + 推到 GH Pages，目前接 project page，網址為：
+
+> https://yuzenchen.github.io/portfolio-website/
+
+### 一次性設定
+
+1. Repo **Settings → Pages → Build and deployment → Source**: `GitHub Actions`
+2. Repo **Settings → Secrets and variables → Actions** 加：
+   - `PUBLIC_FORMSPREE_ENDPOINT` = `https://formspree.io/f/<id>`
+
+### Base path / 自訂網域
+
+`astro.config.mjs` 從環境變數讀 base，所以同一份 code 可以服侍三種情境：
+
+| 情境 | `BASE_PATH` | `SITE` |
+|---|---|---|
+| GH Pages project page (預設, workflow 自動帶) | `/portfolio-website` | `https://yuzenchen.github.io` |
+| Custom domain `yuzen.life` | `/` | `https://yuzen.life` |
+| Local Docker smoke test | `/` (Dockerfile ARG 預設) | `http://localhost` |
+
+切到 custom domain 時：
+1. 在 repo 加一份 `public/CNAME` 檔，內容是 `yuzen.life`
+2. workflow 裡 `BASE_PATH: /` 與 `SITE: https://yuzen.life`
+3. DNS 設 `CNAME yuzen.life → yuzenchen.github.io`（或四筆 A record）
+
+## 從舊版遷移的重點
+
+| 舊 | 新 |
+|---|---|
+| `index.html` 單檔 ~355 行 | `src/pages/index.astro` + 6 個 component |
+| `script.js` 480 行單檔 | `src/scripts/*.ts` 9 個模組 |
+| `styles.css` 1050 行寫死色碼 | `tokens.css` 集中變數 + 拆出 `animations.css` |
+| Flask `/api/send-telegram` | Formspree（無自架後端） |
+| nginx Dockerfile + hardcoded `172.17.0.4` | Static `dist/` 推 CF Pages |
+| `.github/workflows/telegram-backend.yml` (compileall only) | `.github/workflows/deploy.yml`（build + deploy） |
+
+## 授權
+
+© 2025 Yuzen Chen. MIT.
