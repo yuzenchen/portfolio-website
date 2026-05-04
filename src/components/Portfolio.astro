@@ -1,0 +1,36 @@
+---
+import { getCollection } from 'astro:content';
+
+const items = (await getCollection('portfolio')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+<section id="portfolio" class="portfolio">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">精選作品</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="portfolio-grid">
+      {items.map(({ data }) => (
+        <div class="portfolio-item">
+          <div class="portfolio-image">
+            <div class="project-placeholder">
+              <div class="placeholder-icon">{data.icon}</div>
+              <div class="placeholder-text" set:html={data.placeholderTitle}></div>
+            </div>
+            <div class="portfolio-overlay">
+              <div class="portfolio-info">
+                <h3>{data.title}</h3>
+                <p>{data.description}</p>
+                <div class="portfolio-tags">
+                  {data.tags.map((tag) => <span>{tag}</span>)}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

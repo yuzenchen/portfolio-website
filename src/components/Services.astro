@@ -1,0 +1,49 @@
+---
+const services = [
+  {
+    icon: '🌐',
+    title: '網站開發',
+    desc: '響應式網站、Web應用程式、API開發，使用現代化技術棧打造高品質的數位體驗',
+    features: ['前後端整合開發', '資料庫設計與優化', '第三方服務整合', '效能優化與SEO'],
+  },
+  {
+    icon: '⚙️',
+    title: '系統可靠性工程 (SRE)',
+    desc: '確保系統高可用性、監控告警、故障排除，建立穩定可靠的服務架構',
+    features: ['系統監控與告警', '容量規劃與擴展', '故障分析與修復', '服務可用性優化'],
+  },
+  {
+    icon: '🚀',
+    title: 'DevOps 自動化',
+    desc: 'CI/CD流程建立、容器化部署、基礎設施即代碼，提升開發與部署效率',
+    features: ['Docker容器化', 'Kubernetes編排', '自動化部署', '工作流程優化'],
+  },
+  {
+    icon: '🔧',
+    title: '技術諮詢',
+    desc: '架構設計、技術選型、專案規劃，提供專業的技術建議與解決方案',
+    features: ['技術架構規劃', '程式碼審查', '效能調優建議', '團隊技術培訓'],
+  },
+];
+---
+<section id="services" class="services">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">服務項目</h2>
+      <div class="section-line"></div>
+      <p class="section-description">提供全方位的技術服務，從網站開發到系統維運</p>
+    </div>
+    <div class="services-grid">
+      {services.map(({ icon, title, desc, features }) => (
+        <div class="service-card">
+          <div class="service-icon">{icon}</div>
+          <h3>{title}</h3>
+          <p>{desc}</p>
+          <ul class="service-features">
+            {features.map((f) => <li>{f}</li>)}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

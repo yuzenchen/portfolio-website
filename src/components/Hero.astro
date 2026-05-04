@@ -1,0 +1,51 @@
+---
+const techIcons = ['🐍', '⚛️', '🐳', '☸️'];
+---
+<section id="home" class="hero">
+  <div class="hero-container">
+    <div class="hero-content">
+      <div class="glitch-wrapper">
+        <h1 class="glitch-text" data-text="Yuzen Chen">Yuzen Chen</h1>
+      </div>
+      <div class="typing-container">
+        <h2 class="typing-text">IT SRE & Full Stack Developer</h2>
+      </div>
+      <p class="hero-description">
+        專精於網站開發、系統可靠性工程與DevOps自動化<br />
+        打造高效能、高可用性的技術解決方案
+      </p>
+      <div class="hero-buttons">
+        <a href="#services" class="btn btn-primary">
+          <span>探索服務</span>
+          <div class="btn-hover-effect"></div>
+        </a>
+        <a href="#portfolio" class="btn btn-secondary">
+          <span>查看作品</span>
+          <div class="btn-hover-effect"></div>
+        </a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="floating-elements">
+        <div class="code-block floating-item">
+          <div class="code-header">
+            <div class="code-dots"><span></span><span></span><span></span></div>
+          </div>
+          <div class="code-content">
+            <span class="code-line"><span class="keyword">const</span> developer = &#123;</span>
+            <span class="code-line">  name: <span class="string">'Yuzen Chen'</span>,</span>
+            <span class="code-line">  skills: [<span class="string">'Python'</span>, <span class="string">'JavaScript'</span>],</span>
+            <span class="code-line">  passion: <span class="string">'Innovation'</span></span>
+            <span class="code-line">&#125;;</span>
+          </div>
+        </div>
+        {techIcons.map((icon) => (
+          <div class="tech-icon floating-item">{icon}</div>
+        ))}
+      </div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
