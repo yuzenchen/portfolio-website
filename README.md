@@ -26,6 +26,16 @@ npm run build          # astro check + astro build → dist/
 npm run preview        # 預覽 production bundle
 ```
 
+## 測試
+
+```bash
+npm run test:unit      # vitest — debounce / throttle 等純邏輯
+npm run test:smoke     # 在本機 Docker 內 build + 跑 nginx 容器 + curl 驗證 (需 Docker Desktop)
+npm test               # 上面兩個一起跑
+```
+
+`test:smoke` 會：build production image → 起 container 在 :8088 → 對 `/` 與 fingerprinted CSS 做 12 項斷言（HTML 內容、cache header、SPA fallback）→ 自動 teardown。可用 `PORT=9090 npm run test:smoke` 換 port。
+
 ## 專案結構
 
 ```

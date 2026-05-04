@@ -9,13 +9,20 @@
     "start": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "test": "npm run test:unit && npm run test:smoke",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+    "test:smoke": "node tests/smoke/smoke.mjs",
+    "docker:build": "docker build -t portfolio-website:local .",
+    "docker:run": "docker run --rm -p 8080:80 --name portfolio-website-local portfolio-website:local"
   },
   "dependencies": {
     "astro": "^4.16.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
-    "typescript": "^5.6.0"
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
   }
 }
