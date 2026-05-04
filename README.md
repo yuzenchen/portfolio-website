@@ -87,8 +87,9 @@ build 時若 frontmatter 缺欄位或型別不符，`astro check` 會擋下。
 
 ### 一次性設定
 
-1. Repo **Settings → Pages → Build and deployment → Source**: `GitHub Actions`
-2. Repo **Settings → Secrets and variables → Actions** 加：
+1. Repo **Settings → Pages → Build and deployment → Source**: `Deploy from a branch`
+2. **Branch** 選 `gh-pages` / `/ (root)`，存檔（首次 deploy 跑完後 `gh-pages` 才存在；workflow 會自動建立並推上去）
+3. Repo **Settings → Secrets and variables → Actions** 加：
    - `PUBLIC_FORMSPREE_ENDPOINT` = `https://formspree.io/f/<id>`
 
 ### Base path / 自訂網域
