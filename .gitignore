@@ -21,6 +21,11 @@ pnpm-debug.log*
 .DS_Store
 Thumbs.db
 
+# tooling artifacts
+.commit-msg.tmp
+preview.log
+preview.err
+
 # legacy backend artifacts (kept ignored in case anything sneaks back)
 __pycache__/
 *.pyc
