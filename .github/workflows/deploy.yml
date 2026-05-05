@@ -29,8 +29,9 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          BASE_PATH: /portfolio-website
-          SITE: https://yuzenchen.github.io
+          # Custom domain www.yuzen.life — assets served from root.
+          BASE_PATH: /
+          SITE: https://www.yuzen.life
           PUBLIC_FORMSPREE_ENDPOINT: ${{ secrets.PUBLIC_FORMSPREE_ENDPOINT }}
 
       # Push dist/ to the gh-pages branch.
