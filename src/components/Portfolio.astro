@@ -12,25 +12,49 @@ const items = (await getCollection('portfolio')).sort(
       <div class="section-line"></div>
     </div>
     <div class="portfolio-grid">
-      {items.map(({ data }) => (
-        <div class="portfolio-item">
-          <div class="portfolio-image">
-            <div class="project-placeholder">
-              <div class="placeholder-icon">{data.icon}</div>
-              <div class="placeholder-text" set:html={data.placeholderTitle}></div>
-            </div>
-            <div class="portfolio-overlay">
-              <div class="portfolio-info">
-                <h3>{data.title}</h3>
-                <p>{data.description}</p>
-                <div class="portfolio-tags">
-                  {data.tags.map((tag) => <span>{tag}</span>)}
+      {items.map(({ data }) => {
+        const links = [
+          data.demo ? { href: data.demo, label: 'Demo', icon: '🌐' } : null,
+          data.repo ? { href: data.repo, label: 'Frontend', icon: '💻' } : null,
+          data.repoBackend ? { href: data.repoBackend, label: 'Backend', icon: '⚙️' } : null,
+        ].filter((l): l is { href: string; label: string; icon: string } => l !== null);
+
+        return (
+          <div class="portfolio-item">
+            <div class="portfolio-image">
+              <div class="project-placeholder">
+                <div class="placeholder-icon">{data.icon}</div>
+                <div class="placeholder-text" set:html={data.placeholderTitle}></div>
+              </div>
+              <div class="portfolio-overlay">
+                <div class="portfolio-info">
+                  <h3>{data.title}</h3>
+                  <p>{data.description}</p>
+                  <div class="portfolio-tags">
+                    {data.tags.map((tag) => <span>{tag}</span>)}
+                  </div>
+                  {links.length > 0 && (
+                    <div class="portfolio-links">
+                      {links.map(({ href, label, icon }) => (
+                        <a
+                          href={href}
+                          class="portfolio-link-btn"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={`${data.title} ${label}`}
+                        >
+                          <span class="portfolio-link-icon">{icon}</span>
+                          <span>{label}</span>
+                        </a>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   </div>
 </section>
