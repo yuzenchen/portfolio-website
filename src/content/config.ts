@@ -10,6 +10,7 @@ const portfolio = defineCollection({
     tags: z.array(z.string()),
     demo: z.string().url().optional(),
     repo: z.string().url().optional(),
+    repoBackend: z.string().url().optional(),
     order: z.number(),
   }),
 });
