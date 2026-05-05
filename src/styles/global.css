@@ -612,8 +612,6 @@ body {
   justify-content: center;
   opacity: 0;
   transition: all var(--t-fast);
-  overflow-y: auto;        /* let overlay scroll if content overflows */
-  overscroll-behavior: contain;
 }
 
 .portfolio-item:hover .portfolio-overlay,
