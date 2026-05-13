@@ -26,6 +26,9 @@ Thumbs.db
 preview.log
 preview.err
 
+# local-only originals kept for rollback
+public/*.original.png
+
 # legacy backend artifacts (kept ignored in case anything sneaks back)
 __pycache__/
 *.pyc
