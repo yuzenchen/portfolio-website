@@ -581,12 +581,22 @@ body {
 }
 
 .portfolio-screenshot {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: top center;
   display: block;
   background: var(--color-bg);
+  opacity: 0;
+  transition: opacity var(--t-fast);
+  z-index: 1;
+}
+
+.portfolio-item:hover .portfolio-screenshot,
+.portfolio-item:focus-within .portfolio-screenshot {
+  opacity: 1;
 }
 
 .project-placeholder {
@@ -621,6 +631,24 @@ body {
   justify-content: center;
   opacity: 0;
   transition: all var(--t-fast);
+  z-index: 2;
+}
+
+/* When the card has a real screenshot behind the overlay, let it peek
+   through with a top-to-bottom darkening gradient so the description
+   text at the bottom still reads cleanly. */
+.portfolio-item--has-image .portfolio-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.25) 0%,
+    rgba(0, 0, 0, 0.55) 40%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
+  align-items: flex-end;
+}
+
+.portfolio-item--has-image .portfolio-info {
+  padding-top: 0.75rem;
 }
 
 .portfolio-item:hover .portfolio-overlay,

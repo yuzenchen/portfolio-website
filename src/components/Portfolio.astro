@@ -21,9 +21,13 @@ const items = (await getCollection('portfolio')).sort(
             : null;
 
         return (
-          <div class="portfolio-item">
+          <div class:list={["portfolio-item", data.image && "portfolio-item--has-image"]}>
             <div class="portfolio-image">
-              {data.image ? (
+              <div class="project-placeholder">
+                <div class="placeholder-icon">{data.icon}</div>
+                <div class="placeholder-text" set:html={data.placeholderTitle}></div>
+              </div>
+              {data.image && (
                 <img
                   src={data.image}
                   alt={data.title}
@@ -31,11 +35,6 @@ const items = (await getCollection('portfolio')).sort(
                   loading="lazy"
                   decoding="async"
                 />
-              ) : (
-                <div class="project-placeholder">
-                  <div class="placeholder-icon">{data.icon}</div>
-                  <div class="placeholder-text" set:html={data.placeholderTitle}></div>
-                </div>
               )}
               <div class="portfolio-overlay">
                 <div class="portfolio-info">
