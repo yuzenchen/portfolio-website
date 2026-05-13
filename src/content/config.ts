@@ -11,6 +11,7 @@ const portfolio = defineCollection({
     demo: z.string().url().optional(),
     repo: z.string().url().optional(),
     repoBackend: z.string().url().optional(),
+    image: z.string().optional(),
     order: z.number(),
   }),
 });

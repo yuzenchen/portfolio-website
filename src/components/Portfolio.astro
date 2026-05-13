@@ -12,39 +12,58 @@ const items = (await getCollection('portfolio')).sort(
       <div class="section-line"></div>
     </div>
     <div class="portfolio-grid">
-      {items.map(({ data }) => (
-        <div class="portfolio-item">
-          <div class="portfolio-image">
-            <div class="project-placeholder">
-              <div class="placeholder-icon">{data.icon}</div>
-              <div class="placeholder-text" set:html={data.placeholderTitle}></div>
-            </div>
-            <div class="portfolio-overlay">
-              <div class="portfolio-info">
-                <h3>{data.title}</h3>
-                <p>{data.description}</p>
-                <div class="portfolio-tags">
-                  {data.tags.map((tag) => <span>{tag}</span>)}
+      {items.map(({ data }) => {
+        // Prefer Demo button; fall back to Repo (so non-public services still get one CTA)
+        const cta = data.demo
+          ? { href: data.demo, label: 'Demo', icon: '🌐' }
+          : data.repo
+            ? { href: data.repo, label: 'Repo', icon: '💻' }
+            : null;
+
+        return (
+          <div class="portfolio-item">
+            <div class="portfolio-image">
+              {data.image ? (
+                <img
+                  src={data.image}
+                  alt={data.title}
+                  class="portfolio-screenshot"
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <div class="project-placeholder">
+                  <div class="placeholder-icon">{data.icon}</div>
+                  <div class="placeholder-text" set:html={data.placeholderTitle}></div>
                 </div>
-                {data.demo && (
-                  <div class="portfolio-links">
-                    <a
-                      href={data.demo}
-                      class="portfolio-link-btn"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${data.title} Demo`}
-                    >
-                      <span class="portfolio-link-icon">🌐</span>
-                      <span>Demo</span>
-                    </a>
+              )}
+              <div class="portfolio-overlay">
+                <div class="portfolio-info">
+                  <h3>{data.title}</h3>
+                  <p>{data.description}</p>
+                  <div class="portfolio-tags">
+                    {data.tags.map((tag) => <span>{tag}</span>)}
                   </div>
-                )}
+                  {cta && (
+                    <div class="portfolio-links">
+                      <a
+                        href={cta.href}
+                        class="portfolio-link-btn"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`${data.title} ${cta.label}`}
+                      >
+                        <span class="portfolio-link-icon">{cta.icon}</span>
+                        <span>{cta.label}</span>
+                      </a>
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   </div>
 </section>
