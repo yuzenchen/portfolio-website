@@ -615,6 +615,14 @@ body {
   margin-bottom: 1rem;
 }
 
+.placeholder-icon-img {
+  width: 4rem;
+  height: 4rem;
+  object-fit: contain;
+  margin-bottom: 1rem;
+  display: block;
+}
+
 .placeholder-text {
   font-size: 1.2rem;
   font-weight: 600;

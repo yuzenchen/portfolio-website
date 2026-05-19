@@ -24,7 +24,17 @@ const items = (await getCollection('portfolio')).sort(
           <div class:list={["portfolio-item", data.image && "portfolio-item--has-image"]}>
             <div class="portfolio-image">
               <div class="project-placeholder">
-                <div class="placeholder-icon">{data.icon}</div>
+                {data.iconImage ? (
+                  <img
+                    src={data.iconImage}
+                    alt=""
+                    class="placeholder-icon-img"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ) : (
+                  <div class="placeholder-icon">{data.icon}</div>
+                )}
                 <div class="placeholder-text" set:html={data.placeholderTitle}></div>
               </div>
               {data.image && (

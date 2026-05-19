@@ -6,6 +6,7 @@ const portfolio = defineCollection({
     title: z.string(),
     placeholderTitle: z.string(),
     icon: z.string(),
+    iconImage: z.string().optional(),
     description: z.string(),
     tags: z.array(z.string()),
     demo: z.string().url().optional(),
