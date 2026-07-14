@@ -1,42 +1,45 @@
-/* Design tokens — single source of truth for colors, spacing, typography */
+/* Design tokens — "終端深色" (dark terminal) direction.
+   Single accent colour; layering comes from 1px borders, never box-shadow. */
 :root {
-  /* Brand */
-  --color-cyan: #00d9ff;
-  --color-pink: #ff6b9d;
-  --color-yellow: #ffff6b;
-  --color-green: #6bff6b;
-
   /* Surfaces */
-  --color-bg: #0a0a0a;
-  --color-bg-soft: #1a1a1a;
-  --color-bg-panel: rgba(20, 20, 20, 0.8);
-  --color-bg-panel-soft: rgba(20, 20, 20, 0.5);
-  --color-bg-nav: rgba(10, 10, 10, 0.9);
-  --color-bg-nav-scrolled: rgba(10, 10, 10, 0.95);
+  --bg: #0d1117;
+  --panel: #151b23;
+  --border: #232b36;
+  --border-hover: #3a4a5c;
+
+  /* Panels sit above full-bleed canvases, so they need alpha */
+  --panel-alpha: rgba(21, 27, 35, 0.85);
+  --bg-alpha: rgba(13, 17, 23, 0.6);
 
   /* Text */
-  --color-text: #ffffff;
-  --color-text-muted: #cccccc;
+  --text: #e6edf3;
+  --muted: #8b96a5;
+  --faint: #5a6472;
 
-  /* Borders / overlays */
-  --color-border: rgba(255, 255, 255, 0.1);
-  --color-border-strong: rgba(0, 217, 255, 0.3);
-  --color-cyan-soft: rgba(0, 217, 255, 0.1);
-  --color-cyan-soft-2: rgba(0, 217, 255, 0.2);
+  /* The one accent */
+  --accent: #45d6a8;
 
-  /* Gradients */
-  --gradient-brand: linear-gradient(45deg, var(--color-cyan), var(--color-pink));
-  --gradient-bg: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  /* Form feedback only */
+  --danger: #d64545;
+  --danger-text: #ff8080;
+
+  /* Type */
+  --font-sans: 'Noto Sans TC', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* Radius */
+  --r-panel: 10px;
+  --r-cta: 12px;
+  --r-btn: 6px;
+  --r-tag: 5px;
+  --r-pill: 999px;
 
   /* Layout */
-  --container-max: 1200px;
-  --nav-height: 70px;
+  --pad-x: 56px;
+  --pad-x-sm: 24px;
+  --gap-grid: 16px;
 
-  /* Transitions */
-  --t-fast: 0.3s ease;
-  --t-slow: 0.5s ease;
-
-  /* Fonts */
-  --font-sans: 'Noto Sans TC', 'JetBrains Mono', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  /* Motion */
+  --t-fast: 0.15s ease;
+  --t-border: 0.2s;
 }

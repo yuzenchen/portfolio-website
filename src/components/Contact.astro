@@ -1,94 +1,63 @@
 ---
 const formspreeEndpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
 
-const items = [
-  { icon: '📍', label: '位置', value: '台北, 台灣' },
-  {
-    icon: '✉️',
-    label: 'Email',
-    link: { href: 'mailto:b97170098@gmail.com', text: 'b97170098@gmail.com' },
-  },
-  {
-    icon: '💼',
-    label: 'LinkedIn',
-    link: {
-      href: 'https://www.linkedin.com/in/yuzen-chen-a82149167',
-      text: 'yuzen-chen',
-      external: true,
-    },
-  },
-  {
-    icon: '🐙',
-    label: 'GitHub',
-    link: {
-      href: 'https://github.com/yuzenchen',
-      text: 'github.com/yuzenchen',
-      external: true,
-    },
-  },
+const links = [
+  { href: 'mailto:b97170098@gmail.com', text: 'b97170098@gmail.com' },
+  { href: 'https://www.linkedin.com/in/yuzen-chen-a82149167', text: 'LinkedIn', external: true },
+  { href: 'https://github.com/yuzenchen', text: 'GitHub', external: true },
+];
+
+const services = [
+  { value: 'web-development', label: '網站開發' },
+  { value: 'sre', label: '系統可靠性工程' },
+  { value: 'devops', label: 'DevOps 自動化' },
+  { value: 'consulting', label: '技術諮詢' },
 ];
 ---
-<section id="contact" class="contact">
-  <div class="container">
-    <div class="section-header">
-      <h2 class="section-title">聯絡我</h2>
-      <div class="section-line"></div>
-      <p class="section-description">準備開始您的專案？讓我們一起討論!</p>
-    </div>
-    <div class="contact-content">
-      <div class="contact-info">
-        {items.map((item) => (
-          <div class="contact-item">
-            <div class="contact-icon">{item.icon}</div>
-            <div class="contact-details">
-              <h4>{item.label}</h4>
-              {item.link ? (
-                <p>
-                  <a
-                    href={item.link.href}
-                    class="contact-link"
-                    target={item.link.external ? '_blank' : undefined}
-                    rel={item.link.external ? 'noopener noreferrer' : undefined}
-                  >
-                    {item.link.text}
-                  </a>
-                </p>
-              ) : (
-                <p>{item.value}</p>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
-      <div class="contact-form">
-        <form id="contact-form" action={formspreeEndpoint} method="POST">
-          <div class="form-group">
-            <input type="text" id="name" name="name" placeholder=" " required />
-            <label for="name">姓名</label>
-          </div>
-          <div class="form-group">
-            <input type="email" id="email" name="email" placeholder=" " required />
-            <label for="email">Email</label>
-          </div>
-          <div class="form-group">
-            <select id="service" name="service" required>
-              <option value="">選擇服務類型</option>
-              <option value="web-development">網站開發</option>
-              <option value="sre">系統可靠性工程</option>
-              <option value="devops">DevOps自動化</option>
-              <option value="consulting">技術諮詢</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <textarea id="message" name="message" rows="5" placeholder=" " required></textarea>
-            <label for="message">專案詳情</label>
-          </div>
-          <button type="submit" class="btn btn-primary btn-full">
-            <span>發送訊息</span>
-            <div class="btn-hover-effect"></div>
-          </button>
-        </form>
-      </div>
+<div id="contact" class="contact fade">
+  <div>
+    <h2>準備開始您的專案？</h2>
+    <div class="row">
+      {links.map(({ href, text, external }) => (
+        <a
+          href={href}
+          target={external ? '_blank' : undefined}
+          rel={external ? 'noopener noreferrer' : undefined}
+        >
+          {text}
+        </a>
+      ))}
+      <span>台北，台灣</span>
     </div>
   </div>
-</section>
+  <a href="#contact-form" class="btn-primary">發送訊息</a>
+</div>
+
+<div class="contact-form-wrap fade">
+  <form id="contact-form" action={formspreeEndpoint} method="POST">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="name">姓名</label>
+        <input type="text" id="name" name="name" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+      <div class="form-group form-group--full">
+        <label for="service">服務類型</label>
+        <select id="service" name="service" required>
+          <option value="">選擇服務類型</option>
+          {services.map(({ value, label }) => <option value={value}>{label}</option>)}
+        </select>
+      </div>
+      <div class="form-group form-group--full">
+        <label for="message">專案詳情</label>
+        <textarea id="message" name="message" rows="5" required></textarea>
+      </div>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn-primary">發送訊息</button>
+    </div>
+  </form>
+</div>

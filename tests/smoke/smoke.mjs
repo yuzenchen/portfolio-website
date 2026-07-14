@@ -87,13 +87,23 @@ async function main() {
     // 5. Assertions on production HTML
     expect(res.status === 200, `GET / returns 200 (got ${res.status})`);
     expect(body.includes('Yuzen Chen'), 'page contains "Yuzen Chen"');
-    expect(body.includes('data-text="Yuzen Chen"'), 'glitch-text element rendered');
-    expect(body.includes('typing-text'), 'typing-text element rendered');
+    expect(body.includes('yuzen@tw:~$'), 'terminal nav brand rendered');
+    expect(body.includes('id="cvStars"'), 'starfield canvas rendered');
+    expect(body.includes('id="cvWave"'), 'hero wave canvas rendered');
+    expect(body.includes('id="cvGalaxy"'), 'galaxy canvas rendered');
+    expect(body.includes('id="typeA"'), 'typewriter target rendered');
+    expect(body.includes('class="countup"'), 'stat counters rendered');
     expect(body.includes('id="contact-form"'), 'contact form rendered');
-    expect(body.includes('portfolio-grid'), 'portfolio grid rendered');
-    expect(body.includes('id="particles-canvas"'), 'particle canvas container rendered');
+    expect(body.includes('## work'), 'work section marker rendered');
     expect(/href="\/_astro\/[^"]+\.css"/.test(body), 'fingerprinted CSS asset linked');
     expect(/src="\/_astro\/[^"]+\.js"/.test(body), 'fingerprinted JS asset linked');
+
+    // 5b. The redesign mandates zero emoji sitewide. Typographic marks the
+    // design does use (→ U+2192, › U+203A, ✓ U+2713) are deliberately outside
+    // these ranges, so they don't trip this.
+    const EMOJI_RE = /[\u{1F000}-\u{1FAFF}\u{2600}-\u{26FF}\u{FE0F}]/u;
+    const emoji = body.match(new RegExp(EMOJI_RE, 'gu'));
+    expect(emoji === null, `page contains no emoji${emoji ? ` (found: ${[...new Set(emoji)].join(' ')})` : ''}`);
 
     // 6. Hit a CSS asset and check cache headers
     const cssMatch = body.match(/href="(\/_astro\/[^"]+\.css)"/);

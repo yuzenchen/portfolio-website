@@ -5,74 +5,39 @@ const items = (await getCollection('portfolio')).sort(
   (a, b) => a.data.order - b.data.order,
 );
 ---
-<section id="portfolio" class="portfolio">
-  <div class="container">
-    <div class="section-header">
-      <h2 class="section-title">精選作品</h2>
-      <div class="section-line"></div>
-    </div>
-    <div class="portfolio-grid">
-      {items.map(({ data }) => {
-        // Prefer Demo button; fall back to Repo (so non-public services still get one CTA)
-        const cta = data.demo
-          ? { href: data.demo, label: 'Demo', icon: '🌐' }
-          : data.repo
-            ? { href: data.repo, label: 'Repo', icon: '💻' }
-            : null;
+<section id="work" class="work fade">
+  <div class="sec-mark">## work</div>
+  <h2>精選作品</h2>
+  <div class="grid3">
+    {items.map(({ data }) => {
+      // Prefer a live demo; fall back to the repo for services that aren't public.
+      const cta = data.demo
+        ? { href: data.demo, label: 'Demo →' }
+        : data.repo
+          ? { href: data.repo, label: 'Repo →' }
+          : null;
 
-        return (
-          <div class:list={["portfolio-item", data.image && "portfolio-item--has-image"]}>
-            <div class="portfolio-image">
-              <div class="project-placeholder">
-                {data.iconImage ? (
-                  <img
-                    src={data.iconImage}
-                    alt=""
-                    class="placeholder-icon-img"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                ) : (
-                  <div class="placeholder-icon">{data.icon}</div>
-                )}
-                <div class="placeholder-text" set:html={data.placeholderTitle}></div>
-              </div>
-              {data.image && (
-                <img
-                  src={data.image}
-                  alt={data.title}
-                  class="portfolio-screenshot"
-                  loading="lazy"
-                  decoding="async"
-                />
-              )}
-              <div class="portfolio-overlay">
-                <div class="portfolio-info">
-                  <h3>{data.title}</h3>
-                  <p>{data.description}</p>
-                  <div class="portfolio-tags">
-                    {data.tags.map((tag) => <span>{tag}</span>)}
-                  </div>
-                  {cta && (
-                    <div class="portfolio-links">
-                      <a
-                        href={cta.href}
-                        class="portfolio-link-btn"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`${data.title} ${cta.label}`}
-                      >
-                        <span class="portfolio-link-icon">{cta.icon}</span>
-                        <span>{cta.label}</span>
-                      </a>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
+      return (
+        <article class="proj">
+          <div class="thumb">
+            {data.image ? (
+              <img src={data.image} alt={data.title} loading="lazy" decoding="async" />
+            ) : (
+              '[ 專案截圖 ]'
+            )}
           </div>
-        );
-      })}
-    </div>
+          <div class="proj-body">
+            <h3>{data.title}</h3>
+            <p>{data.description}</p>
+            <div class="tags">
+              {data.tags.map((tag) => <span class="tag">{tag}</span>)}
+            </div>
+            {cta && (
+              <a href={cta.href} target="_blank" rel="noopener noreferrer">{cta.label}</a>
+            )}
+          </div>
+        </article>
+      );
+    })}
   </div>
 </section>

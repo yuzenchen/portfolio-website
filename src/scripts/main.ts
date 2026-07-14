@@ -1,19 +1,19 @@
-import { initNav } from './nav';
-import { initParticles } from './particles';
+import { initStars } from './stars';
+import { initWave } from './wave';
+import { initGalaxy } from './galaxy';
 import { initTyping } from './typing';
 import { initCounters } from './counters';
 import { initReveal } from './reveal';
 import { initContactForm } from './contact-form';
-import { initHeroParallax } from './hover';
 
 const boot = (): void => {
-  initNav();
-  initParticles();
+  initStars();
+  initWave();
+  initGalaxy();
   initTyping();
   initCounters();
   initReveal();
   initContactForm();
-  initHeroParallax();
 };
 
 if (document.readyState === 'loading') {

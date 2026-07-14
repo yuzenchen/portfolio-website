@@ -7,12 +7,12 @@ interface Props {
 }
 
 const {
-  title = 'Yuzen Chen - IT SRE & Full Stack Developer',
-  description = '專精於網站開發、系統可靠性工程與DevOps自動化',
+  title = 'Yuzen Chen — IT SRE & Full Stack Developer',
+  description = '專精網站開發、系統可靠性工程與 DevOps 自動化，打造高效能、高可用性的技術解決方案。',
 } = Astro.props;
 ---
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-Hant">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,12 +21,12 @@ const {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Noto+Sans+TC:wght@400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
-    <div id="particles-canvas"></div>
+    <canvas id="cvStars"></canvas>
     <slot />
 
     <script>

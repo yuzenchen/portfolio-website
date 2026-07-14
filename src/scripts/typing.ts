@@ -1,45 +1,28 @@
-const PHRASES = [
-  'IT SRE & Full Stack Developer',
-  'Python & JavaScript Expert',
-  'DevOps & Automation Specialist',
-  'Web Development Professional',
-];
+import { prefersReducedMotion } from './canvas';
 
-const TYPING_SPEED = 100;
-const DELETING_SPEED = 50;
-const PAUSE_TIME = 2000;
+const LINE_1 = '高可用系統，';
+const LINE_2 = '從程式碼到維運。';
+const CHAR_MS = 90;
 
 export function initTyping(): void {
-  const el = document.querySelector<HTMLElement>('.typing-text');
-  if (!el) return;
+  const a = document.getElementById('typeA');
+  const b = document.getElementById('typeB');
+  if (!a || !b) return;
 
-  let phraseIndex = 0;
-  let charIndex = 0;
-  let deleting = false;
+  if (prefersReducedMotion()) {
+    a.textContent = LINE_1;
+    b.textContent = LINE_2;
+    return;
+  }
+
+  const total = LINE_1.length + LINE_2.length;
+  let i = 0;
 
   const tick = (): void => {
-    const phrase = PHRASES[phraseIndex] ?? '';
-    if (deleting) {
-      el.textContent = phrase.substring(0, charIndex - 1);
-      charIndex--;
-      if (charIndex === 0) {
-        deleting = false;
-        phraseIndex = (phraseIndex + 1) % PHRASES.length;
-        setTimeout(tick, 500);
-        return;
-      }
-      setTimeout(tick, DELETING_SPEED);
-    } else {
-      el.textContent = phrase.substring(0, charIndex + 1);
-      charIndex++;
-      if (charIndex === phrase.length) {
-        deleting = true;
-        setTimeout(tick, PAUSE_TIME);
-        return;
-      }
-      setTimeout(tick, TYPING_SPEED);
-    }
+    i++;
+    a.textContent = LINE_1.slice(0, i);
+    b.textContent = i > LINE_1.length ? LINE_2.slice(0, i - LINE_1.length) : '';
+    if (i < total) setTimeout(tick, CHAR_MS);
   };
-
-  setTimeout(tick, 1000);
+  tick();
 }

@@ -1,0 +1,20 @@
+---
+// Values carried over from the previous site. The handoff lists 6+ / 30+ / 99.9%
+// but flags them as 示意值 for the site owner to replace, so the owner's own
+// existing numbers win here.
+const stats = [
+  { target: '10', dec: '0', suffix: '+', label: '年以上經驗' },
+  { target: '50', dec: '0', suffix: '+', label: '完成專案' },
+  { target: '99', dec: '0', suffix: '%', label: '系統可用性' },
+];
+---
+<div class="stats fade">
+  {stats.map(({ target, dec, suffix, label }) => (
+    <div class="stat">
+      <div class="num">
+        <span class="countup" data-target={target} data-dec={dec}>0</span>{suffix}
+      </div>
+      <div class="lbl">{label}</div>
+    </div>
+  ))}
+</div>

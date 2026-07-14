@@ -1,25 +1,13 @@
 ---
 const links = [
-  { href: '#home', label: '首頁' },
-  { href: '#about', label: '關於我' },
-  { href: '#services', label: '服務項目' },
-  { href: '#portfolio', label: '作品集' },
-  { href: '#contact', label: '聯絡我' },
+  { href: '#services', label: '/services' },
+  { href: '#work', label: '/work' },
 ];
 ---
-<nav class="navbar">
-  <div class="nav-container">
-    <div class="nav-logo">
-      <span class="logo-text">yuzen.life</span>
-      <div class="logo-cursor"></div>
-    </div>
-    <ul class="nav-menu">
-      {links.map(({ href, label }) => (
-        <li><a href={href} class="nav-link">{label}</a></li>
-      ))}
-    </ul>
-    <div class="hamburger">
-      <span></span><span></span><span></span>
-    </div>
+<nav>
+  <div class="brand">yuzen@tw:~$</div>
+  <div class="links">
+    {links.map(({ href, label }) => <a href={href}>{label}</a>)}
+    <a href="#contact" class="btn-outline-accent">/contact</a>
   </div>
 </nav>
