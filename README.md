@@ -1,4 +1,4 @@
-# yuzen.life — 個人作品集
+# yuzen.tw — 個人作品集
 
 Yuzen Chen 的個人技術服務網站，使用 [Astro](https://astro.build) + TypeScript 重構。
 靜態輸出，部署於 Cloudflare Pages，聯絡表單交給 Formspree。
@@ -99,13 +99,13 @@ build 時若 frontmatter 缺欄位或型別不符，`astro check` 會擋下。
 | 情境 | `BASE_PATH` | `SITE` |
 |---|---|---|
 | GH Pages project page (預設, workflow 自動帶) | `/portfolio-website` | `https://yuzenchen.github.io` |
-| Custom domain `yuzen.life` | `/` | `https://yuzen.life` |
+| Custom domain `yuzen.tw` | `/` | `https://yuzen.tw` |
 | Local Docker smoke test | `/` (Dockerfile ARG 預設) | `http://localhost` |
 
 切到 custom domain 時：
-1. 在 repo 加一份 `public/CNAME` 檔，內容是 `yuzen.life`
-2. workflow 裡 `BASE_PATH: /` 與 `SITE: https://yuzen.life`
-3. DNS 設 `CNAME yuzen.life → yuzenchen.github.io`（或四筆 A record）
+1. 在 repo 加一份 `public/CNAME` 檔，內容是 `yuzen.tw`
+2. workflow 裡 `BASE_PATH: /` 與 `SITE: https://yuzen.tw`
+3. Apex domain 需在 DNS 設四筆 A record 到 GH Pages IPs（`185.199.108-111.153`）；subdomain 用 `CNAME xxx → yuzenchen.github.io`
 
 ## 從舊版遷移的重點
 
