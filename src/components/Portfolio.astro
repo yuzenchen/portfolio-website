@@ -10,9 +10,9 @@ const items = (await getCollection('portfolio')).sort(
   <h2>精選作品</h2>
   <div class="grid3">
     {items.map(({ data }) => {
-      // Prefer a live demo; fall back to the repo for services that aren't public.
+      // Prefer the live site; fall back to the repo for services that aren't public.
       const cta = data.demo
-        ? { href: data.demo, label: 'Demo →' }
+        ? { href: data.demo, label: '網址 →' }
         : data.repo
           ? { href: data.repo, label: 'Repo →' }
           : null;
