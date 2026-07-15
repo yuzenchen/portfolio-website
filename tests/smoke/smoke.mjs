@@ -91,6 +91,8 @@ async function main() {
     expect(body.includes('id="cvStars"'), 'starfield canvas rendered');
     expect(body.includes('id="cvWave"'), 'hero wave canvas rendered');
     expect(body.includes('id="cvGalaxy"'), 'galaxy canvas rendered');
+    expect(body.includes('id="cvWarp"'), 'warp tunnel canvas rendered');
+    expect(body.includes('// warp speed'), 'warp section marker rendered');
     expect(body.includes('id="typeA"'), 'typewriter target rendered');
     expect(body.includes('class="countup"'), 'stat counters rendered');
     expect(body.includes('id="contact-form"'), 'contact form rendered');

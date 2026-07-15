@@ -1,4 +1,4 @@
-import { fitCanvas, prefersReducedMotion } from './canvas';
+import { fitCanvas, loopOnVisible, prefersReducedMotion } from './canvas';
 import { debounce } from './utils';
 
 const STAR_COUNT = 160;
@@ -35,7 +35,7 @@ export function initStars(): void {
     s: 0.5 + Math.random() * 1.5,
   }));
 
-  const paint = (t: number): void => {
+  const draw = (t: number): void => {
     ctx.clearRect(0, 0, w, h);
     for (const st of stars) {
       const a = 0.15 + 0.55 * (0.5 + 0.5 * Math.sin(t * 0.001 * st.s + st.p));
@@ -47,13 +47,9 @@ export function initStars(): void {
   };
 
   if (prefersReducedMotion()) {
-    paint(0);
+    draw(0); // one static frame
     return;
   }
 
-  const draw = (t: number): void => {
-    paint(t);
-    requestAnimationFrame(draw);
-  };
-  requestAnimationFrame(draw);
+  loopOnVisible(cv, draw);
 }

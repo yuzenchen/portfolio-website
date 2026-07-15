@@ -1,4 +1,4 @@
-import { SPEED, fitCanvas, prefersReducedMotion } from './canvas';
+import { SPEED, fitCanvas, loopOnVisible, prefersReducedMotion } from './canvas';
 import { debounce } from './utils';
 
 const PARTICLE_COUNT = 650;
@@ -78,7 +78,7 @@ export function initGalaxy(): void {
     }
 
     ctx.globalCompositeOperation = 'source-over';
-    requestAnimationFrame(draw);
   };
-  requestAnimationFrame(draw);
+
+  loopOnVisible(cv, draw);
 }

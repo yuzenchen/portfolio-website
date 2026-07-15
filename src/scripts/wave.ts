@@ -1,4 +1,4 @@
-import { SPEED, fitCanvas, prefersReducedMotion } from './canvas';
+import { SPEED, fitCanvas, loopOnVisible, prefersReducedMotion } from './canvas';
 import { debounce } from './utils';
 
 const ROWS = 34;
@@ -70,7 +70,7 @@ export function initWave(): void {
         ctx.fillRect(x, y, s, s);
       }
     }
-    requestAnimationFrame(draw);
   };
-  requestAnimationFrame(draw);
+
+  loopOnVisible(cv, draw);
 }

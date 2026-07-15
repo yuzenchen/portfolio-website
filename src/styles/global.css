@@ -426,6 +426,51 @@ h3 {
   color: var(--accent);
 }
 
+/* ── Warp tunnel ──────────────────────────────────────────────────── */
+.warp-sec {
+  position: relative;
+  height: 520px;
+  margin-bottom: 48px;
+}
+
+#cvWarp {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.warp-inner {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none;
+}
+
+.warp-inner .sec-mark {
+  margin-bottom: 14px;
+}
+
+/* Text sits over moving streaks, so it carries its own halo. */
+.warp-inner h2 {
+  margin: 0 0 14px;
+  font-size: 38px;
+  font-weight: 900;
+  text-shadow: 0 0 30px rgba(13, 17, 23, 0.9);
+}
+
+.warp-inner p {
+  margin: 0;
+  font-size: 15px;
+  color: var(--muted);
+  text-shadow: 0 0 20px rgba(13, 17, 23, 0.9);
+}
+
 /* ── Contact CTA ──────────────────────────────────────────────────── */
 .contact {
   position: relative;
@@ -606,8 +651,13 @@ footer {
     min-height: 90px;
   }
 
-  .galaxy-inner h2 {
+  .galaxy-inner h2,
+  .warp-inner h2 {
     font-size: 28px;
+  }
+
+  .warp-inner {
+    padding: 0 var(--pad-x-sm);
   }
 
   .contact {
