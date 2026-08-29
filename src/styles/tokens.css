@@ -1,45 +1,44 @@
-/* Design tokens — "終端深色" (dark terminal) direction.
-   Single accent colour; layering comes from 1px borders, never box-shadow. */
+/* Design tokens — homepage v4 "playful terminal".
+   Slight tilts, outlined display digits, pill buttons, hard shadows. */
 :root {
   /* Surfaces */
   --bg: #0d1117;
   --panel: #151b23;
-  --border: #232b36;
-  --border-hover: #3a4a5c;
-
-  /* Panels sit above full-bleed canvases, so they need alpha */
   --panel-alpha: rgba(21, 27, 35, 0.85);
-  --bg-alpha: rgba(13, 17, 23, 0.6);
+  --panel-soft: rgba(21, 27, 35, 0.6);
+  --img-bg: #141b24;
+
+  /* Borders */
+  --border: #232b36;
+  --border-dash: #2a3542;
+  --border-hover: #3a4a5c;
 
   /* Text */
   --text: #e6edf3;
   --muted: #8b96a5;
+  --soft: #c3ccd6;
   --faint: #5a6472;
 
-  /* The one accent */
+  /* Accent */
   --accent: #45d6a8;
-
-  /* Form feedback only */
-  --danger: #d64545;
-  --danger-text: #ff8080;
+  --accent-shadow: #1d5c47;
 
   /* Type */
   --font-sans: 'Noto Sans TC', system-ui, sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
 
   /* Radius */
-  --r-panel: 10px;
-  --r-cta: 12px;
-  --r-btn: 6px;
-  --r-tag: 5px;
+  --r-card: 18px;
+  --r-img: 16px;
+  --r-cta-card: 22px;
+  --r-logo: 8px;
   --r-pill: 999px;
 
-  /* Layout */
-  --pad-x: 56px;
-  --pad-x-sm: 24px;
-  --gap-grid: 16px;
+  /* Hard shadow for primary buttons */
+  --shadow-hard: 4px 4px 0 var(--accent-shadow);
 
-  /* Motion */
-  --t-fast: 0.15s ease;
-  --t-border: 0.2s;
+  /* Layout */
+  --page-max: 1100px;
+  --pad-x: 48px;
+  --pad-x-sm: 22px;
 }

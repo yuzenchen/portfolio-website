@@ -3,44 +3,47 @@ const services = [
   {
     no: '01',
     title: '網站開發',
-    desc: '響應式網站、Web 應用程式、API 開發，使用現代化技術棧打造高品質的數位體驗',
-    bullets: ['前後端整合開發', '資料庫設計與優化', '第三方服務整合', '效能優化與 SEO'],
+    desc: '從形象官網到客製化系統，負責設計、開發、部署與維運的完整流程。',
+    chips: ['前後端客製開發', 'RWD 響應式設計', '部署與維運'],
+    image: '/service-web.jpg',
   },
   {
     no: '02',
-    title: '系統可靠性工程 (SRE)',
-    desc: '確保系統高可用性、監控告警、故障排除，建立穩定可靠的服務架構',
-    bullets: ['系統監控與告警', '容量規劃與擴展', '故障分析與修復', '服務可用性優化'],
+    title: '技術諮詢',
+    desc: '系統架構規劃、技術選型與問題診斷，協助你的團隊做出正確的技術決策。',
+    chips: ['架構規劃與選型', '效能與資安診斷', '團隊技術導入'],
+    image: '/service-consult.jpg',
   },
   {
     no: '03',
-    title: 'DevOps 自動化',
-    desc: 'CI/CD 流程建立、容器化部署、基礎設施即代碼，提升開發與部署效率',
-    bullets: ['Docker 容器化', 'Kubernetes 編排', '自動化部署', '工作流程優化'],
-  },
-  {
-    no: '04',
-    title: '技術諮詢',
-    desc: '架構設計、技術選型、專案規劃，提供專業的技術建議與解決方案',
-    bullets: ['技術架構規劃', '程式碼審查', '效能調優建議', '團隊技術培訓'],
+    title: '自動化流程',
+    desc: '將重複性作業自動化：串接 API、排程任務與工作流程整合，節省人力成本。',
+    chips: ['API 串接整合', '排程與批次任務', '工作流程自動化'],
+    image: '/service-automation.jpg',
   },
 ];
 ---
-<section id="services" class="fade">
-  <div class="sec-mark">## services</div>
-  <h2>服務項目</h2>
-  <div class="grid2">
-    {services.map(({ no, title, desc, bullets }) => (
-      <div class="card">
-        <div class="card-head">
-          <span class="badge">{no}</span>
-          <h3>{title}</h3>
+<section id="services">
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <h2>專業服務</h2>
+    <span class="sec-note">/ 三件事，做到好</span>
+  </div>
+  <div class="svc-list">
+    {services.map(({ no, title, desc, chips, image }, i) => (
+      <div class:list={['svc-row', i % 2 === 1 && 'svc-row--flip']}>
+        <div class="svc-media">
+          <img src={image} alt={title} loading="lazy" decoding="async" />
         </div>
-        <p>{desc}</p>
-        <div class="bullets">
-          {bullets.map((b) => (
-            <div><span>›</span>{b}</div>
-          ))}
+        <div class="svc-body">
+          <div class="svc-title">
+            <span class="svc-badge">{no}</span>
+            <h3>{title}</h3>
+          </div>
+          <p>{desc}</p>
+          <div class="svc-chips">
+            {chips.map((c) => <span>{c}</span>)}
+          </div>
         </div>
       </div>
     ))}

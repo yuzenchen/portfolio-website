@@ -1,63 +1,13 @@
 ---
-const formspreeEndpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
-
-const links = [
-  { href: 'mailto:mail@yuzen.tw', text: 'mail@yuzen.tw' },
-  { href: 'https://www.linkedin.com/in/yuzen-chen-a82149167', text: 'LinkedIn', external: true },
-  { href: 'https://github.com/yuzenchen', text: 'GitHub', external: true },
-];
-
-const services = [
-  { value: 'web-development', label: '網站開發' },
-  { value: 'sre', label: '系統可靠性工程' },
-  { value: 'devops', label: 'DevOps 自動化' },
-  { value: 'consulting', label: '技術諮詢' },
-];
 ---
-<div id="contact" class="contact fade">
-  <div>
-    <h2>準備開始您的專案？</h2>
-    <div class="row">
-      {links.map(({ href, text, external }) => (
-        <a
-          href={href}
-          target={external ? '_blank' : undefined}
-          rel={external ? 'noopener noreferrer' : undefined}
-        >
-          {text}
-        </a>
-      ))}
-      <span>台北，台灣</span>
+<section id="contact">
+  <div class="contact-card">
+    <span class="contact-stamp">03 / contact</span>
+    <h2>有專案想討論嗎？</h2>
+    <p>來信說明你的需求，一個工作天內回覆。</p>
+    <a href="mailto:mail@yuzen.tw" class="contact-mail">mail@yuzen.tw</a>
+    <div class="contact-github">
+      <a href="https://github.com/yuzenchen" target="_blank" rel="noopener noreferrer">github.com/yuzenchen</a>
     </div>
   </div>
-  <a href="#contact-form" class="btn-primary">發送訊息</a>
-</div>
-
-<div class="contact-form-wrap fade">
-  <form id="contact-form" action={formspreeEndpoint} method="POST">
-    <div class="form-grid">
-      <div class="form-group">
-        <label for="name">姓名</label>
-        <input type="text" id="name" name="name" required />
-      </div>
-      <div class="form-group">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required />
-      </div>
-      <div class="form-group form-group--full">
-        <label for="service">服務類型</label>
-        <select id="service" name="service" required>
-          <option value="">選擇服務類型</option>
-          {services.map(({ value, label }) => <option value={value}>{label}</option>)}
-        </select>
-      </div>
-      <div class="form-group form-group--full">
-        <label for="message">專案詳情</label>
-        <textarea id="message" name="message" rows="5" required></textarea>
-      </div>
-    </div>
-    <div class="form-actions">
-      <button type="submit" class="btn-primary">發送訊息</button>
-    </div>
-  </form>
-</div>
+</section>

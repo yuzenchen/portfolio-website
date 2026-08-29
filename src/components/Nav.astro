@@ -1,13 +1,10 @@
 ---
-const links = [
-  { href: '#services', label: '/services' },
-  { href: '#work', label: '/work' },
-];
 ---
 <nav>
-  <div class="brand">yuzen@tw:~$</div>
-  <div class="links">
-    {links.map(({ href, label }) => <a href={href}>{label}</a>)}
-    <a href="#contact" class="btn-outline-accent">/contact</a>
+  <a href="#" class="nav-logo">yuzen.tw</a>
+  <div class="nav-links">
+    <a href="#services">services</a>
+    <a href="#work">work</a>
+    <a href="#contact" class="nav-contact">contact ↗</a>
   </div>
 </nav>

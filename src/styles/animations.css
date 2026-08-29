@@ -1,5 +1,10 @@
-/* Terminal cursor at the end of the typed H1 */
+/* Terminal cursor after "$ whoami" */
 @keyframes blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
+  50% { opacity: 0; }
+}
+
+/* Seamless loop: content is rendered twice, shift by exactly half */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }

@@ -1,0 +1,11 @@
+---
+const items = 'IT 技術諮詢 ✦ 網站架設 ✦ 自動化流程 ✦ TypeScript ✦ Node.js ✦ Python ✦ Docker ✦ CI/CD ✦ ';
+// Track holds two identical spans; the keyframe shifts -50% for a seamless loop.
+const half = items + items;
+---
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>{half}</span>
+    <span>{half}</span>
+  </div>
+</div>

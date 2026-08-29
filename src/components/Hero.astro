@@ -1,20 +1,17 @@
 ---
-const chips = ['Python', 'JavaScript', 'React', 'Docker', 'Kubernetes'];
 ---
 <div class="hero">
   <canvas id="cvWave"></canvas>
-  <div class="hero-inner">
-    <div class="kicker">// IT SRE &amp; Full Stack Developer</div>
-    <h1><span id="typeA"></span><br /><span id="typeB"></span><span id="cursor"></span></h1>
-    <p>
-      Yuzen Chen — 專精網站開發、系統可靠性工程與 DevOps 自動化，打造高效能、高可用性的技術解決方案。
+  <header class="hero-inner">
+    <div class="hero-prompt">$ whoami<span id="cursor"></span></div>
+    <h1>高可用系統，</h1>
+    <h1>從<span class="hl">程式碼</span>到<span class="block">維運</span>。</h1>
+    <p class="hero-desc">
+      協助團隊與企業解決技術問題：從系統規劃、網站建置到流程自動化，一次到位。
     </p>
     <div class="hero-actions">
-      <a href="#services" class="btn-primary">探索服務</a>
-      <a href="#work" class="btn-secondary">查看作品</a>
+      <a href="#work" class="btn-primary">查看作品 →</a>
+      <a href="#contact" class="btn-dashed">聯絡我</a>
     </div>
-    <div class="chips">
-      {chips.map((chip) => <span class="chip">{chip}</span>)}
-    </div>
-  </div>
+  </header>
 </div>

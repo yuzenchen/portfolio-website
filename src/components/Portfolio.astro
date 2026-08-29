@@ -5,38 +5,44 @@ const items = (await getCollection('portfolio')).sort(
   (a, b) => a.data.order - b.data.order,
 );
 ---
-<section id="work" class="work fade">
-  <div class="sec-mark">## work</div>
-  <h2>精選作品</h2>
-  <div class="grid3">
+<section id="work">
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <h2>精選作品</h2>
+  </div>
+  <div class="work-grid">
     {items.map(({ data }) => {
-      // Prefer the live site; fall back to the repo for services that aren't public.
-      const cta = data.demo
-        ? { href: data.demo, label: '網址 →' }
-        : data.repo
-          ? { href: data.repo, label: 'Repo →' }
-          : null;
-
-      return (
-        <article class="proj">
-          <div class="thumb">
-            {data.image ? (
+      const body = (
+        <>
+          <div class="proj-thumb">
+            {data.image && (
               <img src={data.image} alt={data.title} loading="lazy" decoding="async" />
-            ) : (
-              '[ 專案截圖 ]'
             )}
+            {data.category && <span class="proj-cat">{data.category}</span>}
           </div>
           <div class="proj-body">
             <h3>{data.title}</h3>
             <p>{data.description}</p>
-            <div class="tags">
-              {data.tags.map((tag) => <span class="tag">{tag}</span>)}
+            <div class="proj-tags">
+              {data.tags.map((tag) => <span>{tag}</span>)}
             </div>
-            {cta && (
-              <a href={cta.href} target="_blank" rel="noopener noreferrer">{cta.label}</a>
-            )}
           </div>
-        </article>
+        </>
+      );
+
+      // A card with a live site is one big link; otherwise it's display-only.
+      return data.demo ? (
+        <a
+          class="proj proj--link"
+          href={data.demo}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${data.title}（另開新視窗）`}
+        >
+          {body}
+        </a>
+      ) : (
+        <article class="proj">{body}</article>
       );
     })}
   </div>
