@@ -44,13 +44,14 @@ nav {
 }
 
 .nav-logo {
-  font: 600 15px var(--font-mono);
-  color: var(--accent);
-  transform: rotate(-2deg);
-  display: inline-block;
-  border: 1.5px solid var(--accent);
-  padding: 6px 12px;
-  border-radius: var(--r-logo);
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-logo img {
+  display: block;
+  width: 42px;
+  height: 42px;
 }
 
 .nav-links {
