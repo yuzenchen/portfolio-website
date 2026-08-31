@@ -88,7 +88,7 @@ async function main() {
     expect(res.status === 200, `GET / returns 200 (got ${res.status})`);
     expect(body.includes('Yuzen Chen'), 'page contains "Yuzen Chen"');
     expect(body.includes('yuzen.tw'), 'boxed logo rendered');
-    expect(body.includes('$ whoami'), 'terminal prompt rendered');
+    expect(body.includes('id="typeWord"'), 'terminal prompt typewriter rendered');
     expect(body.includes('id="cvWave"'), 'hero wave canvas rendered');
     expect(body.includes('marquee-track'), 'marquee rendered');
     expect(body.includes('專業服務'), 'services section rendered');
