@@ -3,47 +3,39 @@ const services = [
   {
     no: '01',
     title: '網站開發',
-    desc: '從形象官網到客製化系統，負責設計、開發、部署與維運的完整流程。',
-    chips: ['前後端客製開發', 'RWD 響應式設計', '部署與維運'],
-    image: '/service-web.jpg',
+    desc: '從形象官網到含金物流電商系統，設計、開發、部署與維運。',
+    chips: ['前後端客製開發', 'RWD 響應式設計', 'LINE Pay 金流', '7-11 超取物流'],
   },
   {
     no: '02',
     title: '技術諮詢',
-    desc: '系統架構規劃、技術選型與問題診斷，協助你的團隊做出正確的技術決策。',
-    chips: ['架構規劃與選型', '效能與資安診斷', '團隊技術導入'],
-    image: '/service-consult.jpg',
+    desc: '檢視系統的架構與安全漏洞，給出可執行的改善清單，協助團隊做出正確的技術決策。',
+    chips: ['架構分層重構', '資安與效能診斷', 'API 設計規範', '團隊技術導入'],
   },
   {
     no: '03',
     title: '自動化流程',
-    desc: '將重複性作業自動化：串接 API、排程任務與工作流程整合，節省人力成本。',
-    chips: ['API 串接整合', '排程與批次任務', '工作流程自動化'],
-    image: '/service-automation.jpg',
+    desc: '把對帳、排程、環境建置這類重複作業交給程式，人力回到需要判斷的事情上。',
+    chips: ['付款對帳自動化', '排程與批次任務', 'API 串接整合'],
   },
 ];
 ---
 <section id="services">
   <div class="sec-head">
-    <span class="sec-num">01</span>
+    <span class="sec-num">02</span>
     <h2>專業服務</h2>
     <span class="sec-note">/ 三件事，做到好</span>
   </div>
-  <div class="svc-list">
-    {services.map(({ no, title, desc, chips, image }, i) => (
-      <div class:list={['svc-row', i % 2 === 1 && 'svc-row--flip']}>
-        <div class="svc-media">
-          <img src={image} alt={title} loading="lazy" decoding="async" />
+  <div class="svc-grid">
+    {services.map(({ no, title, desc, chips }) => (
+      <div class="svc-card">
+        <div class="svc-title">
+          <span class="svc-badge">{no}</span>
+          <h3>{title}</h3>
         </div>
-        <div class="svc-body">
-          <div class="svc-title">
-            <span class="svc-badge">{no}</span>
-            <h3>{title}</h3>
-          </div>
-          <p>{desc}</p>
-          <div class="svc-chips">
-            {chips.map((c) => <span>{c}</span>)}
-          </div>
+        <p>{desc}</p>
+        <div class="svc-chips">
+          {chips.map((c) => <span>{c}</span>)}
         </div>
       </div>
     ))}

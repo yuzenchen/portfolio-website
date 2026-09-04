@@ -1,0 +1,40 @@
+---
+const groups = [
+  {
+    label: '開發',
+    items: ['Node.js', 'Express', 'MongoDB', 'vanilla JS', 'Docker', 'Jest'],
+  },
+  {
+    label: '台灣在地金物流',
+    items: ['LINE Pay', '綠界科技 ECPay 物流（7-11 超商取貨）'],
+    accent: true,
+  },
+  {
+    label: '部署',
+    items: ['Render', 'GitHub Pages', 'Docker Compose'],
+  },
+  {
+    label: '品質',
+    items: ['WCAG 2.1 AA', 'Zod 驗證', 'pino 日誌'],
+  },
+];
+---
+<section id="stack">
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <h2>技術棧</h2>
+    <span class="sec-note">/ 用什麼做的</span>
+  </div>
+  <dl class="stack">
+    {groups.map(({ label, items, accent }) => (
+      <div class="stack-row">
+        <dt>{label}</dt>
+        <dd>
+          {items.map((item) => (
+            <span class:list={['stack-chip', accent && 'stack-chip--accent']}>{item}</span>
+          ))}
+        </dd>
+      </div>
+    ))}
+  </dl>
+</section>

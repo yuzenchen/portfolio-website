@@ -5,45 +5,25 @@ const items = (await getCollection('portfolio')).sort(
   (a, b) => a.data.order - b.data.order,
 );
 ---
-<section id="work">
-  <div class="sec-head">
-    <span class="sec-num">02</span>
-    <h2>精選作品</h2>
-  </div>
-  <div class="work-grid">
-    {items.map(({ data }) => {
-      const body = (
-        <>
-          <div class="proj-thumb">
-            {data.image && (
-              <img src={data.image} alt={data.title} loading="lazy" decoding="async" />
-            )}
-            {data.category && <span class="proj-cat">{data.category}</span>}
+{items.length > 0 && (
+  <div class="others">
+    <h3 class="others-title">其他作品</h3>
+    {items.map(({ data }) => (
+      <article class="other">
+        <div class="other-thumb">
+          {data.image && (
+            <img src={data.image} alt={data.title} loading="lazy" decoding="async" />
+          )}
+        </div>
+        <div class="other-body">
+          {data.category && <span class="other-cat">{data.category}</span>}
+          <h4>{data.title}</h4>
+          <p>{data.description}</p>
+          <div class="proj-tags">
+            {data.tags.map((tag) => <span>{tag}</span>)}
           </div>
-          <div class="proj-body">
-            <h3>{data.title}</h3>
-            <p>{data.description}</p>
-            <div class="proj-tags">
-              {data.tags.map((tag) => <span>{tag}</span>)}
-            </div>
-          </div>
-        </>
-      );
-
-      // A card with a live site is one big link; otherwise it's display-only.
-      return data.demo ? (
-        <a
-          class="proj proj--link"
-          href={data.demo}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`${data.title}（另開新視窗）`}
-        >
-          {body}
-        </a>
-      ) : (
-        <article class="proj">{body}</article>
-      );
-    })}
+        </div>
+      </article>
+    ))}
   </div>
-</section>
+)}

@@ -87,16 +87,23 @@ async function main() {
     // 5. Assertions on production HTML
     expect(res.status === 200, `GET / returns 200 (got ${res.status})`);
     expect(body.includes('Yuzen Chen'), 'page contains "Yuzen Chen"');
-    expect(body.includes('yuzen.tw'), 'boxed logo rendered');
+    expect(body.includes('/logo.png'), 'nav logo rendered');
     expect(body.includes('id="typeWord"'), 'terminal prompt typewriter rendered');
     expect(body.includes('id="cvWave"'), 'hero wave canvas rendered');
     expect(body.includes('marquee-track'), 'marquee rendered');
-    expect(body.includes('專業服務'), 'services section rendered');
-    expect(body.includes('精選作品'), 'work section rendered');
-    expect(body.includes('E-COMMERCE'), 'petsnack category badge rendered');
+    expect(body.includes('id="case"'), 'case study section rendered');
+    expect(body.includes('已上線營運中'), 'case status badge rendered');
+    expect(body.includes('data-auto-open'), 'expandable detail rendered');
+    expect(body.includes('case-gallery'), 'case gallery rendered');
+    expect(body.includes('bento-cell--wide'), 'bento results rendered');
+    expect(body.includes('umimididi.com'), 'live-site link rendered');
+    expect(body.includes('其他作品'), 'other work rendered');
     expect(body.includes('SECURITY'), 'cve category badge rendered');
+    expect(body.includes('專業服務'), 'services section rendered');
+    expect(body.includes('id="stack"'), 'tech stack section rendered');
+    expect(body.includes('綠界科技 ECPay'), 'local logistics chip rendered');
     expect(body.includes('有專案想討論嗎'), 'contact card rendered');
-    expect(body.includes('mailto:mail@yuzen.tw'), 'mailto button rendered');
+    expect(body.includes('id="booking-dialog"'), 'booking dialog rendered');
     expect(/href="\/_astro\/[^"]+\.css"/.test(body), 'fingerprinted CSS asset linked');
     // The page's only script (wave canvas) is small enough that Astro may
     // inline it rather than emit a fingerprinted file — accept either.

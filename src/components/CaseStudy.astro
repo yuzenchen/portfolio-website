@@ -1,0 +1,100 @@
+---
+const highlights = [
+  {
+    title: '三種角色，一套系統',
+    body: '訪客瀏覽下單、經銷商專屬組合包與批量訂貨、管理者後台（組合包／加價購管理、即時定價預覽、訂單列表、團購頁）。',
+  },
+  {
+    title: '7-11 超商取貨物流串接',
+    body: '整合綠界科技 ECPay 物流 API，後台一鍵產出托運單，物流狀態自動回寫訂單。',
+  },
+  {
+    title: '付款對帳自動化',
+    body: '定時掃描逾時未完成的付款，主動向 LINE Pay 查詢並自動更正訂單狀態，不需人工對帳。',
+  },
+];
+
+const shots = [
+  { src: '/case-dashboard.jpg', label: '營運 Dashboard' },
+  { src: '/case-inventory.jpg', label: '庫存管理' },
+  { src: '/case-orders.jpg', label: '訂單 / 物流' },
+];
+---
+<section id="case">
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <h2>精選案例</h2>
+    <span class="sec-note">/ 從零到上線</span>
+  </div>
+
+  <article class="case">
+    <div class="case-shot">
+      <img src="/petsnack.png" alt="Wama' House 寵物零食電商" loading="lazy" decoding="async" />
+    </div>
+
+    <div class="case-body">
+      <span class="case-status">已上線營運中</span>
+      <h3>Wama&#39; House 寵物零食電商</h3>
+      <p class="case-lead">前端、後端、金流、物流與部署，從零到上線的完整電商系統。</p>
+
+      <!-- <details> gives keyboard support and works with JS disabled;
+           a scroll observer opens it automatically when it comes into view. -->
+      <details class="case-more" data-auto-open>
+        <summary>我做了什麼</summary>
+
+        <div class="case-points">
+          {highlights.map(({ title, body }) => (
+            <div class="case-point">
+              <h4>{title}</h4>
+              <p>{body}</p>
+            </div>
+          ))}
+        </div>
+
+        <!-- Plain links so the full image is still reachable without JS;
+             the lightbox script intercepts the click when it can. -->
+        <div class="case-gallery">
+          {shots.map(({ src, label }) => (
+            <a href={src} target="_blank" rel="noopener noreferrer" class="case-thumb" data-label={label}>
+              <span class="case-thumb-img">
+                <img src={src} alt={label} loading="lazy" decoding="async" />
+                <span class="case-thumb-zoom">點擊放大</span>
+              </span>
+              <span class="case-thumb-label">{label}</span>
+            </a>
+          ))}
+        </div>
+      </details>
+
+      <a href="https://umimididi.com" target="_blank" rel="noopener noreferrer" class="case-link">
+        查看線上網站 ↗
+      </a>
+    </div>
+  </article>
+
+  <div class="bento">
+    <div class="bento-cell bento-cell--wide">
+      <div class="bento-num">2 hr <span class="bento-arrow">→</span> 20 min</div>
+      <div class="bento-label">每次對帳耗時</div>
+      <p>定時掃描逾時付款並自動補單，人力回到需要判斷的事情上。</p>
+    </div>
+
+    <div class="bento-cell">
+      <div class="bento-num">0</div>
+      <div class="bento-label">人工介入</div>
+      <p>付款狀態自動補正，無需人工核對 LINE Pay 後台。</p>
+    </div>
+
+    <div class="bento-cell">
+      <div class="bento-num">1</div>
+      <div class="bento-label">鍵產出</div>
+      <p>7-11 超取托運單一鍵產出，物流狀態自動回寫。</p>
+    </div>
+  </div>
+</section>
+
+<dialog id="shot-lightbox" class="lightbox" aria-label="截圖預覽">
+  <button type="button" class="lightbox-close" data-close-lightbox aria-label="關閉">×</button>
+  <img id="lightbox-img" src="" alt="" />
+  <span id="lightbox-caption" class="lightbox-caption"></span>
+</dialog>

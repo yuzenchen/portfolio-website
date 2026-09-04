@@ -199,12 +199,16 @@ section {
   margin: 0 auto;
 }
 
-#services {
-  padding: 50px var(--pad-x) 30px;
+#case {
+  padding: 50px var(--pad-x) 20px;
 }
 
-#work {
-  padding: 70px var(--pad-x) 40px;
+#services {
+  padding: 60px var(--pad-x) 30px;
+}
+
+#stack {
+  padding: 60px var(--pad-x) 40px;
 }
 
 #contact {
@@ -236,31 +240,25 @@ section {
   color: var(--faint);
 }
 
-/* ── Services ─────────────────────────────────────────────────────── */
-.svc-list {
+/* ── Case study ───────────────────────────────────────────────────── */
+.case {
   display: flex;
-  flex-direction: column;
-  gap: 56px;
+  gap: 40px;
+  align-items: flex-start;
+  background: var(--panel-alpha);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  padding: 28px;
 }
 
-.svc-row {
-  display: flex;
-  gap: 44px;
-  align-items: center;
-}
-
-.svc-row--flip {
-  flex-direction: row-reverse;
-}
-
-.svc-media {
+.case-shot {
   flex: none;
-  width: 46%;
+  width: 42%;
   position: relative;
 }
 
-/* Offset dashed frame peeking out behind the photo */
-.svc-media::before {
+/* Offset dashed frame, echoing the old service rows */
+.case-shot::before {
   content: '';
   position: absolute;
   inset: 12px -12px -12px 12px;
@@ -268,105 +266,322 @@ section {
   border-radius: var(--r-img);
 }
 
-.svc-media img {
+.case-shot img {
   position: relative;
   width: 100%;
-  height: 250px;
-  object-fit: cover;
   display: block;
   border-radius: var(--r-img);
   border: 1px solid var(--border);
   transform: rotate(-1.2deg);
 }
 
-.svc-row--flip .svc-media img {
-  transform: rotate(1.2deg);
-}
-
-.svc-body {
+.case-body {
   flex: 1;
+  min-width: 0;
 }
 
-.svc-title {
-  display: flex;
+.case-status {
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
+  gap: 7px;
+  font: 600 11px var(--font-mono);
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: var(--r-pill);
+  padding: 4px 12px;
   margin-bottom: 14px;
 }
 
-.svc-badge {
-  font: 600 13px var(--font-mono);
+.case-status::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
   background: var(--accent);
-  color: var(--bg);
-  padding: 5px 12px;
-  border-radius: var(--r-pill);
-  transform: rotate(-2deg);
 }
 
-.svc-title h3 {
-  margin: 0;
+.case-body h3 {
+  margin: 0 0 10px;
   font-size: 26px;
   font-weight: 900;
 }
 
-.svc-body p {
-  margin: 0 0 18px;
+.case-lead {
+  margin: 0 0 20px;
   font-size: 15px;
   line-height: 1.85;
   color: var(--muted);
 }
 
-.svc-chips {
+.case-more {
+  border-top: 1px solid var(--border);
+  padding-top: 16px;
+}
+
+.case-more summary {
+  font: 500 14px var(--font-mono);
+  color: var(--accent);
+  cursor: pointer;
+  list-style: none;
   display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
+  align-items: center;
+  gap: 9px;
+  user-select: none;
 }
 
-.svc-chips span {
-  font-size: 13px;
-  padding: 7px 14px;
-  border: 1px solid var(--border-dash);
-  border-radius: var(--r-pill);
-  color: var(--soft);
-  background: var(--panel-alpha);
+.case-more summary::-webkit-details-marker {
+  display: none;
 }
 
-/* ── Work ─────────────────────────────────────────────────────────── */
-.work-grid {
+.case-more summary::before {
+  content: '▸';
+  transition: transform 0.2s;
+  display: inline-block;
+}
+
+.case-more[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.case-points {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.case-point h4 {
+  margin: 0 0 5px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.case-point p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.case-gallery {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 36px;
-  align-items: start;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 22px;
 }
 
-.proj {
+.case-thumb {
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--img-bg);
+  transition: border-color 0.2s;
+  cursor: zoom-in;
+}
+
+.case-thumb:hover {
+  border-color: var(--accent);
+  opacity: 1;
+}
+
+.case-thumb-img {
+  position: relative;
+  display: block;
+}
+
+.case-thumb img {
+  width: 100%;
+  height: 96px;
+  object-fit: cover;
+  object-position: top left;
+  display: block;
+}
+
+/* Hover affordance so it reads as clickable */
+.case-thumb-zoom {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(13, 17, 23, 0.72);
+  color: var(--accent);
+  font: 500 12px var(--font-mono);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.case-thumb:hover .case-thumb-zoom,
+.case-thumb:focus-visible .case-thumb-zoom {
+  opacity: 1;
+}
+
+.case-thumb-label {
+  display: block;
+  font: 400 11px var(--font-mono);
+  color: var(--muted);
+  padding: 7px 10px;
+}
+
+/* ── Screenshot lightbox ──────────────────────────────────────────── */
+.lightbox {
+  border: none;
+  background: transparent;
+  padding: 0;
+  max-width: 94vw;
+  max-height: 94vh;
+  overflow: visible;
+}
+
+.lightbox::backdrop {
+  background: rgba(5, 8, 12, 0.86);
+}
+
+.lightbox img {
+  display: block;
+  max-width: 94vw;
+  max-height: 82vh;
+  width: auto;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: zoom-out;
+}
+
+.lightbox-caption {
+  display: block;
+  margin-top: 12px;
+  text-align: center;
+  font: 400 12px var(--font-mono);
+  color: var(--muted);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 20px;
+  line-height: 1;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.lightbox-close:hover {
+  color: var(--text);
+  border-color: var(--accent);
+}
+
+.case-link {
+  display: inline-block;
+  margin-top: 20px;
+  font: 500 13px var(--font-mono);
+  color: var(--accent);
+}
+
+/* ── Bento results ────────────────────────────────────────────────── */
+.bento {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap-grid);
+  margin-top: var(--gap-grid);
+}
+
+.bento-cell {
+  background: var(--panel-alpha);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  padding: 24px 26px;
+  transition: border-color 0.2s;
+}
+
+.bento-cell:hover {
+  border-color: var(--border-hover);
+}
+
+.bento-cell--wide {
+  grid-column: span 2;
+}
+
+.bento-num {
+  font: 600 34px var(--font-mono);
+  color: var(--accent);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.bento-cell--wide .bento-num {
+  font-size: 30px;
+}
+
+.bento-arrow {
+  color: var(--faint);
+  margin: 0 2px;
+}
+
+.bento-icon {
+  width: 34px;
+  height: 34px;
+  color: var(--accent);
+  display: block;
+}
+
+.bento-label {
+  margin-top: 6px;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.bento-cell p {
+  margin: 8px 0 0;
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* ── Other work ───────────────────────────────────────────────────── */
+.others {
+  position: relative;
+  z-index: 2;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 40px var(--pad-x) 0;
+}
+
+.others-title {
+  margin: 0 0 18px;
+  font: 400 13px var(--font-mono);
+  color: var(--faint);
+}
+
+.other {
+  display: flex;
+  gap: 24px;
+  align-items: stretch;
   background: var(--panel-alpha);
   border: 1px solid var(--border);
   border-radius: var(--r-card);
   overflow: hidden;
-  transition: transform 0.25s, border-color 0.25s;
+  transition: border-color 0.25s;
 }
 
-.proj:nth-child(odd) {
-  transform: rotate(-0.8deg);
+.other:hover {
+  border-color: var(--border-hover);
 }
 
-.proj:nth-child(even) {
-  transform: rotate(0.8deg);
-}
-
-.proj:hover {
-  transform: rotate(0deg) translateY(-6px);
-  border-color: var(--accent);
-}
-
-.proj-thumb {
-  height: 190px;
+.other-thumb {
+  flex: none;
+  width: 34%;
   background: repeating-linear-gradient(45deg, #0d1117 0 12px, #141b24 12px 24px);
-  position: relative;
 }
 
-.proj-thumb img {
+.other-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -374,10 +589,16 @@ section {
   display: block;
 }
 
-.proj-cat {
-  position: absolute;
-  top: 14px;
-  left: 14px;
+.other-body {
+  flex: 1;
+  padding: 22px 24px 22px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.other-cat {
   font: 600 11px var(--font-mono);
   background: var(--bg);
   border: 1px solid var(--accent);
@@ -386,20 +607,13 @@ section {
   border-radius: var(--r-pill);
 }
 
-.proj-body {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.proj-body h3 {
+.other-body h4 {
   margin: 0;
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 900;
 }
 
-.proj-body p {
+.other-body p {
   margin: 0;
   font-size: 13.5px;
   line-height: 1.75;
@@ -421,16 +635,118 @@ section {
   color: var(--muted);
 }
 
-/* Clickable card (project with a live site) */
-a.proj {
-  display: block;
-  color: inherit;
+/* ── Services (three text cards) ──────────────────────────────────── */
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--gap-grid);
+  align-items: start;
 }
 
-a.proj:hover {
-  opacity: 1; /* card already animates via lift + border, no fade */
+.svc-card {
+  background: var(--panel-alpha);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  padding: 28px 26px;
+  transition: border-color 0.2s;
 }
 
+.svc-card:hover {
+  border-color: var(--border-hover);
+}
+
+.svc-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.svc-badge {
+  font: 600 13px var(--font-mono);
+  background: var(--accent);
+  color: var(--bg);
+  padding: 5px 12px;
+  border-radius: var(--r-pill);
+  transform: rotate(-2deg);
+}
+
+.svc-title h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.svc-card p {
+  margin: 0 0 18px;
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--muted);
+}
+
+.svc-chips {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.svc-chips span {
+  font-size: 12.5px;
+  padding: 6px 13px;
+  border: 1px solid var(--border-dash);
+  border-radius: var(--r-pill);
+  color: var(--soft);
+  background: var(--bg);
+}
+
+/* ── Tech stack ───────────────────────────────────────────────────── */
+.stack {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.stack-row {
+  display: flex;
+  gap: 28px;
+  align-items: baseline;
+  padding: 18px 0;
+  border-top: 1px solid var(--border);
+}
+
+.stack-row:last-child {
+  border-bottom: 1px solid var(--border);
+}
+
+.stack-row dt {
+  flex: none;
+  width: 130px;
+  font: 500 13px var(--font-mono);
+  color: var(--faint);
+}
+
+.stack-row dd {
+  margin: 0;
+  flex: 1;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.stack-chip {
+  font: 400 12.5px var(--font-mono);
+  padding: 6px 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  color: var(--soft);
+  background: var(--panel-alpha);
+}
+
+/* The Taiwan-specific integrations are the differentiator — mark them */
+.stack-chip--accent {
+  border-color: var(--accent);
+  color: var(--accent);
+}
 /* ── Contact ──────────────────────────────────────────────────────── */
 .contact-card {
   position: relative;
@@ -704,9 +1020,11 @@ footer {
     font-size: 40px;
   }
 
+  #case,
   #services,
-  #work,
-  #contact {
+  #stack,
+  #contact,
+  .others {
     padding-left: var(--pad-x-sm);
     padding-right: var(--pad-x-sm);
   }
@@ -715,18 +1033,57 @@ footer {
     font-size: 44px;
   }
 
-  .svc-row,
-  .svc-row--flip {
+  .case {
     flex-direction: column;
-    gap: 28px;
+    gap: 30px;
+    padding: 22px;
   }
 
-  .svc-media {
+  .case-shot {
     width: 100%;
   }
 
-  .work-grid {
+  .case-gallery {
     grid-template-columns: 1fr;
+  }
+
+  .case-thumb img {
+    height: 150px;
+  }
+
+  .bento {
+    grid-template-columns: 1fr;
+  }
+
+  .bento-cell--wide {
+    grid-column: span 1;
+  }
+
+  .other {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .other-thumb {
+    width: 100%;
+    height: 170px;
+  }
+
+  .other-body {
+    padding: 22px 24px;
+  }
+
+  .svc-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stack-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .stack-row dt {
+    width: auto;
   }
 
   .contact-card {
