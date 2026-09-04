@@ -67,8 +67,27 @@ class FakeEl {
   }
 }
 
+/** Stands in for the .anim-wrap + .anim-play the phone path drives. */
+class FakeWrap {
+  classes = new Set<string>();
+  click: (() => void) | null = null;
+  classList = {
+    add: (c: string) => this.classes.add(c),
+    remove: (c: string) => this.classes.delete(c),
+  };
+  button = {
+    addEventListener: (_ev: string, cb: () => void) => {
+      this.click = cb;
+    },
+  };
+  querySelector(): unknown {
+    return this.button;
+  }
+}
+
 class FakeRoot {
   readonly els = new Map<string, FakeEl>();
+  readonly parentElement = new FakeWrap();
   style = { setProperty: (n: string, v: string) => this.log.push({ el: ':root', name: n, value: v }) };
   constructor(
     keys: string[],
@@ -104,7 +123,23 @@ const saved = { ...globalThis } as Record<string, unknown>;
  * attribute it wrote. The rAF/IntersectionObserver stubs let us step time by
  * hand instead of waiting on a real clock.
  */
-function sweep(init: () => void, anim: string, narrow = false, step = 0.05): Written[] {
+interface Run {
+  log: Written[];
+  wrap: FakeWrap;
+  /** Frames still queued when the sweep stopped — 0 means the run ended itself. */
+  pending: number;
+}
+
+/**
+ * Run one animation's frame function over the timeline and hand back every
+ * attribute it wrote. The rAF/IntersectionObserver stubs let us step time by
+ * hand instead of waiting on a real clock.
+ *
+ * `narrow` picks the phone path, which stays still until the play button is
+ * clicked, so the sweep clicks it and then runs a little past the end to prove
+ * the one-shot stops.
+ */
+function sweep(init: () => void, anim: string, narrow = false, step = 0.05): Run {
   const log: Written[] = [];
   const root = new FakeRoot(keysFromBuild(anim), log);
 
@@ -112,9 +147,15 @@ function sweep(init: () => void, anim: string, narrow = false, step = 0.05): Wri
   Object.assign(globalThis, {
     document: { querySelector: (s: string) => (s.includes(anim) ? root : null) },
     // Only the viewport query flips; reduced motion always stays off.
-    window: { matchMedia: (q: string) => ({ matches: narrow && q.includes('max-width') }) },
+    window: {
+      matchMedia: (q: string) => ({
+        matches: narrow && q.includes('max-width'),
+        addEventListener: () => {},
+      }),
+    },
     getComputedStyle: () => ({ getPropertyValue: (n: string) => PALETTE[n] ?? '#000000' }),
     requestAnimationFrame: (cb: (t: number) => void) => queued.push(cb),
+    cancelAnimationFrame: () => {},
     IntersectionObserver: class {
       constructor(private readonly cb: (e: { isIntersecting: boolean }[]) => void) {}
       observe(): void {
@@ -124,17 +165,33 @@ function sweep(init: () => void, anim: string, narrow = false, step = 0.05): Wri
   });
 
   init();
-  // The observer stub starts the loop synchronously; drive it frame by frame.
-  for (let t = 0; t < DURATION; t += step) {
+  if (narrow) {
+    expect(queued, 'phone path stays still until tapped').toHaveLength(0);
+    root.parentElement.click?.();
+  }
+
+  const last = narrow ? DURATION + 0.2 : DURATION;
+  for (let t = 0; t < last; t += step) {
     const cb = queued.shift();
-    if (!cb) throw new Error('loop stopped early');
+    // The one-shot stops itself past DURATION; the loop must not.
+    if (!cb) {
+      if (narrow && t > DURATION) break;
+      throw new Error(`loop stopped early at t=${t.toFixed(2)}`);
+    }
     cb(t * 1000);
   }
-  return log;
+  return { log, wrap: root.parentElement, pending: queued.length };
 }
 
 afterEach(() => {
-  for (const k of ['document', 'window', 'getComputedStyle', 'requestAnimationFrame', 'IntersectionObserver']) {
+  for (const k of [
+    'document',
+    'window',
+    'getComputedStyle',
+    'requestAnimationFrame',
+    'cancelAnimationFrame',
+    'IntersectionObserver',
+  ]) {
     if (k in saved) (globalThis as Record<string, unknown>)[k] = saved[k];
     else delete (globalThis as Record<string, unknown>)[k];
   }
@@ -172,6 +229,18 @@ function assertCamera(log: Written[], opening: string): void {
   }
 }
 
+/**
+ * The phone path runs the timeline exactly once and settles back to the still:
+ * it must stop scheduling frames, drop the playing flag, and leave the diagram
+ * on the settled frame rather than partway through the closing fade.
+ */
+function assertPlaysOnce({ log, wrap, pending }: Run): void {
+  expect(pending, 'stops scheduling frames after one run').toBe(0);
+  expect(wrap.classes.has('is-playing'), 'play button comes back').toBe(false);
+  const stage = log.filter((w) => w.el === 'stage' && w.name === 'opacity');
+  expect(Number(stage.at(-1)!.value), 'settles fully opaque, not mid-fade').toBe(1);
+}
+
 /** Nothing may be NaN, and the values with a defined range must stay in it. */
 function assertSane(log: Written[]): void {
   expect(log.length).toBeGreaterThan(1000);
@@ -191,7 +260,7 @@ function assertSane(log: Written[]): void {
 describe('order flow animation', () => {
   it('writes finite, in-range values across the whole loop', async () => {
     const { initOrderFlow } = await import('@scripts/order-flow');
-    const log = sweep(initOrderFlow, 'order-flow');
+    const { log } = sweep(initOrderFlow, 'order-flow');
     assertSane(log);
     assertHoldsThenFades(log, 0.05);
 
@@ -212,18 +281,19 @@ describe('order flow animation', () => {
     expect(boxes[0].value).toBe('0 0 1280 720');
   });
 
-  it('tracks each step with the camera on a narrow viewport', async () => {
+  it('plays once on tap and tracks each step, on a narrow viewport', async () => {
     const { initOrderFlow } = await import('@scripts/order-flow');
-    const log = sweep(initOrderFlow, 'order-flow', true);
-    assertSane(log);
-    assertCamera(log, '0 270 470 264');
+    const run = sweep(initOrderFlow, 'order-flow', true);
+    assertSane(run.log);
+    assertCamera(run.log, '0 270 470 264');
+    assertPlaysOnce(run);
   });
 });
 
 describe('monitor animation', () => {
   it('writes finite, in-range values across the whole loop', async () => {
     const { initMonitor } = await import('@scripts/monitor');
-    const log = sweep(initMonitor, 'monitor');
+    const { log } = sweep(initMonitor, 'monitor');
     assertSane(log);
     assertHoldsThenFades(log, 0.05);
 
@@ -240,10 +310,11 @@ describe('monitor animation', () => {
     expect(dash).toContain('none');
   });
 
-  it('tracks each scene with the camera on a narrow viewport', async () => {
+  it('plays once on tap and tracks each scene, on a narrow viewport', async () => {
     const { initMonitor } = await import('@scripts/monitor');
-    const log = sweep(initMonitor, 'monitor', true);
-    assertSane(log);
-    assertCamera(log, '40 160 740 416');
+    const run = sweep(initMonitor, 'monitor', true);
+    assertSane(run.log);
+    assertCamera(run.log, '40 160 740 416');
+    assertPlaysOnce(run);
   });
 });

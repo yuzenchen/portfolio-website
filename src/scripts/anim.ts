@@ -141,37 +141,83 @@ export const qa = <T extends Element>(root: Element, key: string): T[] =>
   Array.from(root.querySelectorAll<T>(`[data-k="${key}"]`));
 
 /**
- * Drive `frame` on rAF while `root` is on screen. Two of these run on the same
+ * Two ways to drive `frame`, picked by viewport.
+ *
+ * Wide: loop on rAF while `root` is on screen. Two of these live on the same
  * page, and an off-screen loop repainting 100+ nodes buys nothing.
  *
- * Both animations are authored in the markup at their end state, so bailing
- * out here leaves reduced-motion (and no-JS) visitors a finished diagram —
- * nothing has to be painted to stand still.
+ * Narrow: hold still behind a play button and run the timeline exactly once
+ * when tapped, then settle back to the still. A diagram that loops on its own
+ * next to body text is a lot of movement to scroll past on a phone, and one
+ * that has already started is one you have to wait out.
+ *
+ * Both animations are authored in the markup at their settled state, so the
+ * still costs nothing to render and reduced-motion (or no-JS) visitors simply
+ * keep it.
  */
 export function playOnVisible(root: Element, frame: (t: number) => void): void {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const wrap = root.parentElement;
+  const trigger = wrap?.querySelector<HTMLButtonElement>('.anim-play') ?? null;
 
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Nothing will ever play, so don't offer a button that does nothing.
+    wrap?.classList.add('is-static');
+    return;
+  }
+
+  const narrow = window.matchMedia('(max-width: 768px)');
+  let raf = 0;
   let visible = false;
-  let running = false;
   let origin = 0;
 
-  const step = (now: number): void => {
-    if (!visible) {
-      running = false;
+  const loop = (now: number): void => {
+    if (!visible || narrow.matches) {
+      raf = 0;
       return;
     }
     if (!origin) origin = now;
     frame(((now - origin) / 1000) % DURATION);
-    requestAnimationFrame(step);
+    raf = requestAnimationFrame(loop);
   };
+
+  const once = (now: number): void => {
+    if (!origin) origin = now;
+    const t = (now - origin) / 1000;
+    if (t >= DURATION) {
+      raf = 0;
+      // Land on the settled frame rather than the tail of the fade.
+      frame(FADE_AT);
+      wrap?.classList.remove('is-playing');
+      return;
+    }
+    frame(t);
+    raf = requestAnimationFrame(once);
+  };
+
+  trigger?.addEventListener('click', () => {
+    if (raf) return;
+    wrap?.classList.add('is-playing');
+    origin = 0;
+    raf = requestAnimationFrame(once);
+  });
 
   new IntersectionObserver((entries) => {
     for (const entry of entries) {
       visible = entry.isIntersecting;
-      if (visible && !running) {
-        running = true;
-        requestAnimationFrame(step);
+      if (visible && !raf && !narrow.matches) {
+        origin = 0;
+        raf = requestAnimationFrame(loop);
       }
     }
   }).observe(root);
+
+  // Rotating a phone, or dragging a desktop window narrow, swaps the mode.
+  narrow.addEventListener('change', () => {
+    cancelAnimationFrame(raf);
+    raf = 0;
+    origin = 0;
+    frame(FADE_AT);
+    wrap?.classList.remove('is-playing');
+    if (!narrow.matches && visible) raf = requestAnimationFrame(loop);
+  });
 }

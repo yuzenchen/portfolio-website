@@ -863,8 +863,13 @@ section {
   margin: 24px 0 0;
 }
 
-.faq-fig-scroll {
-  scrollbar-width: thin;
+.anim-wrap {
+  position: relative;
+}
+
+/* Phones only — see the mobile block. Desktop loops on its own. */
+.anim-play {
+  display: none;
 }
 
 .faq-fig figcaption {
@@ -1393,15 +1398,61 @@ footer {
      supporting type at about 4px. The script crops the viewBox to whichever
      step is being described instead (see makeCamera) — which only pays off
      with width, so bleed out through both the section and card padding. */
-  .faq-fig-scroll {
+  .faq-fig-bleed {
     margin: 0 calc(-1 * (var(--pad-x-sm) + 20px));
   }
 
   /* Full-bleed wants no side edges */
-  .faq-fig-scroll .anim {
+  .faq-fig-bleed .anim {
     border-left: 0;
     border-right: 0;
     border-radius: 0;
+  }
+
+  /* Covers the whole diagram so the tap target is the diagram itself. The
+     scrim also stops the play badge competing with the frame underneath. */
+  .anim-play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 0;
+    border: 0;
+    background: rgba(13, 17, 23, 0.5);
+    cursor: pointer;
+    transition: opacity 0.35s;
+  }
+
+  .anim-wrap.is-playing .anim-play {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  /* Reduced motion never plays, so there is nothing to offer */
+  .anim-wrap.is-static .anim-play {
+    display: none;
+  }
+
+  .anim-play-badge {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border: 1.5px solid var(--accent);
+    border-radius: var(--r-pill);
+    background: var(--panel);
+    color: var(--accent);
+    font-size: 17px;
+    /* The triangle's own bearing sits it left of centre */
+    padding-left: 4px;
+  }
+
+  .anim-play-text {
+    font: 600 12px var(--font-mono);
+    color: var(--soft);
   }
 
   .contact-card {

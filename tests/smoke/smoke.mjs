@@ -107,6 +107,8 @@ async function main() {
     expect(body.includes('結案後系統如果壞掉'), 'maintenance question rendered');
     expect(body.includes('data-anim="order-flow"'), 'order flow animation rendered');
     expect(body.includes('data-anim="monitor"'), 'monitoring animation rendered');
+    // Phones hold a still until this is tapped; it is CSS-hidden on desktop.
+    expect((body.match(/class="anim-play"/g) ?? []).length === 2, 'both play buttons rendered');
     // Both animations ship their end state in the markup, so a visitor with JS
     // off or reduced motion on still gets a finished diagram.
     expect(body.includes('自動開立發票') && body.includes('已開立'), 'order flow settled state rendered');
