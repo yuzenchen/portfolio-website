@@ -109,9 +109,8 @@ Cloudflare Pages 直接接 GitHub repo，push 到 `main` 就自動 build + 發�
 |---|---|---|
 | Cloudflare Pages / 自訂網域（預設，免設定） | `/` | `https://yuzen.tw` |
 | Local Docker smoke test | `/`（Dockerfile ARG 預設） | `http://localhost` |
-| GitHub Pages *project* site（已不使用） | `/portfolio-website` | `https://yuzenchen.github.io` |
 
-自訂網域在 CF Pages 專案的 **Custom domains** 加 `yuzen.tw` 即可，DNS 記錄 Cloudflare 會自動代管；不需要 `public/CNAME`（那是 GitHub Pages 專用）。
+自訂網域在 CF Pages 專案的 **Custom domains** 加 `yuzen.tw` 即可，DNS 記錄 Cloudflare 會自動代管。
 
 ## 從舊版遷移的重點
 
@@ -122,7 +121,7 @@ Cloudflare Pages 直接接 GitHub repo，push 到 `main` 就自動 build + 發�
 | `styles.css` 1050 行寫死色碼 | `tokens.css` 集中變數 + 拆出 `animations.css` |
 | Flask `/api/send-telegram` | Formspree（無自架後端） |
 | nginx Dockerfile + hardcoded `172.17.0.4` | Static `dist/` 推 CF Pages |
-| `.github/workflows/telegram-backend.yml` (compileall only) | `.github/workflows/deploy.yml`（build + deploy） |
+| `.github/workflows/telegram-backend.yml` (compileall only) | Cloudflare Pages 接 repo，push 即 build + deploy（無 CI workflow） |
 
 ## 授權
 
