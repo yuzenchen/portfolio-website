@@ -285,7 +285,7 @@ describe('order flow animation', () => {
     const { initOrderFlow } = await import('@scripts/order-flow');
     const run = sweep(initOrderFlow, 'order-flow', true);
     assertSane(run.log);
-    assertCamera(run.log, '0 270 470 264');
+    assertCamera(run.log, '0 250 524 294.75');
     assertPlaysOnce(run);
   });
 });

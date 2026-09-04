@@ -17,16 +17,14 @@ import Monitor from './anim/Monitor.astro';
         自動通知 → 完成訂單 → 自動開立發票），確認符合你的商業邏輯後開始開發。
       </p>
       <figure class="faq-fig">
-        <div class="faq-fig-bleed">
-          <div class="anim-wrap">
-            <OrderFlow />
-            <!-- Phones only (hidden by CSS above 768px): the diagram sits
-                 still until this is tapped, then runs the timeline once. -->
-            <button type="button" class="anim-play" aria-label="播放訂單流程動畫">
-              <span class="anim-play-badge" aria-hidden="true">▶</span>
-              <span class="anim-play-text">播放流程</span>
-            </button>
-          </div>
+        <div class="anim-wrap">
+          <OrderFlow />
+          <!-- Phones only (hidden by CSS above 768px): the diagram sits still
+               until this is tapped, then runs the timeline once. -->
+          <button type="button" class="anim-play" aria-label="播放訂單流程動畫">
+            <span class="anim-play-badge" aria-hidden="true">▶</span>
+            <span class="anim-play-text">播放流程</span>
+          </button>
         </div>
         <figcaption>訪談後你會拿到的流程圖：每個步驟做什麼、誰會收到通知，一眼看完。</figcaption>
       </figure>
@@ -38,14 +36,12 @@ import Monitor from './anim/Monitor.astro';
         專案包含維護與監控，並會配置自動化報錯系統，確保營運不中斷。
       </p>
       <figure class="faq-fig">
-        <div class="faq-fig-bleed">
-          <div class="anim-wrap">
-            <Monitor />
-            <button type="button" class="anim-play" aria-label="播放監控報錯動畫">
-              <span class="anim-play-badge" aria-hidden="true">▶</span>
-              <span class="anim-play-text">播放流程</span>
-            </button>
-          </div>
+        <div class="anim-wrap">
+          <Monitor />
+          <button type="button" class="anim-play" aria-label="播放監控報錯動畫">
+            <span class="anim-play-badge" aria-hidden="true">▶</span>
+            <span class="anim-play-text">播放流程</span>
+          </button>
         </div>
         <figcaption>服務出狀況時，監控會比你先發現，並自動通報到 LINE 與 Email。</figcaption>
       </figure>

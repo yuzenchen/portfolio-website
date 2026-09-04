@@ -22,13 +22,17 @@ const FLY = S[1] + 0.45;
 const FLY_FROM = CY - 30 + 20;
 const FLY_TO = 208 + 20;
 
-/** Phone framing: one shot per step, leading the beat slightly, then a pull-back. */
+/**
+ * Phone framing: one shot per step, leading the beat slightly, then a pull-back.
+ * Held wide enough that a node's 124-unit circle stays a component of the shot
+ * rather than filling it, and tall enough to keep each step's caption in frame.
+ */
 const SHOTS: Shot[] = [
-  { at: 0, rect: [0, 270, 470, 264] }, //         訂單成立
-  { at: 1.25, rect: [190, 150, 620, 349] }, //    自動通知 — needs both inbox cards
-  { at: 2.75, rect: [552, 270, 470, 264] }, //    完成訂單
-  { at: 4.05, rect: [760, 245, 520, 293] }, //    自動開立發票 — plus the stamp
-  { at: 5.9, rect: [0, 0, 1280, 720] }, //        全景
+  { at: 0, rect: [0, 250, 524, 294.75] }, //         訂單成立
+  { at: 1.25, rect: [163, 165, 660, 371.25] }, //    自動通知 — needs both inbox cards
+  { at: 2.75, rect: [525, 250, 524, 294.75] }, //    完成訂單
+  { at: 4.05, rect: [700, 235, 580, 326.25] }, //    自動開立發票 — plus the stamp
+  { at: 5.9, rect: [0, 0, 1280, 720] }, //           全景
 ];
 
 /** Envelope opacity: fades in over the first 15% of the flight, out over the last. */

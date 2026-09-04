@@ -1392,21 +1392,6 @@ footer {
     padding-left: 0;
   }
 
-  /* The diagrams are a fixed 1280-unit viewBox, so a phone would render the
-     supporting type at about 4px. The script crops the viewBox to whichever
-     step is being described instead (see makeCamera) — which only pays off
-     with width, so bleed out through both the section and card padding. */
-  .faq-fig-bleed {
-    margin: 0 calc(-1 * (var(--pad-x-sm) + 20px));
-  }
-
-  /* Full-bleed wants no side edges */
-  .faq-fig-bleed .anim {
-    border-left: 0;
-    border-right: 0;
-    border-radius: 0;
-  }
-
   /* Covers the whole diagram so the tap target is the diagram itself. The
      scrim also stops the play badge competing with the frame underneath. */
   .anim-play {
@@ -1420,6 +1405,8 @@ footer {
     padding: 0;
     border: 0;
     background: rgba(13, 17, 23, 0.5);
+    /* Matches the diagram's own corners so the scrim doesn't square them off */
+    border-radius: var(--r-img);
     cursor: pointer;
     transition: opacity 0.35s;
   }
