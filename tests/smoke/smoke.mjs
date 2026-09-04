@@ -102,6 +102,15 @@ async function main() {
     expect(body.includes('專業服務'), 'services section rendered');
     expect(body.includes('id="stack"'), 'tech stack section rendered');
     expect(body.includes('綠界科技 ECPay'), 'local logistics chip rendered');
+    expect(body.includes('id="faq"'), 'faq section rendered');
+    expect(body.includes('要怎麼跟你溝通需求'), 'communication question rendered');
+    expect(body.includes('結案後系統如果壞掉'), 'maintenance question rendered');
+    expect(body.includes('data-anim="order-flow"'), 'order flow animation rendered');
+    expect(body.includes('data-anim="monitor"'), 'monitoring animation rendered');
+    // Both animations ship their end state in the markup, so a visitor with JS
+    // off or reduced motion on still gets a finished diagram.
+    expect(body.includes('自動開立發票') && body.includes('已開立'), 'order flow settled state rendered');
+    expect(body.includes('API 服務已恢復正常'), 'monitoring settled state rendered');
     expect(body.includes('有專案想討論嗎'), 'contact card rendered');
     expect(body.includes('id="booking-dialog"'), 'booking dialog rendered');
     expect(/href="\/_astro\/[^"]+\.css"/.test(body), 'fingerprinted CSS asset linked');

@@ -1,0 +1,177 @@
+---
+/**
+ * "監控報錯動畫" — AI Agent 監控服務 → 偵測 API 異常 → 自動通報 LINE / Email → 恢復.
+ *
+ * Same construction as OrderFlow: one 1280x720 SVG authored at its end state,
+ * with `monitor.ts` driving the 6s loop.
+ */
+const SX = 96;
+const SW = 320;
+const SH = 96;
+const SY = [186, 312, 438];
+const AX = 640;
+const AY = 360;
+const AR = 84;
+const TX = 1040;
+const TW = 200;
+const TH = 84;
+const TY = [258, 378];
+
+const services = [
+  { name: '網站前台', meta: '回應 120ms', bars: [5, 7, 6, 8, 6, 7, 5, 6] },
+  { name: 'API 服務', meta: '回應 95ms', bars: [6, 5, 7, 6, 8, 7, 6, 7] },
+  { name: '資料庫', meta: '連線正常', bars: [4, 6, 5, 6, 5, 7, 6, 5] },
+];
+
+const targets = [
+  { k: 'line', tone: 'an-f-line-green', glyph: 'L', name: 'LINE 通知' },
+  { k: 'mail', tone: 'an-f-a', glyph: '@', name: 'Email 通知' },
+];
+
+/** Right edge of the sparkline strip, inside the card's 22px padding. */
+const BAR_X = SX + SW - 22 - 76;
+/** Sparklines sit on a baseline 18px under the card's centre line. */
+const barBase = (y: number): number => y + SH / 2 + 18;
+/** Resting height: the handoff's base value plus the midpoint of its jitter. */
+const barH = (b: number): number => b * 3.4 + 4;
+
+const bez = (x1: number, y1: number, c1: number, c2: number, x2: number, y2: number): string =>
+  `M${x1} ${y1} C ${c1} ${y1}, ${c2} ${y2}, ${x2} ${y2}`;
+---
+<svg
+  class="anim"
+  viewBox="0 0 1280 720"
+  role="img"
+  aria-label="監控與自動化報錯動畫：AI Agent 全天候掃描服務狀態，偵測到 API 逾時後自動通報 LINE 與 Email，服務恢復後持續監控"
+  data-anim="monitor"
+>
+  <defs>
+    <pattern id="mn-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" class="an-grid" fill="none" stroke-width="1" />
+    </pattern>
+  </defs>
+
+  <rect width="1280" height="720" class="an-bg" />
+  <rect width="1280" height="720" fill="url(#mn-grid)" />
+
+  <g data-k="stage">
+    <g data-k="head">
+      <circle cx="85" cy="72" r="5" class="an-f-b" />
+      <text x="104" y="72" class="an-kicker">監控與自動化報錯系統</text>
+      <text x="80" y="120" class="an-title an-title--sm">AI Agent 全天候監控，異常即時通知</text>
+    </g>
+
+    <!-- Service → agent links. Index 1 (API) is the one that fails. -->
+    {SY.map((y, i) => (
+      <g data-k={`link${i}`}>
+        <path
+          data-k={i === 1 ? 'failLink' : null}
+          d={bez(SX + SW, y + SH / 2, SX + SW + 110, AX - AR - 110, AX - AR - 6, AY)}
+          fill="none"
+          class="an-s-line"
+          stroke-width="2.5"
+          stroke-dasharray="8 8"
+        />
+      </g>
+    ))}
+    <!-- The red pulse that travels from the failing service to the agent -->
+    <path
+      data-k="signal"
+      d={bez(SX + SW, SY[1] + SH / 2, SX + SW + 110, AX - AR - 110, AX - AR - 6, AY)}
+      fill="none"
+      class="an-s-red"
+      stroke-width="4"
+      stroke-linecap="round"
+      pathLength="1"
+      stroke-dasharray="0.12 1"
+      stroke-dashoffset="0.12"
+      opacity="0"
+    />
+
+    <!-- Agent → notification links -->
+    {TY.map((ty, i) => (
+      <path
+        data-k={`out${i}`}
+        d={bez(AX + AR + 6, AY, AX + AR + 110, TX - 110, TX, ty + TH / 2)}
+        fill="none"
+        class="an-s-a"
+        stroke-width="3"
+        stroke-linecap="round"
+        pathLength="1"
+        stroke-dasharray="1"
+        stroke-dashoffset="0"
+      />
+    ))}
+
+    <!-- Service cards -->
+    {services.map((s, i) => (
+      <g data-k={`card${i}`}>
+        <rect
+          data-k={i === 1 ? 'failCard' : null}
+          x={SX} y={SY[i]} width={SW} height={SH} rx="16"
+          class="an-f-card an-s-card" stroke-width="2"
+        />
+        <circle data-k={i === 1 ? 'failHalo' : null} cx={SX + 29} cy={SY[i] + SH / 2} r="12" class="an-f-b" opacity="0.18" />
+        <circle data-k={i === 1 ? 'failDot' : null} cx={SX + 29} cy={SY[i] + SH / 2} r="7" class="an-f-b" />
+        <text x={SX + 52} y={SY[i] + 38} class="an-svc-name">{s.name}</text>
+        <text data-k={i === 1 ? 'failMeta' : null} x={SX + 52} y={SY[i] + 62} class="an-svc-meta">{s.meta}</text>
+        {s.bars.map((b, k) => (
+          <rect
+            data-k={`bar${i}-${k}`}
+            x={BAR_X + k * 10}
+            y={barBase(SY[i]) - barH(b)}
+            width="6"
+            height={barH(b)}
+            rx="3"
+            class="an-f-a"
+            opacity={0.5 + 0.5 * (k / 7)}
+          />
+        ))}
+      </g>
+    ))}
+
+    <!-- The warning mark is drawn rather than typed: the design system bans
+         emoji sitewide, and U+26A0 renders as one on most platforms. -->
+    <g data-k="badge" opacity="0">
+      <rect x={SX + SW - 60} y={SY[1] - 22} width="132" height="34" rx="17" class="an-f-red" />
+      <g transform={`translate(${SX + SW - 46} ${SY[1] - 12})`} fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 1.5 13.2 12.5H0.8z" />
+        <path d="M7 5.4v3.1M7 10.3v.2" />
+      </g>
+      <text x={SX + SW - 24} y={SY[1] - 5} class="an-badge">偵測到異常</text>
+    </g>
+
+    <!-- AI agent -->
+    {[0, 1].map((r) => (
+      <circle data-k={`ring${r}`} cx={AX} cy={AY} r={AR} fill="none" class="an-s-agent" stroke-width="2" opacity="0" />
+    ))}
+    <g data-k="agent">
+      <circle cx={AX} cy={AY} r={AR} class="an-f-card an-s-agent" stroke-width="3" />
+      <g transform={`translate(${AX - 27} ${AY - 40}) scale(0.84375)`} fill="none" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" class="an-s-agent">
+        <rect x="12" y="18" width="40" height="32" rx="8" />
+        <circle cx="25" cy="34" r="3.5" class="an-f-agent" stroke="none" />
+        <circle cx="39" cy="34" r="3.5" class="an-f-agent" stroke="none" />
+        <path d="M32 18v-8M24 10h16" />
+      </g>
+      <text x={AX} y={AY + 29} class="an-agent-name an-f-agent">AI AGENT</text>
+    </g>
+    <text data-k="agentCaption" x={AX} y={AY + AR + 34} class="an-agent-caption">持續掃描服務狀態</text>
+
+    <!-- Notification cards -->
+    {targets.map((t, i) => (
+      <g data-k={`msg${i}`}>
+        <rect x={TX} y={TY[i]} width={TW} height={TH} rx="16" class="an-f-card an-s-line" stroke-width="1" />
+        <rect x={TX + 16} y={TY[i] + 20} width="44" height="44" rx="12" class:list={[t.tone]} />
+        <text x={TX + 38} y={TY[i] + 42} class="an-msg-glyph">{t.glyph}</text>
+        <text x={TX + 72} y={TY[i] + 32} class="an-msg-name">{t.name}</text>
+        <text data-k={`sent${i}`} x={TX + 72} y={TY[i] + 56} class="an-msg-sent an-f-b">✓ 已送達</text>
+      </g>
+    ))}
+
+    <g data-k="recovered">
+      <rect x="80" y="617" width="342" height="47" rx="12" class="an-f-b" fill-opacity="0.1" />
+      <circle cx="103" cy="640" r="5" class="an-f-b" />
+      <text x="118" y="640" class="an-recovered an-f-b">API 服務已恢復正常，持續監控中</text>
+    </g>
+  </g>
+</svg>

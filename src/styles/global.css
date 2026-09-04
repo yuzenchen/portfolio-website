@@ -211,6 +211,10 @@ section {
   padding: 60px var(--pad-x) 40px;
 }
 
+#faq {
+  padding: 60px var(--pad-x) 30px;
+}
+
 #contact {
   padding: 60px var(--pad-x) 70px;
 }
@@ -811,6 +815,212 @@ section {
   border-color: var(--accent);
   color: var(--accent);
 }
+
+/* ── FAQ ──────────────────────────────────────────────────────────── */
+.faq {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-grid);
+}
+
+.faq-item {
+  background: var(--panel-alpha);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  padding: 28px 26px;
+}
+
+.faq-q {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 0 14px;
+  font-size: 20px;
+  font-weight: 900;
+  line-height: 1.55;
+}
+
+.faq-mark {
+  flex: none;
+  font: 700 14px var(--font-mono);
+  color: var(--bg);
+  background: var(--accent);
+  border-radius: var(--r-pill);
+  padding: 4px 11px;
+  transform: rotate(-2deg);
+}
+
+/* Indented to hang under the question text, clear of the Q pill */
+.faq-a {
+  margin: 0;
+  padding-left: 42px;
+  font-size: 14px;
+  line-height: 1.95;
+  color: var(--muted);
+}
+
+.faq-fig {
+  margin: 24px 0 0;
+}
+
+.faq-fig-scroll {
+  scrollbar-width: thin;
+}
+
+.faq-fig figcaption {
+  margin-top: 12px;
+  font: 400 12.5px var(--font-mono);
+  color: var(--faint);
+  text-align: center;
+}
+
+/* ── Explainer animations ─────────────────────────────────────────── */
+/* Authored at 1280x720 in a viewBox, so the whole diagram scales to the
+   column with no resize observer and stays sharp at any width. */
+.anim {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--r-img);
+  /* Explicit so the backdrop rect gets clipped to the rounded corners */
+  overflow: hidden;
+  font-family: var(--font-sans);
+}
+
+.an-bg { fill: var(--an-bg); }
+.an-grid { stroke: var(--an-grid); }
+
+.an-f-a { fill: var(--an-a); }
+.an-f-b { fill: var(--an-b); }
+.an-f-agent { fill: var(--an-agent); }
+.an-f-card { fill: var(--an-card); }
+.an-f-line { fill: var(--an-line); }
+.an-f-red { fill: var(--an-red); }
+.an-f-line-green { fill: var(--an-green); }
+
+.an-s-a { stroke: var(--an-a); }
+.an-s-b { stroke: var(--an-b); }
+.an-s-agent { stroke: var(--an-agent); }
+.an-s-card { stroke: var(--an-card); }
+.an-s-line { stroke: var(--an-line); }
+.an-s-red { stroke: var(--an-red); }
+
+.an-stop-a { stop-color: var(--an-a); }
+.an-stop-b { stop-color: var(--an-b); }
+
+/* Type scale is the handoff's, in viewBox units */
+.anim text {
+  dominant-baseline: central;
+}
+
+.an-kicker {
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  fill: var(--an-muted);
+}
+
+.an-title {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  fill: var(--an-ink);
+}
+
+.an-title--sm { font-size: 38px; }
+
+.an-step {
+  font-size: 28px;
+  font-weight: 700;
+  fill: var(--an-ink);
+  text-anchor: middle;
+}
+
+.an-step-sub {
+  font-size: 17px;
+  fill: var(--an-muted);
+  text-anchor: middle;
+}
+
+.an-chip-glyph {
+  font-size: 17px;
+  font-weight: 700;
+  text-anchor: middle;
+}
+
+.an-chip-name {
+  font-size: 16px;
+  font-weight: 600;
+  fill: var(--an-ink);
+}
+
+.an-chip-sent {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.an-stamp {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  text-anchor: middle;
+}
+
+.an-svc-name {
+  font-size: 21px;
+  font-weight: 700;
+  fill: var(--an-ink);
+}
+
+.an-svc-meta {
+  font-size: 15px;
+  fill: var(--an-muted);
+}
+
+.an-badge {
+  font-size: 15px;
+  font-weight: 700;
+  fill: #fff;
+}
+
+.an-agent-name {
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-anchor: middle;
+}
+
+.an-agent-caption {
+  font-size: 16px;
+  font-weight: 500;
+  fill: var(--an-muted);
+  text-anchor: middle;
+}
+
+.an-msg-glyph {
+  font-size: 22px;
+  font-weight: 800;
+  fill: #fff;
+  text-anchor: middle;
+}
+
+.an-msg-name {
+  font-size: 17px;
+  font-weight: 700;
+  fill: var(--an-ink);
+}
+
+.an-msg-sent {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.an-recovered {
+  font-size: 18px;
+  font-weight: 700;
+}
+
 /* ── Contact ──────────────────────────────────────────────────────── */
 .contact-card {
   position: relative;
@@ -1087,6 +1297,7 @@ footer {
   #case,
   #services,
   #stack,
+  #faq,
   #contact,
   .others {
     padding-left: var(--pad-x-sm);
@@ -1163,6 +1374,32 @@ footer {
 
   .stack-row dt {
     width: auto;
+  }
+
+  .faq-item {
+    padding: 22px 20px;
+  }
+
+  .faq-q {
+    font-size: 17px;
+  }
+
+  /* No room to hang the answer under the question on a phone */
+  .faq-a {
+    padding-left: 0;
+  }
+
+  /* The diagrams are a fixed 1280-unit viewBox: squeezed into a phone's width
+     the labels would land around 4px. Hold them at a legible size and let the
+     visitor swipe instead — they read left to right anyway. */
+  .faq-fig-scroll {
+    overflow-x: auto;
+    margin: 0 -20px;
+    padding: 0 20px;
+  }
+
+  .faq-fig-scroll .anim {
+    min-width: 880px;
   }
 
   .contact-card {

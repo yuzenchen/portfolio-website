@@ -1,0 +1,118 @@
+---
+/**
+ * "訂單流程動畫" — 訂單成立 → 自動通知 → 完成訂單 → 自動開立發票.
+ *
+ * Rebuilt from the design handoff as one 1280x720 SVG so it scales to any
+ * column width without a resize observer. The markup below is authored at
+ * T=5.3s (everything landed); `order-flow.ts` drives the 6s loop from there.
+ */
+const XS = [200, 493, 787, 1080];
+const CY = 372;
+const R = 62;
+
+const steps = [
+  { label: '訂單成立', sub: '客戶下單', icon: 'order' },
+  { label: '自動通知', sub: '寄送 Email 給客戶與店家', icon: 'mail' },
+  { label: '完成訂單', sub: '出貨並結案', icon: 'check' },
+  { label: '自動開立發票', sub: '電子發票即時開立', icon: 'invoice' },
+];
+
+// 64x64 line icons, stroked by the node's own colour class.
+const ICONS: Record<string, string> = {
+  order: '<path d="M14 20h36l-4 22H20z"/><circle cx="24" cy="50" r="3"/><circle cx="42" cy="50" r="3"/><path d="M8 12h6l3 8"/>',
+  mail: '<rect x="10" y="16" width="44" height="32" rx="5"/><path d="M12 20l20 15 20-15"/>',
+  invoice: '<path d="M18 8h20l10 10v38H18z"/><path d="M38 8v10h10"/><path d="M25 30h14M25 38h14M25 46h8"/>',
+};
+
+// The two notification cards: customer (teal, left) and shop (blue, right).
+const chips = [
+  { k: 'chip0', x: 243, tone: 'b', glyph: '客', name: '客戶信箱', sent: '✓ 訂單確認信已寄出' },
+  { k: 'chip1', x: 507, tone: 'a', glyph: '店', name: '店家信箱', sent: '✓ 新訂單通知已寄出' },
+];
+---
+<svg
+  class="anim"
+  viewBox="0 0 1280 720"
+  role="img"
+  aria-label="訂單自動化流程動畫：訂單成立後自動寄出通知信給客戶與店家，完成訂單並即時開立電子發票"
+  data-anim="order-flow"
+>
+  <defs>
+    <pattern id="of-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" class="an-grid" fill="none" stroke-width="1" />
+    </pattern>
+    <linearGradient id="of-track" gradientUnits="userSpaceOnUse" x1={XS[0]} x2={XS[3]}>
+      <stop offset="0" class="an-stop-a" />
+      <stop offset="1" class="an-stop-b" />
+    </linearGradient>
+  </defs>
+
+  <rect width="1280" height="720" class="an-bg" />
+  <rect width="1280" height="720" fill="url(#of-grid)" />
+
+  <g data-k="stage">
+    <!-- Heading -->
+    <g data-k="head">
+      <circle cx="85" cy="80" r="5" class="an-f-b" />
+      <text x="104" y="80" class="an-kicker">訂單自動化流程</text>
+      <text x="80" y="130" class="an-title">從下單到開立發票，全程自動完成</text>
+    </g>
+
+    <!-- Connector: full-width track, then the gradient progress over it -->
+    <rect data-k="track" x={XS[0]} y={CY - 2} width={XS[3] - XS[0]} height="4" rx="2" class="an-f-line" />
+    <rect data-k="fill" x={XS[0]} y={CY - 2} width={XS[3] - XS[0]} height="4" rx="2" fill="url(#of-track)" />
+    <g data-k="headDot" opacity="0">
+      <circle cx="0" cy={CY} r="17" class="an-f-b" opacity="0.2" />
+      <circle cx="0" cy={CY} r="9" class="an-f-b" />
+    </g>
+
+    <!-- Four steps -->
+    {steps.map((step, i) => {
+      const tone = i % 2 === 0 ? 'a' : 'b';
+      return (
+        <g>
+          <g data-k={`node${i}`}>
+            <circle cx={XS[i]} cy={CY} r={R} class:list={['an-f-card', `an-s-${tone}`]} stroke-width="3" />
+            <g transform={`translate(${XS[i] - 30} ${CY - 30}) scale(0.9375)`} fill="none" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" class:list={[`an-s-${tone}`]}>
+              {step.icon === 'check' ? (
+                <g>
+                  <circle cx="32" cy="32" r="22" />
+                  <path data-k="check" d="M20 33l8 8 16-17" pathLength="1" stroke-dasharray="1" stroke-dashoffset="0" />
+                </g>
+              ) : (
+                <g set:html={ICONS[step.icon]} />
+              )}
+            </g>
+          </g>
+          <g data-k={`label${i}`}>
+            <text x={XS[i]} y="481" class="an-step">{step.label}</text>
+            <text x={XS[i]} y="521" class="an-step-sub">{step.sub}</text>
+          </g>
+        </g>
+      );
+    })}
+
+    <!-- Envelopes flying out of the notify node -->
+    {[0, 1].map((i) => (
+      <g data-k={`fly${i}`} opacity="0" transform={`translate(${XS[1]} 198)`}>
+        <g transform="translate(-20 -20) scale(0.625)" fill="none" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" class:list={[i === 0 ? 'an-s-b' : 'an-s-a']} set:html={ICONS.mail} />
+      </g>
+    ))}
+
+    {chips.map(({ k, x, tone, glyph, name, sent }) => (
+      <g data-k={k}>
+        <rect x={x} y="150" width="236" height="72" rx="16" class="an-f-card an-s-line" stroke-width="1" />
+        <circle cx={x + 36} cy="186" r="20" class:list={[`an-f-${tone}`]} fill-opacity="0.13" />
+        <text x={x + 36} y="186" class:list={['an-chip-glyph', `an-f-${tone}`]}>{glyph}</text>
+        <text x={x + 68} y="178" class="an-chip-name">{name}</text>
+        <text data-k={`${k}sent`} x={x + 68} y="200" class:list={['an-chip-sent', `an-f-${tone}`]}>{sent}</text>
+      </g>
+    ))}
+
+    <!-- Invoice stamp, tilted -->
+    <g data-k="stamp" transform="translate(1150 275) rotate(-8) translate(-1150 -275)">
+      <rect x="1100" y="254" width="100" height="42" rx="8" class="an-f-card an-s-b" stroke-width="3" />
+      <text x="1150" y="275" class="an-stamp an-f-b">已開立</text>
+    </g>
+  </g>
+</svg>

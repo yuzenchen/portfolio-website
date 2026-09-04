@@ -41,4 +41,20 @@
   --page-max: 1100px;
   --pad-x: 48px;
   --pad-x-sm: 22px;
+  --gap-grid: 16px;
+
+  /* Explainer animations — the handoff's own tokens, mapped onto the site's.
+     Its blue/teal pair becomes site-blue + the site accent so the diagrams
+     read as part of the page rather than a pasted-in asset. */
+  --an-a: #3d9be9;
+  --an-b: var(--accent);
+  --an-agent: var(--an-b);
+  --an-bg: var(--bg);
+  --an-card: var(--panel);
+  --an-ink: var(--text);
+  --an-muted: var(--muted);
+  --an-line: var(--border);
+  --an-grid: rgba(255, 255, 255, 0.04);
+  --an-red: #e5484d;
+  --an-green: #06c755;
 }

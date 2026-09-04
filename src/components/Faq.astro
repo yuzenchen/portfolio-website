@@ -1,0 +1,36 @@
+---
+import OrderFlow from './anim/OrderFlow.astro';
+import Monitor from './anim/Monitor.astro';
+---
+<section id="faq">
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <h2>常見問題</h2>
+    <span class="sec-note">/ 發案前先問清楚</span>
+  </div>
+
+  <div class="faq">
+    <article class="faq-item">
+      <h3 class="faq-q"><span class="faq-mark">Q</span>如果我不是技術背景，要怎麼跟你溝通需求？</h3>
+      <p class="faq-a">
+        你不需要懂任何程式碼。我提供完整的需求訪談，你會拿到一份白話文的流程圖（如：訂單成立 →
+        自動通知 → 完成訂單 → 自動開立發票），確認符合你的商業邏輯後開始開發。
+      </p>
+      <figure class="faq-fig">
+        <div class="faq-fig-scroll"><OrderFlow /></div>
+        <figcaption>訪談後你會拿到的流程圖：每個步驟做什麼、誰會收到通知，一眼看完。</figcaption>
+      </figure>
+    </article>
+
+    <article class="faq-item">
+      <h3 class="faq-q"><span class="faq-mark">Q</span>結案後系統如果壞掉怎麼辦？</h3>
+      <p class="faq-a">
+        專案包含維護與監控，並會配置自動化報錯系統，確保營運不中斷。
+      </p>
+      <figure class="faq-fig">
+        <div class="faq-fig-scroll"><Monitor /></div>
+        <figcaption>服務出狀況時，監控會比你先發現，並自動通報到 LINE 與 Email。</figcaption>
+      </figure>
+    </article>
+  </div>
+</section>

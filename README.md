@@ -34,7 +34,9 @@ npm run test:smoke     # 在本機 Docker 內 build + 跑 nginx 容器 + curl �
 npm test               # 上面兩個一起跑
 ```
 
-`test:smoke` 會：build production image → 起 container 在 :8088 → 對 `/` 與 fingerprinted CSS 做 12 項斷言（HTML 內容、cache header、SPA fallback）→ 自動 teardown。可用 `PORT=9090 npm run test:smoke` 換 port。
+`test:smoke` 會：build production image → 起 container 在 :8088 → 對 `/` 與 fingerprinted CSS 逐項斷言（HTML 內容、無 emoji、cache header、SPA fallback）→ 自動 teardown。可用 `PORT=9090 npm run test:smoke` 換 port。
+
+`test:unit` 除了 `debounce` / `throttle`，也把兩支 FAQ 說明動畫的時間軸完整跑一遍（0–6s 掃描，比對 build 產出的 `data-k`），確保沒有 NaN、opacity 不越界、顏色有回到原色。
 
 ## 專案結構
 

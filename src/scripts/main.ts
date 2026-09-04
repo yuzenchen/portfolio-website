@@ -3,6 +3,8 @@ import { initTyping } from './typing';
 import { initContactForm } from './contact-form';
 import { initDisclosure } from './disclosure';
 import { initLightbox } from './lightbox';
+import { initOrderFlow } from './order-flow';
+import { initMonitor } from './monitor';
 
 const boot = (): void => {
   initWave();
@@ -10,6 +12,8 @@ const boot = (): void => {
   initContactForm();
   initDisclosure();
   initLightbox();
+  initOrderFlow();
+  initMonitor();
 };
 
 if (document.readyState === 'loading') {
