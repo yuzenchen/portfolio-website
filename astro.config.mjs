@@ -1,12 +1,10 @@
 import { defineConfig } from 'astro/config';
 
-// BASE_PATH lets us switch between "/" (custom domain, local Docker test)
-// and "/portfolio-website" (GitHub Pages project site) without touching config.
-const base = process.env.BASE_PATH ?? '/portfolio-website';
-
-// SITE follows the same logic — override with SITE env at build time when
-// you move to a custom domain (e.g. SITE=https://yuzen.life).
-const site = process.env.SITE ?? 'https://yuzenchen.github.io';
+// The site lives at the root of a custom domain, so that is the default.
+// Both are still overridable per build — a GitHub Pages *project* site would
+// need BASE_PATH=/portfolio-website, for instance.
+const base = process.env.BASE_PATH ?? '/';
+const site = process.env.SITE ?? 'https://yuzen.tw';
 
 export default defineConfig({
   site,

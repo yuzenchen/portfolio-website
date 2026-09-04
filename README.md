@@ -79,33 +79,39 @@ order: 5
 
 build 時若 frontmatter 缺欄位或型別不符，`astro check` 會擋下。
 
-## 部署 (GitHub Pages)
+## 部署 (Cloudflare Pages)
 
-`.github/workflows/deploy.yml` 在 push 到 `main` 時自動 build + 推到 GH Pages，目前接 project page，網址為：
+Cloudflare Pages 直接接 GitHub repo，push 到 `main` 就自動 build + 發布，網址 https://yuzen.tw。
 
-> https://yuzenchen.github.io/portfolio-website/
+### Pages 專案設定
 
-### 一次性設定
+| 項目 | 值 |
+|---|---|
+| Framework preset | Astro |
+| Build command | `npm run build` |
+| Build output directory | `dist` |
+| Production branch | `main` |
 
-1. Repo **Settings → Pages → Build and deployment → Source**: `Deploy from a branch`
-2. **Branch** 選 `gh-pages` / `/ (root)`，存檔（首次 deploy 跑完後 `gh-pages` 才存在；workflow 會自動建立並推上去）
-3. Repo **Settings → Secrets and variables → Actions** 加：
-   - `PUBLIC_FORMSPREE_ENDPOINT` = `https://formspree.io/f/<id>`
+環境變數（Settings → Environment variables，Production 與 Preview 都要加）：
+
+| 變數 | 值 | 必要性 |
+|---|---|---|
+| `PUBLIC_FORMSPREE_ENDPOINT` | `https://formspree.io/f/<id>` | 必要，沒設表單會報錯 |
+| `NODE_VERSION` | `20` | 必要，CF 預設 Node 版本對 Astro 4 太舊 |
+
+`BASE_PATH` / `SITE` 不用設 —— `astro.config.mjs` 的預設值就是 `/` 與 `https://yuzen.tw`。
 
 ### Base path / 自訂網域
 
-`astro.config.mjs` 從環境變數讀 base，所以同一份 code 可以服侍三種情境：
+`astro.config.mjs` 從環境變數讀 base，需要時可覆寫：
 
 | 情境 | `BASE_PATH` | `SITE` |
 |---|---|---|
-| GH Pages project page (預設, workflow 自動帶) | `/portfolio-website` | `https://yuzenchen.github.io` |
-| Custom domain `yuzen.tw` | `/` | `https://yuzen.tw` |
-| Local Docker smoke test | `/` (Dockerfile ARG 預設) | `http://localhost` |
+| Cloudflare Pages / 自訂網域（預設，免設定） | `/` | `https://yuzen.tw` |
+| Local Docker smoke test | `/`（Dockerfile ARG 預設） | `http://localhost` |
+| GitHub Pages *project* site（已不使用） | `/portfolio-website` | `https://yuzenchen.github.io` |
 
-切到 custom domain 時：
-1. 在 repo 加一份 `public/CNAME` 檔，內容是 `yuzen.tw`
-2. workflow 裡 `BASE_PATH: /` 與 `SITE: https://yuzen.tw`
-3. Apex domain 需在 DNS 設四筆 A record 到 GH Pages IPs（`185.199.108-111.153`）；subdomain 用 `CNAME xxx → yuzenchen.github.io`
+自訂網域在 CF Pages 專案的 **Custom domains** 加 `yuzen.tw` 即可，DNS 記錄 Cloudflare 會自動代管；不需要 `public/CNAME`（那是 GitHub Pages 專用）。
 
 ## 從舊版遷移的重點
 
