@@ -1,4 +1,15 @@
-import { draw, easeOutBack, enter, FADE_AT, playOnVisible, pop, q, seg } from './anim';
+import {
+  draw,
+  easeOutBack,
+  enter,
+  FADE_AT,
+  makeCamera,
+  playOnVisible,
+  pop,
+  q,
+  seg,
+  type Shot,
+} from './anim';
 
 /** Node centres and the shared centre line, straight from the handoff. */
 const XS = [200, 493, 787, 1080];
@@ -10,6 +21,15 @@ const FLY = S[1] + 0.45;
 /** Centre of the flying envelope, from just above the node to the inbox row. */
 const FLY_FROM = CY - 30 + 20;
 const FLY_TO = 208 + 20;
+
+/** Phone framing: one shot per step, leading the beat slightly, then a pull-back. */
+const SHOTS: Shot[] = [
+  { at: 0, rect: [0, 270, 470, 264] }, //         訂單成立
+  { at: 1.25, rect: [190, 150, 620, 349] }, //    自動通知 — needs both inbox cards
+  { at: 2.75, rect: [552, 270, 470, 264] }, //    完成訂單
+  { at: 4.05, rect: [760, 245, 520, 293] }, //    自動開立發票 — plus the stamp
+  { at: 5.9, rect: [0, 0, 1280, 720] }, //        全景
+];
 
 /** Envelope opacity: fades in over the first 15% of the flight, out over the last. */
 const flightOpacity = (u: number): number => {
@@ -36,8 +56,10 @@ export function initOrderFlow(): void {
   const chips = [q(root, 'chip0'), q(root, 'chip1')];
   const sents = [q(root, 'chip0sent'), q(root, 'chip1sent')];
   const stamp = q(root, 'stamp');
+  const camera = makeCamera(root, SHOTS);
 
   const frame = (t: number): void => {
+    camera(t);
     stage.setAttribute('opacity', String(1 - seg(t, FADE_AT, 0.4)));
 
     const h = enter(t, 0.05, 0.6);

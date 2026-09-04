@@ -86,6 +86,54 @@ export function readPalette(root: Element, names: readonly string[]): Record<str
   return out;
 }
 
+/* ── Mobile camera ─────────────────────────────────────────────────── */
+
+/** A viewBox crop: x, y, width, height in canvas units. */
+export type Rect = readonly [number, number, number, number];
+
+/** Where the camera sits from time `at` onwards. */
+export interface Shot {
+  readonly at: number;
+  readonly rect: Rect;
+}
+
+const FULL: Rect = [0, 0, 1280, 720];
+/** How long the camera takes to travel between two shots. */
+const MOVE = 0.6;
+
+/** The crop at time `t`, easing from the previous shot into the current one. */
+export function cameraAt(shots: readonly Shot[], t: number): Rect {
+  let i = 0;
+  while (i + 1 < shots.length && t >= shots[i + 1].at) i++;
+  const to = shots[i];
+  const from = shots[i - 1];
+  if (!from) return to.rect;
+  const u = seg(t, to.at, MOVE);
+  return [0, 1, 2, 3].map(
+    (k) => Math.round((from.rect[k] + (to.rect[k] - from.rect[k]) * u) * 10) / 10,
+  ) as unknown as Rect;
+}
+
+/**
+ * A phone gets ~375px of width. Showing all 1280 units at once puts the
+ * supporting type at about 4px, and holding it legible means a diagram wider
+ * than the screen. So on narrow viewports the viewBox follows the step being
+ * described and pulls back to the whole frame for the closing hold. Every crop
+ * is 16:9, so the element's rendered height never changes.
+ *
+ * Desktop keeps the full frame, written once rather than every frame.
+ */
+export function makeCamera(root: Element, shots: readonly Shot[]): (t: number) => void {
+  const narrow = window.matchMedia('(max-width: 768px)');
+  let applied = '';
+  return (t: number): void => {
+    const box = (narrow.matches ? cameraAt(shots, t) : FULL).join(' ');
+    if (box === applied) return;
+    root.setAttribute('viewBox', box);
+    applied = box;
+  };
+}
+
 export const q = <T extends Element>(root: Element, key: string): T =>
   root.querySelector<T>(`[data-k="${key}"]`) as T;
 

@@ -1389,17 +1389,19 @@ footer {
     padding-left: 0;
   }
 
-  /* The diagrams are a fixed 1280-unit viewBox: squeezed into a phone's width
-     the labels would land around 4px. Hold them at a legible size and let the
-     visitor swipe instead — they read left to right anyway. */
+  /* The diagrams are a fixed 1280-unit viewBox, so a phone would render the
+     supporting type at about 4px. The script crops the viewBox to whichever
+     step is being described instead (see makeCamera) — which only pays off
+     with width, so bleed out through both the section and card padding. */
   .faq-fig-scroll {
-    overflow-x: auto;
-    margin: 0 -20px;
-    padding: 0 20px;
+    margin: 0 calc(-1 * (var(--pad-x-sm) + 20px));
   }
 
+  /* Full-bleed wants no side edges */
   .faq-fig-scroll .anim {
-    min-width: 880px;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
   }
 
   .contact-card {

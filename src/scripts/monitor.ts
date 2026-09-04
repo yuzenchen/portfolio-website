@@ -1,4 +1,17 @@
-import { draw, easeOutCubic, enter, FADE_AT, mix, playOnVisible, pop, q, readPalette, seg } from './anim';
+import {
+  draw,
+  easeOutCubic,
+  enter,
+  FADE_AT,
+  makeCamera,
+  mix,
+  playOnVisible,
+  pop,
+  q,
+  readPalette,
+  seg,
+  type Shot,
+} from './anim';
 
 const SX = 96;
 const SW = 320;
@@ -22,6 +35,15 @@ const BARS = [
   [4, 6, 5, 6, 5, 7, 6, 5],
 ];
 const BAR_X = SX + SW - 22 - 76;
+
+/** Phone framing: one shot per scene, leading the beat slightly, then a pull-back. */
+const SHOTS: Shot[] = [
+  { at: 0, rect: [40, 160, 740, 416] }, //       三個服務 + AI Agent
+  { at: 1.45, rect: [70, 240, 500, 281] }, //    API 逾時 + 異常標籤
+  { at: 2.85, rect: [540, 210, 720, 405] }, //   Agent 通報 LINE / Email
+  { at: 4.65, rect: [40, 300, 658, 370] }, //    恢復正常 + 提示
+  { at: 5.9, rect: [0, 0, 1280, 720] }, //       全景
+];
 
 export function initMonitor(): void {
   const root = document.querySelector<SVGSVGElement>('[data-anim="monitor"]');
@@ -51,8 +73,10 @@ export function initMonitor(): void {
   const msgs = [q(root, 'msg0'), q(root, 'msg1')];
   const sents = [q(root, 'sent0'), q(root, 'sent1')];
   const recovered = q(root, 'recovered');
+  const camera = makeCamera(root, SHOTS);
 
   const frame = (t: number): void => {
+    camera(t);
     stage.setAttribute('opacity', String(1 - seg(t, FADE_AT, 0.4)));
 
     const h = enter(t, 0.05, 0.6);

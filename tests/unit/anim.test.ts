@@ -80,6 +80,10 @@ class FakeRoot {
     const m = /\[data-k="(.+)"\]/.exec(sel);
     return (m && this.els.get(m[1])) || null;
   }
+  /** The camera writes viewBox on the root itself. */
+  setAttribute(name: string, value: string): void {
+    this.log.push({ el: ':svg', name, value });
+  }
 }
 
 /** data-k names actually present in the built SVG for one animation. */
@@ -100,14 +104,15 @@ const saved = { ...globalThis } as Record<string, unknown>;
  * attribute it wrote. The rAF/IntersectionObserver stubs let us step time by
  * hand instead of waiting on a real clock.
  */
-function sweep(init: () => void, anim: string, step = 0.05): Written[] {
+function sweep(init: () => void, anim: string, narrow = false, step = 0.05): Written[] {
   const log: Written[] = [];
   const root = new FakeRoot(keysFromBuild(anim), log);
 
   const queued: ((t: number) => void)[] = [];
   Object.assign(globalThis, {
     document: { querySelector: (s: string) => (s.includes(anim) ? root : null) },
-    window: { matchMedia: () => ({ matches: false }) },
+    // Only the viewport query flips; reduced motion always stays off.
+    window: { matchMedia: (q: string) => ({ matches: narrow && q.includes('max-width') }) },
     getComputedStyle: () => ({ getPropertyValue: (n: string) => PALETTE[n] ?? '#000000' }),
     requestAnimationFrame: (cb: (t: number) => void) => queued.push(cb),
     IntersectionObserver: class {
@@ -147,6 +152,26 @@ function assertHoldsThenFades(log: Written[], step: number): void {
   expect(at(6.95), 'faded out by the loop point').toBeLessThan(0.05);
 }
 
+/**
+ * Every crop the phone camera lands on has to be 16:9 and inside the canvas —
+ * a crop of another ratio would change the element's rendered height mid-loop,
+ * and one hanging off the edge would show blank.
+ */
+function assertCamera(log: Written[], opening: string): void {
+  const boxes = log.filter((w) => w.el === ':svg' && w.name === 'viewBox').map((w) => w.value);
+  expect(boxes.length, 'camera moves during the loop').toBeGreaterThan(20);
+  expect(boxes[0], 'opens on the first step').toBe(opening);
+  expect(boxes.at(-1), 'pulls back to the whole frame').toBe('0 0 1280 720');
+  for (const b of boxes) {
+    const [x, y, w, h] = b.split(' ').map(Number);
+    expect(w / h, `16:9 for "${b}"`).toBeCloseTo(16 / 9, 2);
+    expect(x, `left edge of "${b}"`).toBeGreaterThanOrEqual(0);
+    expect(y, `top edge of "${b}"`).toBeGreaterThanOrEqual(0);
+    expect(x + w, `right edge of "${b}"`).toBeLessThanOrEqual(1280.5);
+    expect(y + h, `bottom edge of "${b}"`).toBeLessThanOrEqual(720.5);
+  }
+}
+
 /** Nothing may be NaN, and the values with a defined range must stay in it. */
 function assertSane(log: Written[]): void {
   expect(log.length).toBeGreaterThan(1000);
@@ -180,6 +205,18 @@ describe('order flow animation', () => {
     expect(dot[0].value).toBe('0');
     expect(dot.at(-1)!.value).toBe('0');
     expect(dot.some((w) => w.value === '1')).toBe(true);
+
+    // Desktop leaves the frame alone — one write, then nothing.
+    const boxes = log.filter((w) => w.el === ':svg' && w.name === 'viewBox');
+    expect(boxes).toHaveLength(1);
+    expect(boxes[0].value).toBe('0 0 1280 720');
+  });
+
+  it('tracks each step with the camera on a narrow viewport', async () => {
+    const { initOrderFlow } = await import('@scripts/order-flow');
+    const log = sweep(initOrderFlow, 'order-flow', true);
+    assertSane(log);
+    assertCamera(log, '0 270 470 264');
   });
 });
 
@@ -201,5 +238,12 @@ describe('monitor animation', () => {
     expect(dash[0]).toBe('8 8');
     expect(dash.at(-1)).toBe('8 8');
     expect(dash).toContain('none');
+  });
+
+  it('tracks each scene with the camera on a narrow viewport', async () => {
+    const { initMonitor } = await import('@scripts/monitor');
+    const log = sweep(initMonitor, 'monitor', true);
+    assertSane(log);
+    assertCamera(log, '40 160 740 416');
   });
 });
