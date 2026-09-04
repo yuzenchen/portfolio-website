@@ -128,6 +128,8 @@ interface Run {
   wrap: FakeWrap;
   /** Frames still queued when the sweep stopped — 0 means the run ended itself. */
   pending: number;
+  /** Wall-clock seconds the run occupied before it stopped. */
+  elapsed: number;
 }
 
 /**
@@ -170,17 +172,21 @@ function sweep(init: () => void, anim: string, narrow = false, step = 0.05): Run
     root.parentElement.click?.();
   }
 
-  const last = narrow ? DURATION + 0.2 : DURATION;
-  for (let t = 0; t < last; t += step) {
+  // The phone runs the same timeline stretched over a longer span, so give the
+  // sweep plenty of room and let the one-shot decide when it is done.
+  const cap = narrow ? 30 : DURATION;
+  let elapsed = 0;
+  for (let t = 0; t < cap; t += step) {
     const cb = queued.shift();
-    // The one-shot stops itself past DURATION; the loop must not.
+    // The one-shot stops itself; the desktop loop must not.
     if (!cb) {
-      if (narrow && t > DURATION) break;
+      if (narrow) break;
       throw new Error(`loop stopped early at t=${t.toFixed(2)}`);
     }
+    elapsed = t;
     cb(t * 1000);
   }
-  return { log, wrap: root.parentElement, pending: queued.length };
+  return { log, wrap: root.parentElement, pending: queued.length, elapsed };
 }
 
 afterEach(() => {
@@ -234,11 +240,16 @@ function assertCamera(log: Written[], opening: string): void {
  * it must stop scheduling frames, drop the playing flag, and leave the diagram
  * on the settled frame rather than partway through the closing fade.
  */
-function assertPlaysOnce({ log, wrap, pending }: Run): void {
+function assertPlaysOnce({ log, wrap, pending, elapsed }: Run): void {
   expect(pending, 'stops scheduling frames after one run').toBe(0);
   expect(wrap.classes.has('is-playing'), 'play button comes back').toBe(false);
   const stage = log.filter((w) => w.el === 'stage' && w.name === 'opacity');
   expect(Number(stage.at(-1)!.value), 'settles fully opaque, not mid-fade').toBe(1);
+  // Five shots, half a second of extra dwell each, on top of the 7s timeline.
+  // Landing anywhere inside the final 0.05s step is the sweep's own resolution.
+  const span = DURATION + 2.5;
+  expect(elapsed, 'runs the full stretched span').toBeGreaterThanOrEqual(span - 0.05);
+  expect(elapsed, 'and stops at the end of it').toBeLessThan(span + 0.1);
 }
 
 /** Nothing may be NaN, and the values with a defined range must stay in it. */

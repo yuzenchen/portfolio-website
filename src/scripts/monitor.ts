@@ -5,6 +5,7 @@ import {
   FADE_AT,
   makeCamera,
   mix,
+  narrowSpan,
   playOnVisible,
   pop,
   q,
@@ -178,5 +179,5 @@ export function initMonitor(): void {
     recovered.setAttribute('transform', `translate(0 ${rec.y})`);
   };
 
-  playOnVisible(root, frame);
+  playOnVisible(root, frame, narrowSpan(SHOTS));
 }

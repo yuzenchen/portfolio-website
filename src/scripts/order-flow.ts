@@ -4,6 +4,7 @@ import {
   enter,
   FADE_AT,
   makeCamera,
+  narrowSpan,
   playOnVisible,
   pop,
   q,
@@ -129,5 +130,5 @@ export function initOrderFlow(): void {
     );
   };
 
-  playOnVisible(root, frame);
+  playOnVisible(root, frame, narrowSpan(SHOTS));
 }

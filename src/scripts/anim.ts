@@ -101,6 +101,17 @@ const FULL: Rect = [0, 0, 1280, 720];
 /** How long the camera takes to travel between two shots. */
 const MOVE = 0.6;
 
+/** Extra seconds each shot gets on a phone, where there is more to take in. */
+const HOLD = 0.5;
+
+/**
+ * How long the timeline takes to play on a phone. The same 7s of animation,
+ * run slower so every shot lingers — stretching the clock rather than freezing
+ * the content, because the connector line draws straight through the scene
+ * boundaries and would visibly stall if it were paused there.
+ */
+export const narrowSpan = (shots: readonly Shot[]): number => DURATION + HOLD * shots.length;
+
 /** The crop at time `t`, easing from the previous shot into the current one. */
 export function cameraAt(shots: readonly Shot[], t: number): Rect {
   let i = 0;
@@ -155,7 +166,12 @@ export const qa = <T extends Element>(root: Element, key: string): T[] =>
  * still costs nothing to render and reduced-motion (or no-JS) visitors simply
  * keep it.
  */
-export function playOnVisible(root: Element, frame: (t: number) => void): void {
+export function playOnVisible(
+  root: Element,
+  frame: (t: number) => void,
+  /** Wall-clock length of the one-shot phone playback; see `narrowSpan`. */
+  span = DURATION,
+): void {
   const wrap = root.parentElement;
   const trigger = wrap?.querySelector<HTMLButtonElement>('.anim-play') ?? null;
 
@@ -182,15 +198,15 @@ export function playOnVisible(root: Element, frame: (t: number) => void): void {
 
   const once = (now: number): void => {
     if (!origin) origin = now;
-    const t = (now - origin) / 1000;
-    if (t >= DURATION) {
+    const elapsed = (now - origin) / 1000;
+    if (elapsed >= span) {
       raf = 0;
       // Land on the settled frame rather than the tail of the fade.
       frame(FADE_AT);
       wrap?.classList.remove('is-playing');
       return;
     }
-    frame(t);
+    frame((elapsed * DURATION) / span);
     raf = requestAnimationFrame(once);
   };
 
