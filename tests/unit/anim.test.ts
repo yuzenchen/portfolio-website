@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { afterEach, describe, expect, it } from 'vitest';
-import { draw, enter, mix, pop, seg } from '@scripts/anim';
+import { draw, DURATION, enter, mix, pop, seg } from '@scripts/anim';
 
 describe('timeline primitives', () => {
   it('clamps at both ends of the window', () => {
@@ -120,7 +120,7 @@ function sweep(init: () => void, anim: string, step = 0.05): Written[] {
 
   init();
   // The observer stub starts the loop synchronously; drive it frame by frame.
-  for (let t = 0; t < 6; t += step) {
+  for (let t = 0; t < DURATION; t += step) {
     const cb = queued.shift();
     if (!cb) throw new Error('loop stopped early');
     cb(t * 1000);
@@ -134,6 +134,18 @@ afterEach(() => {
     else delete (globalThis as Record<string, unknown>)[k];
   }
 });
+
+/**
+ * v2 of the handoff stretched each loop's last scene so the finished diagram
+ * holds before the fade. Guard both ends of that hold.
+ */
+function assertHoldsThenFades(log: Written[], step: number): void {
+  const stage = log.filter((w) => w.el === 'stage' && w.name === 'opacity').map((w) => Number(w.value));
+  const at = (t: number): number => stage[Math.round(t / step)];
+  expect(at(5.5), 'still fully visible a second before the end').toBe(1);
+  expect(at(6.4), 'hold lasts right up to the fade').toBe(1);
+  expect(at(6.95), 'faded out by the loop point').toBeLessThan(0.05);
+}
 
 /** Nothing may be NaN, and the values with a defined range must stay in it. */
 function assertSane(log: Written[]): void {
@@ -156,6 +168,7 @@ describe('order flow animation', () => {
     const { initOrderFlow } = await import('@scripts/order-flow');
     const log = sweep(initOrderFlow, 'order-flow');
     assertSane(log);
+    assertHoldsThenFades(log, 0.05);
 
     // The connector fills the full 880px track by the time the last node lands.
     const widths = log.filter((w) => w.el === 'fill' && w.name === 'width').map((w) => Number(w.value));
@@ -175,6 +188,7 @@ describe('monitor animation', () => {
     const { initMonitor } = await import('@scripts/monitor');
     const log = sweep(initMonitor, 'monitor');
     assertSane(log);
+    assertHoldsThenFades(log, 0.05);
 
     // The agent recolours to red during the outage and back again.
     const agent = log.filter((w) => w.name === '--an-agent').map((w) => w.value);

@@ -1,4 +1,4 @@
-import { draw, easeOutCubic, enter, mix, playOnVisible, pop, q, readPalette, seg } from './anim';
+import { draw, easeOutCubic, enter, FADE_AT, mix, playOnVisible, pop, q, readPalette, seg } from './anim';
 
 const SX = 96;
 const SW = 320;
@@ -53,7 +53,7 @@ export function initMonitor(): void {
   const recovered = q(root, 'recovered');
 
   const frame = (t: number): void => {
-    stage.setAttribute('opacity', String(1 - seg(t, 5.55, 0.4)));
+    stage.setAttribute('opacity', String(1 - seg(t, FADE_AT, 0.4)));
 
     const h = enter(t, 0.05, 0.6);
     head.setAttribute('opacity', String(h.o));
@@ -148,8 +148,9 @@ export function initMonitor(): void {
       sents[i].setAttribute('transform', `translate(0 ${s.y})`);
     });
 
+    // The banner clears a touch before the rest of the stage fades.
     const rec = enter(t, S[3] + 0.35, 0.4);
-    recovered.setAttribute('opacity', String(rec.o * (1 - seg(t, 5.4, 0.3))));
+    recovered.setAttribute('opacity', String(rec.o * (1 - seg(t, FADE_AT - 0.15, 0.3))));
     recovered.setAttribute('transform', `translate(0 ${rec.y})`);
   };
 

@@ -6,8 +6,15 @@
  * pop — so those three are all that lives here.
  */
 
-/** Loop length. Both animations are authored to the same 6s timeline. */
-export const DURATION = 6;
+/**
+ * Loop length. Both animations are authored to the same timeline; v2 of the
+ * handoff stretched each one's final scene by a second so the end state holds
+ * long enough to read before the fade.
+ */
+export const DURATION = 7;
+
+/** Everything fades out over the last 450ms of the loop. */
+export const FADE_AT = DURATION - 0.45;
 
 const clamp01 = (v: number): number => (v < 0 ? 0 : v > 1 ? 1 : v);
 

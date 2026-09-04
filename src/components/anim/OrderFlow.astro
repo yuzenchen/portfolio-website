@@ -25,9 +25,12 @@ const ICONS: Record<string, string> = {
 };
 
 // The two notification cards: customer (teal, left) and shop (blue, right).
+// v2 of the handoff dropped them 32px and pushed them 32px further apart,
+// clearing the headline above and widening the gap the envelopes fly into.
+const CHIP_Y = 182;
 const chips = [
-  { k: 'chip0', x: 243, tone: 'b', glyph: '客', name: '客戶信箱', sent: '✓ 訂單確認信已寄出' },
-  { k: 'chip1', x: 507, tone: 'a', glyph: '店', name: '店家信箱', sent: '✓ 新訂單通知已寄出' },
+  { k: 'chip0', x: 211, tone: 'b', glyph: '客', name: '客戶信箱', sent: '✓ 訂單確認信已寄出' },
+  { k: 'chip1', x: 539, tone: 'a', glyph: '店', name: '店家信箱', sent: '✓ 新訂單通知已寄出' },
 ];
 ---
 <svg
@@ -94,18 +97,18 @@ const chips = [
 
     <!-- Envelopes flying out of the notify node -->
     {[0, 1].map((i) => (
-      <g data-k={`fly${i}`} opacity="0" transform={`translate(${XS[1]} 198)`}>
+      <g data-k={`fly${i}`} opacity="0" transform={`translate(${XS[1]} ${CHIP_Y + 46})`}>
         <g transform="translate(-20 -20) scale(0.625)" fill="none" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" class:list={[i === 0 ? 'an-s-b' : 'an-s-a']} set:html={ICONS.mail} />
       </g>
     ))}
 
     {chips.map(({ k, x, tone, glyph, name, sent }) => (
       <g data-k={k}>
-        <rect x={x} y="150" width="236" height="72" rx="16" class="an-f-card an-s-line" stroke-width="1" />
-        <circle cx={x + 36} cy="186" r="20" class:list={[`an-f-${tone}`]} fill-opacity="0.13" />
-        <text x={x + 36} y="186" class:list={['an-chip-glyph', `an-f-${tone}`]}>{glyph}</text>
-        <text x={x + 68} y="178" class="an-chip-name">{name}</text>
-        <text data-k={`${k}sent`} x={x + 68} y="200" class:list={['an-chip-sent', `an-f-${tone}`]}>{sent}</text>
+        <rect x={x} y={CHIP_Y} width="236" height="72" rx="16" class="an-f-card an-s-line" stroke-width="1" />
+        <circle cx={x + 36} cy={CHIP_Y + 36} r="20" class:list={[`an-f-${tone}`]} fill-opacity="0.13" />
+        <text x={x + 36} y={CHIP_Y + 36} class:list={['an-chip-glyph', `an-f-${tone}`]}>{glyph}</text>
+        <text x={x + 68} y={CHIP_Y + 28} class="an-chip-name">{name}</text>
+        <text data-k={`${k}sent`} x={x + 68} y={CHIP_Y + 50} class:list={['an-chip-sent', `an-f-${tone}`]}>{sent}</text>
       </g>
     ))}
 
