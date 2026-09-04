@@ -1,14 +1,14 @@
 import { initWave } from './wave';
 import { initTyping } from './typing';
 import { initContactForm } from './contact-form';
-import { initAutoDetails } from './autodetails';
+import { initDisclosure } from './disclosure';
 import { initLightbox } from './lightbox';
 
 const boot = (): void => {
   initWave();
   initTyping();
   initContactForm();
-  initAutoDetails();
+  initDisclosure();
   initLightbox();
 };
 

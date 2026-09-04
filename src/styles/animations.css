@@ -8,3 +8,9 @@
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
+
+/* Disclosure items easing in, staggered by --i */
+@keyframes printLine {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

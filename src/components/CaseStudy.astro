@@ -29,7 +29,31 @@ const shots = [
 
   <article class="case">
     <div class="case-shot">
-      <img src="/petsnack.png" alt="Wama' House 寵物零食電商" loading="lazy" decoding="async" />
+      <div class="case-shot-main">
+        <img src="/petsnack.png" alt="Wama' House 寵物零食電商" loading="lazy" decoding="async" />
+      </div>
+
+      <!-- Backend screenshots live under the storefront shot and reveal with
+           the points on the right, so the left column doesn't sit empty.
+           Plain links keep the full image reachable without JS. -->
+      <div class="case-gallery-reveal">
+        <div class="case-gallery-inner">
+          <div class="case-gallery">
+            {shots.map(({ src, label }, i) => (
+              <a href={src} target="_blank" rel="noopener noreferrer" class="case-thumb" data-label={label} style={`--i: ${i}`}>
+                <!-- Not lazy: the collapsed wrapper has zero height, so a lazy
+                     image would only start loading as the reveal begins and
+                     would pop in mid-animation. ~120 kB for all three. -->
+                <span class="case-thumb-img">
+                  <img src={src} alt={label} decoding="async" />
+                  <span class="case-thumb-zoom">點擊放大</span>
+                </span>
+                <span class="case-thumb-label">{label}</span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="case-body">
@@ -37,34 +61,26 @@ const shots = [
       <h3>Wama&#39; House 寵物零食電商</h3>
       <p class="case-lead">前端、後端、金流、物流與部署，從零到上線的完整電商系統。</p>
 
-      <!-- <details> gives keyboard support and works with JS disabled;
-           a scroll observer opens it automatically when it comes into view. -->
-      <details class="case-more" data-auto-open>
-        <summary>我做了什麼</summary>
+      <!-- Button + grid-row reveal so the height animates; the disclosure
+           script toggles .is-open on click and when scrolled into view. -->
+      <div class="case-more" data-auto-open>
+        <button type="button" class="case-toggle" aria-expanded="false" aria-controls="case-detail">
+          <span class="case-toggle-caret" aria-hidden="true">▸</span>我做了什麼
+        </button>
 
-        <div class="case-points">
-          {highlights.map(({ title, body }) => (
-            <div class="case-point">
-              <h4>{title}</h4>
-              <p>{body}</p>
+        <div class="case-reveal" id="case-detail">
+          <div class="case-reveal-inner">
+            <div class="case-points">
+              {highlights.map(({ title, body }, i) => (
+                <div class="case-point" style={`--i: ${i}`}>
+                  <h4>{title}</h4>
+                  <p>{body}</p>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
-
-        <!-- Plain links so the full image is still reachable without JS;
-             the lightbox script intercepts the click when it can. -->
-        <div class="case-gallery">
-          {shots.map(({ src, label }) => (
-            <a href={src} target="_blank" rel="noopener noreferrer" class="case-thumb" data-label={label}>
-              <span class="case-thumb-img">
-                <img src={src} alt={label} loading="lazy" decoding="async" />
-                <span class="case-thumb-zoom">點擊放大</span>
-              </span>
-              <span class="case-thumb-label">{label}</span>
-            </a>
-          ))}
-        </div>
-      </details>
+      </div>
 
       <a href="https://umimididi.com" target="_blank" rel="noopener noreferrer" class="case-link">
         查看線上網站 ↗

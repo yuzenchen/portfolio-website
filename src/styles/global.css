@@ -254,11 +254,14 @@ section {
 .case-shot {
   flex: none;
   width: 42%;
+}
+
+.case-shot-main {
   position: relative;
 }
 
 /* Offset dashed frame, echoing the old service rows */
-.case-shot::before {
+.case-shot-main::before {
   content: '';
   position: absolute;
   inset: 12px -12px -12px 12px;
@@ -266,13 +269,30 @@ section {
   border-radius: var(--r-img);
 }
 
-.case-shot img {
+.case-shot-main img {
   position: relative;
   width: 100%;
   display: block;
   border-radius: var(--r-img);
   border: 1px solid var(--border);
   transform: rotate(-1.2deg);
+}
+
+/* Gallery grows open beneath the storefront shot, in step with the points */
+/* Same curve and duration as the points column so both sides grow in step */
+.case-gallery-reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.case.is-open .case-gallery-reveal {
+  grid-template-rows: 1fr;
+}
+
+.case-gallery-inner {
+  min-height: 0;
+  overflow: hidden;
 }
 
 .case-body {
@@ -313,34 +333,50 @@ section {
   color: var(--muted);
 }
 
+/* ── Case disclosure ("我做了什麼") ─────────────────────────────────
+   A button + grid-row reveal instead of <details>, so the height can
+   actually animate. Items then print in one after another, terminal-style. */
 .case-more {
   border-top: 1px solid var(--border);
   padding-top: 16px;
 }
 
-.case-more summary {
+.case-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  background: none;
+  border: none;
+  padding: 0;
   font: 500 14px var(--font-mono);
   color: var(--accent);
   cursor: pointer;
-  list-style: none;
-  display: flex;
-  align-items: center;
-  gap: 9px;
   user-select: none;
 }
 
-.case-more summary::-webkit-details-marker {
-  display: none;
-}
-
-.case-more summary::before {
-  content: '▸';
-  transition: transform 0.2s;
+.case-toggle-caret {
   display: inline-block;
+  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
-.case-more[open] summary::before {
+.case-more.is-open .case-toggle-caret {
   transform: rotate(90deg);
+}
+
+/* 0fr → 1fr is the one way to transition to an auto height in CSS */
+.case-reveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.case-more.is-open .case-reveal {
+  grid-template-rows: 1fr;
+}
+
+.case-reveal-inner {
+  min-height: 0;
+  overflow: hidden;
 }
 
 .case-points {
@@ -348,6 +384,24 @@ section {
   flex-direction: column;
   gap: 16px;
   margin-top: 18px;
+}
+
+/* Each item starts hidden; opening staggers them by --i. Points (right)
+   and thumbnails (left) share the same schedule so both columns fill in
+   together. */
+.case-point,
+.case-thumb {
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+/* Timed so the last item lands exactly as the containers finish growing
+   (0.06 + 2 x 0.07 + 0.4 = 0.6s), instead of popping in afterwards. */
+.case-more.is-open .case-point,
+.case.is-open .case-thumb {
+  animation: printLine 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  animation-delay: calc(0.06s + var(--i) * 0.07s);
 }
 
 .case-point h4 {
@@ -363,14 +417,17 @@ section {
   color: var(--muted);
 }
 
+/* Stacked in the narrow left column; captions overlay the image so the
+   stack stays compact next to the three points. */
 .case-gallery {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  margin-top: 22px;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin-top: 18px;
 }
 
 .case-thumb {
+  position: relative;
   display: block;
   border: 1px solid var(--border);
   border-radius: 10px;
@@ -392,7 +449,7 @@ section {
 
 .case-thumb img {
   width: 100%;
-  height: 96px;
+  height: 104px;
   object-fit: cover;
   object-position: top left;
   display: block;
@@ -417,11 +474,18 @@ section {
   opacity: 1;
 }
 
+/* Caption sits over the image as a small pill instead of its own row */
 .case-thumb-label {
-  display: block;
-  font: 400 11px var(--font-mono);
-  color: var(--muted);
-  padding: 7px 10px;
+  position: absolute;
+  left: 8px;
+  bottom: 8px;
+  font: 500 11px var(--font-mono);
+  color: var(--soft);
+  background: rgba(13, 17, 23, 0.85);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  padding: 3px 9px;
+  pointer-events: none;
 }
 
 /* ── Screenshot lightbox ──────────────────────────────────────────── */
@@ -1039,8 +1103,23 @@ footer {
     padding: 22px;
   }
 
+  /* Single column: flatten the left wrapper so the gallery can be reordered
+     to sit *after* the points — otherwise it would open above the button
+     that revealed it, out of view. */
   .case-shot {
-    width: 100%;
+    display: contents;
+  }
+
+  .case-shot-main {
+    order: 1;
+  }
+
+  .case-body {
+    order: 2;
+  }
+
+  .case-gallery-reveal {
+    order: 3;
   }
 
   .case-gallery {
@@ -1116,5 +1195,17 @@ footer {
 
   .marquee-track {
     animation: none;
+  }
+
+  .case-reveal,
+  .case-gallery-reveal {
+    transition: none;
+  }
+
+  .case-more.is-open .case-point,
+  .case.is-open .case-thumb {
+    animation: none;
+    opacity: 1;
+    transform: none;
   }
 }
