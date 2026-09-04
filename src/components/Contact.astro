@@ -1,13 +1,58 @@
 ---
+const formspreeEndpoint = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
+
+const services = [
+  { value: 'web-development', label: '網站開發' },
+  { value: 'consulting', label: '技術諮詢' },
+  { value: 'automation', label: '自動化流程' },
+];
 ---
 <section id="contact">
   <div class="contact-card">
     <span class="contact-stamp">03 / contact</span>
     <h2>有專案想討論嗎？</h2>
     <p>來信說明你的需求，一個工作天內回覆。</p>
-    <a href="mailto:mail@yuzen.tw" class="contact-mail">mail@yuzen.tw</a>
+    <button type="button" id="booking-open" class="contact-mail">
+      預約 15 分鐘免費技術諮詢
+    </button>
     <div class="contact-github">
-      <a href="https://github.com/yuzenchen" target="_blank" rel="noopener noreferrer">github.com/yuzenchen</a>
+      <a href="mailto:mail@yuzen.tw">mail@yuzen.tw</a>
     </div>
   </div>
 </section>
+
+<dialog id="booking-dialog" class="booking" aria-labelledby="booking-title">
+  <form id="contact-form" action={formspreeEndpoint} method="POST" class="booking-panel">
+    <button type="button" class="booking-close" data-close-dialog aria-label="關閉">×</button>
+    <span class="booking-stamp">15 min / free</span>
+    <h2 id="booking-title">預約免費技術諮詢</h2>
+    <p class="booking-lead">留下聯絡方式與需求，我會安排時間與你聊聊。</p>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="name">姓名</label>
+        <input type="text" id="name" name="name" required />
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
+      </div>
+      <div class="form-group form-group--full">
+        <label for="service">服務類型</label>
+        <select id="service" name="service" required>
+          <option value="">選擇服務類型</option>
+          {services.map(({ value, label }) => <option value={value}>{label}</option>)}
+        </select>
+      </div>
+      <div class="form-group form-group--full">
+        <label for="message">需求說明</label>
+        <textarea id="message" name="message" rows="4" required></textarea>
+      </div>
+    </div>
+
+    <div class="booking-actions">
+      <button type="submit" class="contact-mail">送出預約</button>
+      <button type="button" class="booking-cancel" data-close-dialog>取消</button>
+    </div>
+  </form>
+</dialog>
