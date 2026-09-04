@@ -115,6 +115,12 @@ async function main() {
     expect(body.includes('API 服務已恢復正常'), 'monitoring settled state rendered');
     expect(body.includes('有專案想討論嗎'), 'contact card rendered');
     expect(body.includes('id="booking-dialog"'), 'booking dialog rendered');
+    expect(
+      ['web-development', 'consulting', 'automation', 'other'].every((v) =>
+        body.includes(`<option value="${v}">`),
+      ),
+      'all service types offered',
+    );
     expect(/href="\/_astro\/[^"]+\.css"/.test(body), 'fingerprinted CSS asset linked');
     // The page's only script (wave canvas) is small enough that Astro may
     // inline it rather than emit a fingerprinted file — accept either.
