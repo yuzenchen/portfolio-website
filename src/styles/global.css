@@ -1401,7 +1401,6 @@ footer {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 12px;
     padding: 0;
     border: 0;
     background: rgba(13, 17, 23, 0.5);
@@ -1433,11 +1432,6 @@ footer {
     font-size: 17px;
     /* The triangle's own bearing sits it left of centre */
     padding-left: 4px;
-  }
-
-  .anim-play-text {
-    font: 600 12px var(--font-mono);
-    color: var(--soft);
   }
 
   .contact-card {
