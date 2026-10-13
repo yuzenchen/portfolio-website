@@ -17,11 +17,15 @@
   --text: #e6edf3;
   --muted: #8b96a5;
   --soft: #c3ccd6;
-  --faint: #5a6472;
+  --faint: #808a99;
 
   /* Accent */
   --accent: #45d6a8;
   --accent-shadow: #1d5c47;
+
+  /* Errors */
+  --danger: #ff8080;
+  --danger-line: #d64545;
 
   /* Type */
   --font-sans: 'Noto Sans TC', system-ui, sans-serif;

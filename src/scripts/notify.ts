@@ -3,6 +3,7 @@ export type NotificationType = 'success' | 'error' | 'info';
 export function showNotification(message: string, type: NotificationType = 'info'): void {
   const el = document.createElement('div');
   el.className = `notification notification-${type}`;
+  el.setAttribute('role', 'status');
   el.textContent = message;
   document.body.appendChild(el);
 

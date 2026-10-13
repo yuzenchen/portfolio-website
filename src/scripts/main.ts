@@ -1,4 +1,4 @@
-import { initWave } from './wave';
+import { initRace } from './race';
 import { initTyping } from './typing';
 import { initContactForm } from './contact-form';
 import { initDisclosure } from './disclosure';
@@ -7,7 +7,7 @@ import { initOrderFlow } from './order-flow';
 import { initMonitor } from './monitor';
 
 const boot = (): void => {
-  initWave();
+  initRace();
   initTyping();
   initContactForm();
   initDisclosure();

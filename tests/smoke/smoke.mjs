@@ -89,13 +89,17 @@ async function main() {
     expect(body.includes('Yuzen Chen'), 'page contains "Yuzen Chen"');
     expect(body.includes('/logo.png'), 'nav logo rendered');
     expect(body.includes('id="typeWord"'), 'terminal prompt typewriter rendered');
-    expect(body.includes('id="cvWave"'), 'hero wave canvas rendered');
+    expect(body.includes('data-race'), 'hero race track rendered');
+    expect((body.match(/data-lane /g) ?? []).length === 2, 'both race lanes rendered');
+    expect(body.includes('2 hr') && body.includes('20 min'), 'race renders its finished clocks');
     expect(body.includes('marquee-track'), 'marquee rendered');
     expect(body.includes('id="case"'), 'case study section rendered');
     expect(body.includes('已上線營運中'), 'case status badge rendered');
     expect(body.includes('data-auto-open'), 'expandable detail rendered');
     expect(body.includes('case-gallery'), 'case gallery rendered');
-    expect(body.includes('bento-cell--wide'), 'bento results rendered');
+    expect(body.includes('case-point-st'), 'case points tagged with their station');
+    expect(body.includes('<main'), 'main landmark rendered');
+    expect((body.match(/<h1/g) ?? []).length === 1, 'exactly one h1');
     expect(body.includes('umimididi.com'), 'live-site link rendered');
     expect(body.includes('其他作品'), 'other work rendered');
     expect(body.includes('SECURITY'), 'cve category badge rendered');
@@ -122,7 +126,7 @@ async function main() {
       'all service types offered',
     );
     expect(/href="\/_astro\/[^"]+\.css"/.test(body), 'fingerprinted CSS asset linked');
-    // The page's only script (wave canvas) is small enough that Astro may
+    // The page's client script is small enough that Astro may
     // inline it rather than emit a fingerprinted file — accept either.
     expect(
       /src="\/_astro\/[^"]+\.js"/.test(body) || body.includes('<script type="module">'),

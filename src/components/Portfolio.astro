@@ -22,6 +22,11 @@ const items = (await getCollection('portfolio')).sort(
           <div class="proj-tags">
             {data.tags.map((tag) => <span>{tag}</span>)}
           </div>
+          {(data.demo ?? data.repo) && (
+            <a href={data.demo ?? data.repo} target="_blank" rel="noopener noreferrer" class="case-link">
+              {data.demo ? "查看線上 Demo ↗" : "查看原始碼 ↗"}
+            </a>
+          )}
         </div>
       </article>
     ))}

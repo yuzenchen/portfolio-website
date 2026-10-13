@@ -22,7 +22,7 @@ import Monitor from './anim/Monitor.astro';
           <!-- Phones only (hidden by CSS above 768px): the diagram sits still
                until this is tapped, then runs the timeline once. -->
           <button type="button" class="anim-play" aria-label="播放訂單流程動畫">
-            <span class="anim-play-badge" aria-hidden="true">▶</span>
+            <span class="anim-play-badge" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"><path d="M5.5 3.5v9l7-4.5z" /></svg></span>
           </button>
         </div>
         <figcaption>訪談後你會拿到的流程圖：每個步驟做什麼、誰會收到通知，一眼看完。</figcaption>
@@ -38,7 +38,7 @@ import Monitor from './anim/Monitor.astro';
         <div class="anim-wrap">
           <Monitor />
           <button type="button" class="anim-play" aria-label="播放監控報錯動畫">
-            <span class="anim-play-badge" aria-hidden="true">▶</span>
+            <span class="anim-play-badge" aria-hidden="true"><svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"><path d="M5.5 3.5v9l7-4.5z" /></svg></span>
           </button>
         </div>
         <figcaption>服務出狀況時，監控會比你先發現，並自動通報到 LINE 與 Email。</figcaption>

@@ -25,8 +25,8 @@ const services = [
 </section>
 
 <dialog id="booking-dialog" class="booking" aria-labelledby="booking-title">
-  <form id="contact-form" action={formspreeEndpoint} method="POST" class="booking-panel">
-    <button type="button" class="booking-close" data-close-dialog aria-label="關閉">×</button>
+  <form id="contact-form" action={formspreeEndpoint} method="POST" class="booking-panel" novalidate>
+    <button type="button" class="booking-close" data-close-dialog aria-label="關閉"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" /></svg></button>
     <span class="booking-stamp">15 min / free</span>
     <h2 id="booking-title">預約免費技術諮詢</h2>
     <p class="booking-lead">留下聯絡方式與需求，我會安排時間與你聊聊。</p>
@@ -35,10 +35,12 @@ const services = [
       <div class="form-group">
         <label for="name">姓名</label>
         <input type="text" id="name" name="name" required />
+        <p class="field-error" id="name-error" hidden></p>
       </div>
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" id="email" name="email" required />
+        <p class="field-error" id="email-error" hidden></p>
       </div>
       <div class="form-group form-group--full">
         <label for="service">服務類型</label>
@@ -50,8 +52,11 @@ const services = [
       <div class="form-group form-group--full">
         <label for="message">需求說明</label>
         <textarea id="message" name="message" rows="4" required></textarea>
+        <p class="field-error" id="message-error" hidden></p>
       </div>
     </div>
+
+    <p class="form-status" data-form-status role="alert" hidden></p>
 
     <div class="booking-actions">
       <button type="submit" class="contact-mail">送出預約</button>

@@ -33,6 +33,34 @@ a:hover {
   outline-offset: 2px;
 }
 
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+input,
+textarea {
+  caret-color: var(--accent);
+}
+
+html {
+  scrollbar-color: var(--border-hover) var(--bg);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-hover);
+  border: 2px solid var(--bg);
+  border-radius: 999px;
+}
+
 /* ── Nav ──────────────────────────────────────────────────────────── */
 nav {
   position: relative;
@@ -63,43 +91,40 @@ nav {
 }
 
 .nav-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--muted);
 }
 
 .nav-contact {
-  padding: 8px 18px;
+  padding: 0 18px;
   background: var(--accent);
   color: var(--bg) !important;
   font-weight: 600;
   border-radius: var(--r-pill);
 }
 
-/* ── Hero ─────────────────────────────────────────────────────────── */
+/* ── Hero: the race ───────────────────────────────────────────────── */
 .hero {
   position: relative;
-}
-
-#cvWave {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-.hero-inner {
-  position: relative;
   z-index: 2;
-  padding: 70px var(--pad-x) 40px;
   max-width: var(--page-max);
   margin: 0 auto;
-  pointer-events: none;
+  padding: 56px var(--pad-x) 0;
+}
+
+.hero-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 330px);
+  gap: 48px;
+  align-items: end;
 }
 
 .hero-prompt {
+  margin: 0 0 18px;
   font: 400 13px var(--font-mono);
   color: var(--accent);
-  margin-bottom: 18px;
 }
 
 #cursor {
@@ -113,15 +138,12 @@ nav {
 }
 
 .hero h1 {
-  margin: 0 0 8px;
-  font-size: 64px;
+  margin: 0;
+  font-size: clamp(40px, 5.2vw, 60px);
   font-weight: 900;
-  line-height: 1.15;
+  line-height: 1.16;
   letter-spacing: -0.01em;
-}
-
-.hero h1:nth-of-type(2) {
-  margin-bottom: 24px;
+  text-wrap: balance;
 }
 
 .hero .hl {
@@ -129,21 +151,21 @@ nav {
 }
 
 .hero-desc {
-  margin: 0 0 30px;
-  font-size: 16px;
+  text-wrap: pretty;
+  margin: 0 0 24px;
+  font-size: 15px;
   line-height: 1.8;
   color: var(--muted);
-  max-width: 44ch;
 }
 
 .hero-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: 14px;
-  pointer-events: auto;
 }
 
 .btn-primary {
-  padding: 14px 30px;
+  padding: 14px 28px;
   background: var(--accent);
   color: var(--bg);
   font-size: 15px;
@@ -153,11 +175,229 @@ nav {
 }
 
 .btn-dashed {
-  padding: 14px 30px;
+  padding: 14px 28px;
   border: 1.5px dashed var(--border-hover);
   color: var(--text);
   font-size: 15px;
   border-radius: var(--r-pill);
+}
+
+/* The track: one panel, two lanes, five stations each. Mint only ever
+   means "automated and done"; the manual lane stays in the greys. */
+.race {
+  margin: 44px 0 0;
+  padding: 24px 28px 20px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+}
+
+.race-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 6px 24px;
+  margin-bottom: 10px;
+  font: 500 12.5px var(--font-mono);
+  color: var(--muted);
+}
+
+.lane {
+  display: grid;
+  /* Clock column sizes to its content; .lane-time reserves the widest
+     reading so the stations never shift while the clock runs. */
+  grid-template-columns: 56px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+  padding: 16px 0;
+}
+
+.lane + .lane {
+  border-top: 1px dashed var(--border-dash);
+}
+
+.lane-name {
+  font: 600 14px var(--font-mono);
+  color: var(--muted);
+}
+
+.lane--auto .lane-name {
+  color: var(--accent);
+}
+
+.lane-stations {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.st {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 6px 8px;
+  border: 1px dashed var(--border-dash);
+  border-radius: 10px;
+  font-size: 13.5px;
+  line-height: 1.35;
+  text-align: center;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  color: var(--faint);
+  transition:
+    background-color 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+    border-color 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
+    color 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Manual work in progress: hatched and crawling, like a queue */
+.lane--manual .st.is-active {
+  border-style: solid;
+  border-color: var(--border-hover);
+  color: var(--text);
+  background: repeating-linear-gradient(-45deg, var(--panel) 0 8px, #1d2631 8px 16px) 0 0 / 22.6px 22.6px;
+  animation: grind 0.9s linear infinite;
+}
+
+.lane--manual .st.is-done {
+  border-style: solid;
+  border-color: var(--border-hover);
+  color: var(--soft);
+}
+
+/* The steps that cost the two hours stay hatched once the race is over,
+   so the finished still (no JS, reduced motion) still shows where the time
+   went. Static here; only the live active station crawls. */
+.lane--manual .st.is-done.is-slow {
+  background: repeating-linear-gradient(-45deg, var(--panel) 0 8px, #1d2631 8px 16px);
+}
+
+/* Arrival: a solid mint rule draws under the automated lane as it lands */
+.lane--auto .lane-stations {
+  position: relative;
+}
+
+.lane--auto .lane-stations::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -9px;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lane--auto.is-finished .lane-stations::after {
+  transform: scaleX(1);
+}
+
+.lane--auto .st.is-active {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.lane--auto .st.is-done {
+  border-style: solid;
+  border-color: var(--accent);
+  background: rgba(69, 214, 168, 0.12);
+  color: var(--accent);
+}
+
+.lane-clock {
+  margin: 0;
+  text-align: right;
+}
+
+.lane-time {
+  display: block;
+  /* Wide enough for the longest mid-run reading, "1 hr 59 min" (11 ch) */
+  min-width: 11ch;
+  font: 600 clamp(24px, 2.4vw, 34px) var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--soft);
+  white-space: nowrap;
+}
+
+.lane--auto .lane-time {
+  color: var(--accent);
+}
+
+.lane-unit {
+  display: block;
+  margin-top: 4px;
+  font: 400 12px var(--font-mono);
+  color: var(--muted);
+}
+
+/* Phones only: names the station a lane is on, since the bar has no room */
+.lane-now {
+  display: none;
+}
+
+.race-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px 24px;
+  margin-top: 6px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.race-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 36px;
+  margin: 0;
+}
+
+.race-facts div {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.race-facts dt {
+  font: 400 12.5px var(--font-mono);
+  color: var(--muted);
+}
+
+.race-facts dd {
+  margin: 0;
+  font: 600 15px var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.race-replay {
+  min-height: 44px;
+  padding: 0 20px;
+  background: none;
+  border: 1px solid var(--accent);
+  border-radius: var(--r-pill);
+  font: 500 13px var(--font-mono);
+  color: var(--accent);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.race-replay:hover {
+  background: rgba(69, 214, 168, 0.12);
+}
+
+.race-replay[hidden] {
+  display: none;
 }
 
 /* ── Marquee ──────────────────────────────────────────────────────── */
@@ -178,6 +418,7 @@ nav {
 }
 
 .marquee-track span {
+  white-space: pre;
   font: 500 14px var(--font-mono);
   color: var(--muted);
 }
@@ -295,6 +536,19 @@ section {
   min-width: 0;
 }
 
+/* Title first; the live status rides at the end of the title line */
+.case-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  margin-bottom: 10px;
+}
+
+.case-title h3 {
+  margin: 0;
+}
+
 .case-status {
   display: inline-flex;
   align-items: center;
@@ -304,7 +558,6 @@ section {
   border: 1px solid var(--accent);
   border-radius: var(--r-pill);
   padding: 4px 12px;
-  margin-bottom: 14px;
 }
 
 .case-status::before {
@@ -339,6 +592,7 @@ section {
 .case-toggle {
   display: inline-flex;
   align-items: center;
+  min-height: 44px;
   gap: 9px;
   background: none;
   border: none;
@@ -350,7 +604,7 @@ section {
 }
 
 .case-toggle-caret {
-  display: inline-block;
+  display: inline-flex;
   transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
@@ -518,10 +772,13 @@ section {
 
 .lightbox-close {
   position: absolute;
-  top: -14px;
-  right: -14px;
-  width: 34px;
-  height: 34px;
+  top: -18px;
+  right: -18px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
   border-radius: 50%;
   border: 1px solid var(--border);
   background: var(--panel);
@@ -538,70 +795,12 @@ section {
 }
 
 .case-link {
-  display: inline-block;
-  margin-top: 20px;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 8px;
   font: 500 13px var(--font-mono);
   color: var(--accent);
-}
-
-/* ── Bento results ────────────────────────────────────────────────── */
-.bento {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--gap-grid);
-  margin-top: var(--gap-grid);
-}
-
-.bento-cell {
-  background: var(--panel-alpha);
-  border: 1px solid var(--border);
-  border-radius: var(--r-card);
-  padding: 24px 26px;
-  transition: border-color 0.2s;
-}
-
-.bento-cell:hover {
-  border-color: var(--border-hover);
-}
-
-.bento-cell--wide {
-  grid-column: span 2;
-}
-
-.bento-num {
-  font: 600 34px var(--font-mono);
-  color: var(--accent);
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-}
-
-.bento-cell--wide .bento-num {
-  font-size: 30px;
-}
-
-.bento-arrow {
-  color: var(--faint);
-  margin: 0 2px;
-}
-
-.bento-icon {
-  width: 34px;
-  height: 34px;
-  color: var(--accent);
-  display: block;
-}
-
-.bento-label {
-  margin-top: 6px;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.bento-cell p {
-  margin: 8px 0 0;
-  font-size: 12.5px;
-  line-height: 1.7;
-  color: var(--muted);
 }
 
 /* ── Other work ───────────────────────────────────────────────────── */
@@ -694,68 +893,76 @@ section {
   color: var(--muted);
 }
 
-/* ── Services (three text cards) ──────────────────────────────────── */
-.svc-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--gap-grid);
-  align-items: start;
-}
-
-.svc-card {
-  background: var(--panel-alpha);
+/* ── Services: three lanes on one track ──────────────────────────── */
+.svc-lanes {
+  margin: 0;
+  padding: 4px 28px;
+  list-style: none;
+  background: var(--panel);
   border: 1px solid var(--border);
   border-radius: var(--r-card);
-  padding: 28px 26px;
-  transition: border-color 0.2s;
 }
 
-.svc-card:hover {
-  border-color: var(--border-hover);
+.svc-lane {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-areas:
+    "title desc"
+    "title stations";
+  gap: 12px 32px;
+  padding: 26px 0;
+}
+
+.svc-lane + .svc-lane {
+  border-top: 1px dashed var(--border-dash);
 }
 
 .svc-title {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.svc-badge {
-  font: 600 13px var(--font-mono);
-  background: var(--accent);
-  color: var(--bg);
-  padding: 5px 12px;
-  border-radius: var(--r-pill);
-  transform: rotate(-2deg);
-}
-
-.svc-title h3 {
+  grid-area: title;
+  align-self: start;
   margin: 0;
   font-size: 22px;
   font-weight: 900;
 }
 
-.svc-card p {
-  margin: 0 0 18px;
-  font-size: 14px;
+.svc-desc {
+  grid-area: desc;
+  margin: 0;
+  max-width: 60ch;
+  font-size: 14.5px;
   line-height: 1.85;
   color: var(--muted);
+  /* Break Chinese only at punctuation, so a clause never strands its tail
+     (e.g. 事情 / 上。); anywhere is the fallback if a clause cannot fit. */
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 
-.svc-chips {
+/* What each service covers: parallel, so plain pills with no connectors */
+.svc-stations {
+  grid-area: stations;
   display: flex;
-  gap: 8px;
   flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
-.svc-chips span {
-  font-size: 12.5px;
+.svc-stations li {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: var(--soft);
+}
+
+.svc-stations span {
   padding: 6px 13px;
   border: 1px solid var(--border-dash);
   border-radius: var(--r-pill);
-  color: var(--soft);
   background: var(--bg);
+  white-space: nowrap;
 }
 
 /* ── Tech stack ───────────────────────────────────────────────────── */
@@ -1062,8 +1269,14 @@ section {
   box-shadow: var(--shadow-hard);
 }
 
+.contact-github a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
 .contact-github {
-  margin-top: 22px;
+  margin-top: 12px;
   font: 400 13px var(--font-mono);
   color: var(--faint);
 }
@@ -1124,15 +1337,18 @@ button.contact-mail:disabled {
 
 .booking-close {
   position: absolute;
-  top: 12px;
-  right: 14px;
+  top: 8px;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
   background: none;
   border: none;
+  border-radius: var(--r-pill);
   color: var(--muted);
-  font-size: 26px;
-  line-height: 1;
   cursor: pointer;
-  padding: 4px 8px;
 }
 
 .booking-close:hover {
@@ -1222,6 +1438,43 @@ button.contact-mail:disabled {
   border-color: var(--accent);
 }
 
+.form-group input:focus-visible,
+.form-group select:focus-visible,
+.form-group textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.form-group [aria-invalid='true'] {
+  border-color: var(--danger-line);
+}
+
+.field-error {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: var(--danger);
+}
+
+.field-error[hidden] {
+  display: none;
+}
+
+.form-status {
+  margin: 18px 0 0;
+  padding: 10px 14px;
+  border: 1px solid var(--danger-line);
+  border-radius: 10px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--danger);
+  text-align: left;
+}
+
+.form-status[hidden] {
+  display: none;
+}
+
 .form-group select {
   cursor: pointer;
 }
@@ -1257,8 +1510,8 @@ button.contact-mail:disabled {
 }
 
 .notification-error {
-  border-color: #d64545;
-  color: #ff8080;
+  border-color: var(--danger-line);
+  color: var(--danger);
 }
 
 /* ── Footer ───────────────────────────────────────────────────────── */
@@ -1272,6 +1525,77 @@ footer {
 }
 
 /* ── Responsive ───────────────────────────────────────────────────── */
+/* Below 960px five full station names no longer fit their boxes, so the
+   race folds to bars well before the rest of the page goes single column. */
+@media (max-width: 960px) {
+  /* Each lane folds to name + clock over a five-segment bar, with the
+     current station named underneath. Station names stay in the list for
+     screen readers. */
+  .race {
+    margin-top: 32px;
+    padding: 18px 18px 16px;
+  }
+
+  .lane {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "name clock"
+      "bar bar"
+      "now now";
+    gap: 10px 12px;
+    padding: 14px 0;
+  }
+
+  .lane-name {
+    grid-area: name;
+  }
+
+  .lane-clock {
+    grid-area: clock;
+  }
+
+  .lane-stations {
+    grid-area: bar;
+    gap: 4px;
+  }
+
+  .st {
+    min-height: 8px;
+    height: 8px;
+    padding: 0;
+    border-radius: 4px;
+  }
+
+  .lane--manual .st.is-active {
+    background-size: 11.3px 11.3px;
+  }
+
+  .st-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .lane-now {
+    grid-area: now;
+    display: block;
+    margin: 0;
+    font: 400 12.5px var(--font-mono);
+    color: var(--soft);
+  }
+
+  .lane-time {
+    font-size: 26px;
+  }
+
+  .lane-unit {
+    margin-top: 2px;
+  }
+}
+
 @media (max-width: 768px) {
   nav {
     padding: 18px var(--pad-x-sm);
@@ -1282,19 +1606,26 @@ footer {
     font-size: 12px;
   }
 
-  .hero-inner {
-    padding: 48px var(--pad-x-sm) 32px;
+  .hero {
+    padding: 36px var(--pad-x-sm) 0;
   }
 
-  /* The second heading wraps to a third row here, and nothing can put margin
-     between two rows of the same element. So drop the margin between the two
-     headings and let line-height alone set the rhythm — otherwise row 2→3 sits
-     8px tighter than row 1→2. The 24px before the description is a separate
-     rule on :nth-of-type(2) and is more specific, so it survives. */
+  .hero-top {
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
   .hero h1 {
-    font-size: 40px;
-    line-height: 1.3;
-    margin-bottom: 0;
+    font-size: 38px;
+    line-height: 1.28;
+  }
+
+  .race-facts {
+    flex-direction: column;
+  }
+
+  .race-replay {
+    width: 100%;
   }
 
   #case,
@@ -1344,14 +1675,6 @@ footer {
     height: 150px;
   }
 
-  .bento {
-    grid-template-columns: 1fr;
-  }
-
-  .bento-cell--wide {
-    grid-column: span 1;
-  }
-
   .other {
     flex-direction: column;
     gap: 0;
@@ -1366,8 +1689,17 @@ footer {
     padding: 22px 24px;
   }
 
-  .svc-grid {
+  .svc-lanes {
+    padding: 0 20px;
+  }
+
+  .svc-lane {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "desc"
+      "stations";
+    padding: 22px 0;
   }
 
   .stack-row {
@@ -1429,9 +1761,8 @@ footer {
     border-radius: var(--r-pill);
     background: var(--panel);
     color: var(--accent);
-    font-size: 17px;
     /* The triangle's own bearing sits it left of centre */
-    padding-left: 4px;
+    padding-left: 3px;
   }
 
   .contact-card {

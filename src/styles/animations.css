@@ -14,3 +14,10 @@
   from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* Hatched manual station crawls one stripe period per loop */
+@keyframes grind {
+  to {
+    background-position: 22.6px 0;
+  }
+}

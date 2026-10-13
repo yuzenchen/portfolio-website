@@ -32,3 +32,8 @@ public/*.original.png
 # legacy backend artifacts (kept ignored in case anything sneaks back)
 __pycache__/
 *.pyc
+
+# Impeccable working files (decision sketches, review captures, question pages)
+.impeccable/mocks/
+.impeccable/review/
+.impeccable/questions/

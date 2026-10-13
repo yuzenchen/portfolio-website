@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "design-system-font",
+        "value": "plex mono",
+        "createdAt": "2026-10-13T14:25:24.088Z",
+        "reason": "Claude: IBM Plex Mono is declared in DESIGN.md typography; flagged file is a non-shipping decision sketch"
+      }
+    ]
+  }
+}

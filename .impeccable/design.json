@@ -1,0 +1,372 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-13T00:00:00Z",
+  "title": "Design System: yuzen.tw",
+  "extensions": {
+    "colorMeta": {
+      "ground": {
+        "role": "neutral",
+        "displayName": "Night Ground",
+        "canonical": "#0d1117",
+        "tonalRamp": [
+          "oklch(15% 0.015 255)",
+          "oklch(19% 0.015 255)",
+          "oklch(28% 0.015 255)",
+          "oklch(40% 0.015 255)",
+          "oklch(55% 0.015 255)",
+          "oklch(70% 0.015 255)",
+          "oklch(84% 0.012 255)",
+          "oklch(95% 0.008 255)"
+        ]
+      },
+      "panel": {
+        "role": "neutral",
+        "displayName": "Slate Panel",
+        "canonical": "#151b23",
+        "tonalRamp": [
+          "oklch(15% 0.016 255)",
+          "oklch(22% 0.016 255)",
+          "oklch(30% 0.016 255)",
+          "oklch(42% 0.016 255)",
+          "oklch(56% 0.016 255)",
+          "oklch(70% 0.014 255)",
+          "oklch(84% 0.01 255)",
+          "oklch(95% 0.006 255)"
+        ]
+      },
+      "panel-alpha": {
+        "role": "neutral",
+        "displayName": "Slate Panel 85%",
+        "canonical": "rgba(21, 27, 35, 0.85)"
+      },
+      "panel-soft": {
+        "role": "neutral",
+        "displayName": "Slate Panel 60%",
+        "canonical": "rgba(21, 27, 35, 0.6)"
+      },
+      "image-well": {
+        "role": "neutral",
+        "displayName": "Image Well",
+        "canonical": "#141b24"
+      },
+      "hatch-stripe": {
+        "role": "neutral",
+        "displayName": "Hatch Stripe",
+        "canonical": "#1d2631"
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#232b36"
+      },
+      "rule-dashed": {
+        "role": "neutral",
+        "displayName": "Dashed Rule",
+        "canonical": "#2a3542"
+      },
+      "rule-strong": {
+        "role": "neutral",
+        "displayName": "Strong Rule",
+        "canonical": "#3a4a5c"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#e6edf3",
+        "tonalRamp": [
+          "oklch(15% 0.012 250)",
+          "oklch(27% 0.012 250)",
+          "oklch(39% 0.012 250)",
+          "oklch(51% 0.012 250)",
+          "oklch(63% 0.012 250)",
+          "oklch(75% 0.012 250)",
+          "oklch(87% 0.01 250)",
+          "oklch(95% 0.008 250)"
+        ]
+      },
+      "ink-soft": {
+        "role": "neutral",
+        "displayName": "Soft Ink",
+        "canonical": "#c3ccd6"
+      },
+      "ink-muted": {
+        "role": "neutral",
+        "displayName": "Muted Ink",
+        "canonical": "#8b96a5"
+      },
+      "ink-faint": {
+        "role": "neutral",
+        "displayName": "Faint Ink",
+        "canonical": "#808a99"
+      },
+      "mint": {
+        "role": "primary",
+        "displayName": "Terminal Mint",
+        "canonical": "#45d6a8",
+        "tonalRamp": [
+          "oklch(18% 0.04 166)",
+          "oklch(28% 0.07 166)",
+          "oklch(40% 0.09 166)",
+          "oklch(52% 0.11 166)",
+          "oklch(64% 0.13 166)",
+          "oklch(79% 0.14 166)",
+          "oklch(88% 0.09 166)",
+          "oklch(95% 0.04 166)"
+        ]
+      },
+      "mint-deep": {
+        "role": "primary",
+        "displayName": "Deep Mint",
+        "canonical": "#1d5c47"
+      },
+      "mint-wash": {
+        "role": "primary",
+        "displayName": "Mint Wash",
+        "canonical": "rgba(69, 214, 168, 0.12)"
+      },
+      "danger": {
+        "role": "tertiary",
+        "displayName": "Error Rose",
+        "canonical": "#ff8080",
+        "tonalRamp": [
+          "oklch(18% 0.05 22)",
+          "oklch(28% 0.09 22)",
+          "oklch(40% 0.13 22)",
+          "oklch(52% 0.16 22)",
+          "oklch(62% 0.18 22)",
+          "oklch(74% 0.15 22)",
+          "oklch(86% 0.08 22)",
+          "oklch(95% 0.03 22)"
+        ]
+      },
+      "danger-line": {
+        "role": "tertiary",
+        "displayName": "Error Line",
+        "canonical": "#d64545"
+      },
+      "diagram-blue": {
+        "role": "tertiary",
+        "displayName": "Diagram Blue (explainers only)",
+        "canonical": "#3d9be9"
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Hero headline only; fixed line breaks, key words in mint."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles beside the outlined numeral; 34px in the contact card, 24px in the booking dialog."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Service names, case title (26px), FAQ questions (20px), other-work titles (18px)."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Lead copy in Muted Ink."
+      },
+      "body-sm": {
+        "displayName": "Body Small",
+        "purpose": "Secondary copy, case points, card descriptions."
+      },
+      "label": {
+        "displayName": "Mono Label",
+        "purpose": "Nav, prompt line, section notes, form labels, chips, captions, footer."
+      },
+      "numeral": {
+        "displayName": "Clock Numeral",
+        "purpose": "Race clocks, tabular figures."
+      },
+      "section-numeral": {
+        "displayName": "Section Numeral",
+        "purpose": "Outlined 01 to 05 section numbers; transparent fill, 1.5px mint stroke."
+      }
+    },
+    "shadows": [
+      {
+        "name": "hard-mint-offset",
+        "value": "4px 4px 0 #1d5c47",
+        "purpose": "Filled mint primary pills only."
+      },
+      {
+        "name": "dialog-backdrop",
+        "value": "rgba(5, 8, 12, 0.72)",
+        "purpose": "Backdrop behind the booking dialog; the lightbox uses 0.86."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-settle",
+        "value": "cubic-bezier(0.22, 0.61, 0.36, 1)",
+        "purpose": "Station colour changes (0.3s), grid-row reveals (0.6s), print-in items (0.4s)."
+      },
+      {
+        "name": "ease-arrive",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "The mint arrival rule under the automated lane (0.55s)."
+      },
+      {
+        "name": "ease-caret",
+        "value": "cubic-bezier(0.2, 0.7, 0.2, 1)",
+        "purpose": "Disclosure chevron rotation (0.25s)."
+      },
+      {
+        "name": "grind",
+        "value": "0.9s linear infinite",
+        "purpose": "The active manual station's hatch crawls one stripe period per loop."
+      },
+      {
+        "name": "print-stagger",
+        "value": "calc(0.06s + var(--i) * 0.07s)",
+        "purpose": "Stagger for disclosure points and thumbnails."
+      },
+      {
+        "name": "race-scale",
+        "value": "50ms per reconciliation minute",
+        "purpose": "Time-lapse at the true 6:1 ratio: 2 hr runs 6s, 20 min runs 1s."
+      },
+      {
+        "name": "blink",
+        "value": "1s step-end infinite",
+        "purpose": "Prompt cursor."
+      },
+      {
+        "name": "marquee",
+        "value": "22s linear infinite",
+        "purpose": "Marquee band; stopped under reduced motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone",
+        "value": "768px"
+      },
+      {
+        "name": "race-fold",
+        "value": "960px",
+        "purpose": "Hero race folds to bars; five station names no longer fit."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Pill",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Filled mint pill with the hard mint offset; the one primary action per view.",
+      "html": "<a href=\"#\" class=\"ds-btn-primary\">查看案例 →</a>",
+      "css": ".ds-btn-primary { display: inline-block; padding: 14px 28px; background: var(--accent, #45d6a8); color: var(--bg, #0d1117); font-family: 'Noto Sans TC', system-ui, sans-serif; font-size: 15px; font-weight: 700; text-decoration: none; border-radius: 999px; box-shadow: 4px 4px 0 var(--accent-shadow, #1d5c47); transition: filter 0.15s; } .ds-btn-primary:hover { filter: brightness(1.08); } .ds-btn-primary:focus-visible { outline: 2px solid var(--accent, #45d6a8); outline-offset: 2px; }"
+    },
+    {
+      "name": "Dashed Secondary Pill",
+      "kind": "button",
+      "refersTo": "button-dashed",
+      "description": "Transparent pill with a dashed strong-rule border; pairs with the primary.",
+      "html": "<a href=\"#\" class=\"ds-btn-dashed\">聯絡我</a>",
+      "css": ".ds-btn-dashed { display: inline-block; padding: 14px 28px; border: 1.5px dashed var(--border-hover, #3a4a5c); color: var(--text, #e6edf3); font-family: 'Noto Sans TC', system-ui, sans-serif; font-size: 15px; text-decoration: none; border-radius: 999px; transition: opacity 0.15s; } .ds-btn-dashed:hover { opacity: 0.85; } .ds-btn-dashed:focus-visible { outline: 2px solid var(--accent, #45d6a8); outline-offset: 2px; }"
+    },
+    {
+      "name": "Mint Outline Pill",
+      "kind": "button",
+      "refersTo": "button-outline-mint",
+      "description": "Mono mint-outlined pill for secondary in-component actions such as race replay.",
+      "html": "<button type=\"button\" class=\"ds-btn-outline\">重跑一次</button>",
+      "css": ".ds-btn-outline { min-height: 44px; padding: 0 20px; background: none; border: 1px solid var(--accent, #45d6a8); border-radius: 999px; font: 500 13px 'IBM Plex Mono', monospace; color: var(--accent, #45d6a8); cursor: pointer; transition: background-color 0.2s; } .ds-btn-outline:hover { background: rgba(69, 214, 168, 0.12); } .ds-btn-outline:focus-visible { outline: 2px solid var(--accent, #45d6a8); outline-offset: 2px; }"
+    },
+    {
+      "name": "Chips",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Mono pills for parallel items; the accent variant marks Taiwan-specific integrations only.",
+      "html": "<div class=\"ds-chips\"><span class=\"ds-chip\">前後端客製開發</span><span class=\"ds-chip ds-chip--accent\">LINE Pay 金流</span><span class=\"ds-status\">已上線營運中</span></div>",
+      "css": ".ds-chips { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; } .ds-chip { padding: 6px 13px; border: 1px solid var(--border-dash, #2a3542); border-radius: 999px; background: var(--bg, #0d1117); color: var(--soft, #c3ccd6); font: 400 12.5px 'IBM Plex Mono', monospace; } .ds-chip--accent { border-color: var(--accent, #45d6a8); color: var(--accent, #45d6a8); } .ds-status { display: inline-flex; align-items: center; gap: 7px; padding: 4px 12px; border: 1px solid var(--accent, #45d6a8); border-radius: 999px; color: var(--accent, #45d6a8); font: 600 11px 'IBM Plex Mono', monospace; } .ds-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent, #45d6a8); }"
+    },
+    {
+      "name": "Text Field with Error",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Ground-filled field with mono label, mint focus, and a field-level error in rose.",
+      "html": "<div class=\"ds-field\"><label for=\"ds-email\">Email</label><input id=\"ds-email\" type=\"email\" aria-invalid=\"true\" value=\"mail@\" /><p class=\"ds-field-error\">請輸入有效的 Email</p></div>",
+      "css": ".ds-field { display: flex; flex-direction: column; gap: 7px; max-width: 320px; } .ds-field label { font: 400 12px 'IBM Plex Mono', monospace; color: var(--muted, #8b96a5); } .ds-field input { padding: 11px 13px; background: var(--bg, #0d1117); border: 1px solid var(--border, #232b36); border-radius: 10px; color: var(--text, #e6edf3); caret-color: var(--accent, #45d6a8); font: 14px 'Noto Sans TC', system-ui, sans-serif; outline: none; transition: border-color 0.15s; } .ds-field input:focus { border-color: var(--accent, #45d6a8); } .ds-field input:focus-visible { outline: 2px solid var(--accent, #45d6a8); outline-offset: 1px; } .ds-field input[aria-invalid='true'] { border-color: var(--danger-line, #d64545); } .ds-field-error { margin: 0; font-size: 12.5px; line-height: 1.6; color: var(--danger, #ff8080); }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav",
+      "description": "YZ logo left (the real asset is /logo.png; a placeholder hexagon stands in here), lowercase mono links right, ending in the mint contact pill.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\" class=\"ds-nav-logo\" aria-label=\"yuzen.tw\"><svg viewBox=\"0 0 42 42\" width=\"42\" height=\"42\" aria-hidden=\"true\"><path d=\"M21 2 38 11.5v19L21 40 4 30.5v-19z\" fill=\"none\" stroke=\"#45d6a8\" stroke-width=\"2\"/><text x=\"21\" y=\"25\" text-anchor=\"middle\" font-family=\"IBM Plex Mono, monospace\" font-size=\"12\" font-weight=\"600\" fill=\"#e6edf3\">YZ</text></svg></a><div class=\"ds-nav-links\"><a href=\"#\">case</a><a href=\"#\">services</a><a href=\"#\" class=\"ds-nav-contact\">contact ↗</a></div></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 48px; background: var(--bg, #0d1117); } .ds-nav-logo { display: inline-flex; } .ds-nav-links { display: flex; gap: 26px; align-items: center; font: 400 13px 'IBM Plex Mono', monospace; } .ds-nav-links a { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted, #8b96a5); text-decoration: none; transition: opacity 0.15s; } .ds-nav-links a:hover { opacity: 0.85; } .ds-nav-links a:focus-visible { outline: 2px solid var(--accent, #45d6a8); outline-offset: 2px; } .ds-nav-links .ds-nav-contact { padding: 0 18px; background: var(--accent, #45d6a8); color: var(--bg, #0d1117); font-weight: 600; border-radius: 999px; }"
+    },
+    {
+      "name": "Panel Card",
+      "kind": "card",
+      "refersTo": "panel",
+      "description": "Slate panel, 1px hairline, 18px radius, no shadow; FAQ item shown with its tilted Q pill.",
+      "html": "<article class=\"ds-card\"><h3 class=\"ds-card-q\"><span class=\"ds-card-mark\">Q</span>結案後系統如果壞掉怎麼辦？</h3><p class=\"ds-card-a\">專案包含維護與監控，並會配置自動化報錯系統，確保營運不中斷。</p></article>",
+      "css": ".ds-card { background: var(--panel-alpha, rgba(21, 27, 35, 0.85)); border: 1px solid var(--border, #232b36); border-radius: 18px; padding: 28px 26px; color: var(--text, #e6edf3); font-family: 'Noto Sans TC', system-ui, sans-serif; transition: border-color 0.25s; } .ds-card:hover { border-color: var(--border-hover, #3a4a5c); } .ds-card-q { display: flex; align-items: baseline; gap: 12px; margin: 0 0 14px; font-size: 20px; font-weight: 900; line-height: 1.55; } .ds-card-mark { flex: none; font: 700 14px 'IBM Plex Mono', monospace; color: var(--bg, #0d1117); background: var(--accent, #45d6a8); border-radius: 999px; padding: 4px 11px; transform: rotate(-2deg); } .ds-card-a { margin: 0; padding-left: 42px; font-size: 14px; line-height: 1.95; color: var(--muted, #8b96a5); }"
+    },
+    {
+      "name": "Race Track",
+      "kind": "custom",
+      "refersTo": "race-station",
+      "description": "Signature two-lane race in its finished still: manual greys with hatched slow steps, automated mint with the arrival rule.",
+      "html": "<figure class=\"ds-race\"><div class=\"ds-lane\"><span class=\"ds-lane-name\">手動</span><ol class=\"ds-st-row\"><li class=\"ds-st ds-st--m\">匯出帳務明細</li><li class=\"ds-st ds-st--m ds-st--slow\">逐筆比對訂單</li><li class=\"ds-st ds-st--m\">找出逾時付款</li><li class=\"ds-st ds-st--m ds-st--slow\">手動更正狀態</li><li class=\"ds-st ds-st--m\">對帳完成</li></ol><span class=\"ds-clock\">2 hr</span></div><div class=\"ds-lane ds-lane--auto\"><span class=\"ds-lane-name\">自動</span><ol class=\"ds-st-row\"><li class=\"ds-st ds-st--a\">排程啟動</li><li class=\"ds-st ds-st--a\">掃描逾時付款</li><li class=\"ds-st ds-st--a\">向 LINE Pay 查詢</li><li class=\"ds-st ds-st--a\">自動更正狀態</li><li class=\"ds-st ds-st--a\">對帳完成</li></ol><span class=\"ds-clock\">20 min</span></div></figure>",
+      "css": ".ds-race { margin: 0; padding: 24px 28px 20px; background: var(--panel, #151b23); border: 1px solid var(--border, #232b36); border-radius: 18px; font-family: 'Noto Sans TC', system-ui, sans-serif; } .ds-lane { display: grid; grid-template-columns: 56px minmax(0, 1fr) 110px; align-items: center; gap: 20px; padding: 16px 0; } .ds-lane + .ds-lane { border-top: 1px dashed var(--border-dash, #2a3542); } .ds-lane-name { font: 600 14px 'IBM Plex Mono', monospace; color: var(--muted, #8b96a5); } .ds-lane--auto .ds-lane-name { color: var(--accent, #45d6a8); } .ds-st-row { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; } .ds-lane--auto .ds-st-row::after { content: ''; position: absolute; left: 0; right: 0; bottom: -9px; height: 2px; border-radius: 1px; background: var(--accent, #45d6a8); } .ds-st { display: flex; align-items: center; justify-content: center; min-height: 46px; padding: 6px 8px; border: 1px solid; border-radius: 10px; font-size: 13.5px; line-height: 1.35; text-align: center; transition: background-color 0.3s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.3s cubic-bezier(0.22, 0.61, 0.36, 1); } .ds-st--m { border-color: var(--border-hover, #3a4a5c); color: var(--soft, #c3ccd6); } .ds-st--slow { background: repeating-linear-gradient(-45deg, var(--panel, #151b23) 0 8px, #1d2631 8px 16px); } .ds-st--a { border-color: var(--accent, #45d6a8); background: rgba(69, 214, 168, 0.12); color: var(--accent, #45d6a8); } .ds-clock { text-align: right; font: 600 30px 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; color: var(--soft, #c3ccd6); white-space: nowrap; } .ds-lane--auto .ds-clock { color: var(--accent, #45d6a8); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Night-Shift Terminal",
+    "overview": "The site reads like a terminal left running after hours: near-black ground, slate panels, mono labels and timing digits, and one mint accent that lights up only where something is finished or can be acted on. It is dense the way a console is dense: thin rules, small mono captions, tabular numbers. The Chinese headlines carry the weight in Noto Sans TC Black. The playfulness is small and physical: the screenshot tilts a degree, the Q and stamp pills tilt two, section numbers are outlined, and primary pills cast a hard mint shadow.\n\nThe world is dark by commitment. The palette in `src/styles/tokens.css` is the brand, and there is no light theme. Depth comes from tone and rules, not soft shadows. Dashed rules mean waiting, unfinished, or parallel; solid rules mean settled. The signature component is the hero race track. One real reconciliation runs as two lanes, manual in greys with hatched slow steps and automated in mint with an arrival rule. The service rows reuse the same panel and dashed dividers, so the page reads as one material.\n\nThe YZ hexagon logo (`/logo.png`, 42px in the nav) is the only brand mark. Nothing on the site uses emoji. Typographic arrows such as → and ↗ are part of the voice.",
+    "keyCharacteristics": [
+      "Near-black ground (#0d1117), slate panels, a single mint accent.",
+      "Two families: Noto Sans TC for language, IBM Plex Mono for labels, prompts, and numbers.",
+      "Tonal layering and 1px rules instead of ambient shadows.",
+      "Pills for every action and tag; 18px cards; 10px fields and stations.",
+      "Dashed versus solid rules carry meaning: pending versus done.",
+      "Motion is time-lapse and print-in, and it always resolves to a static finished state with no JS or with reduced motion."
+    ],
+    "rules": [
+      {
+        "name": "The Mint Means Done Rule",
+        "body": "Inside the race track and any future process or lane diagram, mint marks the automated or finished state and nothing else. Manual and in-progress work stays in the greys. Elsewhere mint is the one action colour. A second accent hue never appears outside the explainers.",
+        "section": "colors"
+      },
+      {
+        "name": "The Dark Commitment Rule",
+        "body": "No light theme and no light sections. Every surface sits on Night Ground or a Slate Panel.",
+        "section": "colors"
+      },
+      {
+        "name": "The Measured-in-Mono Rule",
+        "body": "Times, counts, and prompts are set in IBM Plex Mono with tabular figures. Claims and explanations are set in Noto Sans TC.",
+        "section": "typography"
+      },
+      {
+        "name": "The One Shadow Rule",
+        "body": "The hard mint offset belongs only to filled mint pills. Cards, panels, images, and dialogs never cast shadows.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do keep every surface on Night Ground (#0d1117) or Slate Panel (#151b23), and add depth with 1px Hairline borders, not shadows.",
+      "Do reserve mint for automated or finished states inside process diagrams. Elsewhere use it as the single action colour; manual and pending states stay grey.",
+      "Do use dashed rules for pending or parallel items and solid rules for settled ones.",
+      "Do set times, counts, and prompts in IBM Plex Mono with tabular figures, and headlines in Noto Sans TC 900.",
+      "Do make every action and tag a full pill, and give filled mint pills the 4px 4px 0 Deep Mint offset.",
+      "Do draw icons as inline SVG at stroke 1.75 with currentColor.",
+      "Do render the finished state on the server so animations degrade to a correct still under reduced motion or without JS. On phones, explainer motion plays only on tap.",
+      "Do show form errors at the field, in Error Rose text with an Error Line border, and keep targets at least 44px.",
+      "Do keep the YZ hexagon logo as the only brand mark."
+    ],
+    "donts": [
+      "Don't use emoji anywhere. The smoke test fails on them; typographic arrows (→ ↗) are fine.",
+      "Don't introduce a light theme, light section, or second accent hue in page chrome. The explainer palette stays inside the explainers.",
+      "Don't put shadows on cards, panels, images, or dialogs, or use a soft blurred shadow anywhere.",
+      "Don't use mint for manual, waiting, or failing states. Errors are Error Rose, and progress is grey.",
+      "Don't darken Faint Ink below #808a99; it is the contrast floor for captions on the panel.",
+      "Don't use icon fonts, `<img>` icons, or text glyphs as icons in page chrome."
+    ]
+  }
+}

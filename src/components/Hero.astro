@@ -1,17 +1,76 @@
 ---
+/**
+ * The race: one reconciliation run at Wama' House, by hand and automated.
+ * Every station is a reconciliation step, so the clocks (the measured 2 hr
+ * and 20 min) time exactly what the lanes show. The server renders the finished state, so
+ * without JS (or with reduced motion) the visitor sees the result directly.
+ */
+const lanes = [
+  {
+    id: 'manual',
+    name: '手動',
+    minutes: 120,
+    final: '2 hr',
+    stations: ['匯出帳務明細', '逐筆比對訂單', '找出逾時付款', '手動更正狀態', '對帳完成'],
+    // The steps that eat the two hours stay hatched in the finished still.
+    slow: [1, 3],
+  },
+  {
+    id: 'auto',
+    name: '自動',
+    minutes: 20,
+    final: '20 min',
+    stations: ['排程啟動', '掃描逾時付款', '向 LINE Pay 查詢', '自動更正狀態', '對帳完成'],
+    slow: [] as number[],
+  },
+];
 ---
-<div class="hero">
-  <canvas id="cvWave"></canvas>
-  <header class="hero-inner">
-    <div class="hero-prompt">$ <span id="typeWord">whoami</span><span id="cursor"></span></div>
-    <h1>用<span class="hl">自動化流程</span>，</h1>
-    <h1>幫你公司釋放 <span class="hl">80%</span> 作業時間。</h1>
-    <p class="hero-desc">
-      專為電商、新創團隊打造自動化工作流，從金流物流 API 串接、進銷存自動化到數據爬蟲，讓系統替你 24 小時賺錢。
-    </p>
-    <div class="hero-actions">
-      <a href="#case" class="btn-primary">查看案例 →</a>
-      <a href="#contact" class="btn-dashed">聯絡我</a>
+<header class="hero">
+  <div class="hero-top">
+    <div class="hero-head">
+      <p class="hero-prompt">$ <span id="typeWord">whoami</span><span id="cursor" aria-hidden="true"></span></p>
+      <h1>用<span class="hl">自動化流程</span>，<br />幫你公司釋放<br /><span class="hl">80%</span> 作業時間。</h1>
     </div>
-  </header>
-</div>
+    <div class="hero-side">
+      <p class="hero-desc">
+        專為電商、新創團隊打造自動化工作流，從金流物流 API 串接、進銷存自動化到數據爬蟲，讓系統替你 24 小時賺錢。
+      </p>
+      <div class="hero-actions">
+        <a href="#case" class="btn-primary">查看案例 →</a>
+        <a href="#contact" class="btn-dashed">聯絡我</a>
+      </div>
+    </div>
+  </div>
+
+  <figure class="race" data-race aria-labelledby="race-title">
+    <div class="race-head">
+      <span id="race-title">每次對帳，兩種跑法 · Wama' House 實測耗時</span>
+      <span class="race-scale">縮時播放：1 秒約等於 20 分鐘</span>
+    </div>
+
+    {lanes.map(({ id, name, minutes, final, stations, slow }) => (
+      <div class:list={['lane', `lane--${id}`, 'is-finished']} data-lane data-minutes={minutes}>
+        <span class="lane-name">{name}</span>
+        <ol class="lane-stations" aria-label={`${name}處理的五個步驟`}>
+          {stations.map((s, i) => (
+            <li class:list={['st', 'is-done', slow.includes(i) && 'is-slow']}><span class="st-label">{s}</span></li>
+          ))}
+        </ol>
+        <p class="lane-clock">
+          <span class="lane-time" data-time>{final}</span>
+          <span class="lane-unit">對帳耗時</span>
+        </p>
+        <p class="lane-now" data-now aria-hidden="true">{stations[stations.length - 1]}</p>
+      </div>
+    ))}
+
+    <div class="race-foot">
+      <dl class="race-facts">
+        <div><dt>人工介入</dt><dd>0 次</dd></div>
+        <div><dt>7-11 托運單</dt><dd>1 鍵產出</dd></div>
+        <div><dt>每次對帳</dt><dd>2 hr → 20 min</dd></div>
+      </dl>
+      <button type="button" class="race-replay" data-replay hidden>重跑一次</button>
+    </div>
+  </figure>
+</header>

@@ -1,4 +1,4 @@
-import { prefersReducedMotion } from './canvas';
+import { prefersReducedMotion } from './motion';
 
 const WORDS = ['whoami', 'yuzen', 'sre', 'devops', 'consultant'];
 const TYPE_MS = 90;
