@@ -1,4 +1,41 @@
 ---
 const year = new Date().getFullYear();
+
+const groups = [
+  {
+    label: '開發',
+    items: ['Node.js', 'Express', 'MongoDB', 'vanilla JS', 'Docker', 'Jest'],
+  },
+  {
+    label: '台灣在地金物流',
+    items: ['LINE Pay', '綠界科技 ECPay 物流（7-11 超商取貨）'],
+  },
+  {
+    label: '部署',
+    items: ['Render', 'Cloudflare Pages', 'Docker Compose'],
+  },
+  {
+    label: '品質',
+    items: ['WCAG 2.1 AA', 'Zod 驗證', 'pino 日誌'],
+  },
+];
 ---
-<footer>© {year} Yuzen Chen · yuzen.tw</footer>
+<footer>
+  <div class="footer-inner">
+    <details class="stack-details">
+      <summary>
+        <svg class="stack-chevron" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5l4.5 4.5L6 12.5" /></svg>
+        使用的技術
+      </summary>
+      <dl class="stack-list">
+        {groups.map(({ label, items }) => (
+          <div class="stack-group">
+            <dt>{label}</dt>
+            <dd>{items.join(' · ')}</dd>
+          </div>
+        ))}
+      </dl>
+    </details>
+    <p class="footer-copy">© {year} Yuzen Chen · yuzen.tw</p>
+  </div>
+</footer>

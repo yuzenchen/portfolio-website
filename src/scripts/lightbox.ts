@@ -1,19 +1,21 @@
 /**
- * Opens case-study screenshots in a modal instead of a new tab. The markup is
- * a plain link to the image, so without JS the click still shows the file.
+ * Opens screenshots in a modal instead of leaving the page. Every
+ * `a[data-lightbox]` is bound, with its `data-label` as the caption. The
+ * markup is a plain link to the image, so without JS the click still shows
+ * the file.
  */
 export function initLightbox(): void {
   const dialog = document.getElementById('shot-lightbox') as HTMLDialogElement | null;
   const img = document.getElementById('lightbox-img') as HTMLImageElement | null;
   const caption = document.getElementById('lightbox-caption');
-  const thumbs = document.querySelectorAll<HTMLAnchorElement>('.case-thumb');
-  if (!dialog || !img || !caption || thumbs.length === 0) return;
+  const links = document.querySelectorAll<HTMLAnchorElement>('a[data-lightbox]');
+  if (!dialog || !img || !caption || links.length === 0) return;
 
-  thumbs.forEach((thumb) => {
-    thumb.addEventListener('click', (e) => {
+  links.forEach((link) => {
+    link.addEventListener('click', (e) => {
       e.preventDefault();
-      const label = thumb.dataset.label ?? '';
-      img.src = thumb.href;
+      const label = link.dataset.label ?? '';
+      img.src = link.href;
       img.alt = label;
       caption.textContent = label;
       dialog.showModal();

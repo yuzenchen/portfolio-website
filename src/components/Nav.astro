@@ -1,12 +1,23 @@
 ---
+const links = [
+  { href: '#case', label: '案例' },
+  { href: '#services', label: '服務' },
+  { href: '#process', label: '合作流程' },
+  { href: '#faq', label: '常見問題' },
+];
 ---
-<nav>
-  <a href="#" class="nav-logo" aria-label="yuzen.tw">
-    <img src="/logo.png" alt="YZ logo" width="42" height="42" />
+<nav aria-label="主選單">
+  <div class="nav-inner">
+  <a href="#" class="nav-brand">
+    <img src="/logo.png" alt="" width="42" height="42" />
+    <span class="nav-brand-text">
+      <span class="nav-brand-name">Yuzen Chen</span>
+      <span class="nav-brand-tag">流程自動化 × 系統開發</span>
+    </span>
   </a>
   <div class="nav-links">
-    <a href="#case">case</a>
-    <a href="#services">services</a>
-    <a href="#contact" class="nav-contact">contact ↗</a>
+    {links.map(({ href, label }) => <a href={href}>{label}</a>)}
+  </div>
+  <a href="#contact" class="nav-contact">聯絡我</a>
   </div>
 </nav>

@@ -1,0 +1,32 @@
+---
+/**
+ * Measured results from Wama' House, right under the hero. Only the first
+ * card animates (a countdown from the old reconciliation time); the markup
+ * holds the final figure, so no-JS and reduced-motion visitors see it as is.
+ */
+---
+<section class="results" aria-label="Wama' House 實測成果">
+  <div class="result">
+    <p class="result-label">每次對帳</p>
+    <p class="result-value">
+      <span class="sr-only">每次對帳從 120 分鐘降到 20 分鐘</span>
+      <span class="result-was" aria-hidden="true">120 →</span>
+      <span class="result-num" aria-hidden="true" data-countdown data-from="120" data-to="20">20</span>
+      <span class="result-unit" aria-hidden="true">分鐘</span>
+    </p>
+  </div>
+  <div class="result">
+    <p class="result-label">人工介入</p>
+    <p class="result-value">
+      <span class="result-num">0</span>
+      <span class="result-unit">次</span>
+    </p>
+  </div>
+  <div class="result">
+    <p class="result-label">超商托運單</p>
+    <p class="result-value">
+      <span class="result-num">1</span>
+      <span class="result-unit">鍵產出</span>
+    </p>
+  </div>
+</section>

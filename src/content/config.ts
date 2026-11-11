@@ -7,6 +7,12 @@ const portfolio = defineCollection({
     /** Uppercase badge shown on the card thumbnail, e.g. "E-COMMERCE". */
     category: z.string().optional(),
     description: z.string(),
+    /** How the work was done by hand before the project. When both `before`
+     *  and `after` are set, the card shows them as a 原本 / 現在 pair in
+     *  place of `description`. */
+    before: z.string().optional(),
+    /** What the project changed it to; pairs with `before`. */
+    after: z.string().optional(),
     tags: z.array(z.string()),
     /** Live demo URL. Takes priority over `repo` for the card's link. */
     demo: z.string().url().optional(),

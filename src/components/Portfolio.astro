@@ -18,7 +18,20 @@ const items = (await getCollection('portfolio')).sort(
         <div class="other-body">
           {data.category && <span class="other-cat">{data.category}</span>}
           <h4>{data.title}</h4>
-          <p>{data.description}</p>
+          {data.before && data.after ? (
+            <dl class="ba">
+              <div class="ba-item">
+                <dt class="ba-label">原本</dt>
+                <dd class="ba-text">{data.before}</dd>
+              </div>
+              <div class="ba-item ba-item--now">
+                <dt class="ba-label">現在</dt>
+                <dd class="ba-text">{data.after}</dd>
+              </div>
+            </dl>
+          ) : (
+            <p>{data.description}</p>
+          )}
           <div class="proj-tags">
             {data.tags.map((tag) => <span>{tag}</span>)}
           </div>

@@ -1,11 +1,18 @@
 ---
-const items = '✦ WEBSITE ✦ IT CONSULTATION ✦ AUTOMATION ✦ CLOUD ✦ SECURITY ✦ LB ✦ CICD ';
-// Track holds two identical spans; the keyframe shifts -50% for a seamless loop.
-const half = items + items;
+const items = ['對帳自動化', '訂單自動通知', '金流物流串接', '庫存即時同步', '異常自動通報', '上線後持續維護'];
+// The track holds two identical halves; the keyframe shifts -50% for a
+// seamless loop. Each half repeats the list three times so it is wider than
+// a large screen. Spacing comes from margins, never trailing spaces.
+const half = [...items, ...items, ...items];
 ---
 <div class="marquee" aria-hidden="true">
   <div class="marquee-track">
-    <span>{half}</span>
-    <span>{half}</span>
+    {[0, 1].map(() => (
+      <div class="marquee-half">
+        {half.map((item) => (
+          <span class="marquee-item">{item}<span class="marquee-sep">✦</span></span>
+        ))}
+      </div>
+    ))}
   </div>
 </div>

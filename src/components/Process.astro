@@ -1,0 +1,44 @@
+---
+// Step 03 has no description yet: the owner has not supplied the text, so the
+// step renders its title only (no placeholder, no empty paragraph).
+const steps: { num: string; title: string; desc?: string; cta?: boolean }[] = [
+  {
+    num: '01',
+    title: '免費諮詢 15 分鐘',
+    desc: '您說明現在最花時間的作業，我判斷能不能自動化、值不值得做。',
+    cta: true,
+  },
+  {
+    num: '02',
+    title: '需求訪談與流程圖',
+    desc: '我把您的作業畫成一張白話文流程圖，您確認沒問題才開工。',
+  },
+  { num: '03', title: '開發與測試' },
+  {
+    num: '04',
+    title: '上線與維護',
+    desc: '系統上線後持續監控，異常時自動通知。',
+  },
+];
+---
+<section id="process">
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <h2>合作流程</h2>
+  </div>
+  <div class="process-panel">
+    <ol class="process-steps">
+      {steps.map(({ num, title, desc, cta }) => (
+        <li class="process-step">
+          <span class="process-marker" aria-hidden="true"></span>
+          <div class="process-body">
+            <span class="process-num" aria-hidden="true">{num}</span>
+            <h3 class="process-title">{title}</h3>
+            {desc && <p class="process-desc">{desc}</p>}
+            {cta && <a href="#contact" class="btn-primary process-cta" data-booking>預約諮詢</a>}
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

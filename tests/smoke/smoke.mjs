@@ -88,27 +88,30 @@ async function main() {
     expect(res.status === 200, `GET / returns 200 (got ${res.status})`);
     expect(body.includes('Yuzen Chen'), 'page contains "Yuzen Chen"');
     expect(body.includes('/logo.png'), 'nav logo rendered');
-    expect(body.includes('id="typeWord"'), 'terminal prompt typewriter rendered');
+    expect(body.includes('aria-label="主選單"'), 'main nav rendered');
+    expect(body.includes('流程自動化 × 系統開發'), 'nav tagline rendered');
     expect(body.includes('data-race'), 'hero race track rendered');
     expect((body.match(/data-lane /g) ?? []).length === 2, 'both race lanes rendered');
-    expect(body.includes('2 hr') && body.includes('20 min'), 'race renders its finished clocks');
+    expect(body.includes('人工處理') && body.includes('系統自動'), 'race lanes labelled');
+    expect(body.includes('人工介入') && body.includes('鍵產出'), 'results row rendered');
     expect(body.includes('marquee-track'), 'marquee rendered');
     expect(body.includes('id="case"'), 'case study section rendered');
     expect(body.includes('已上線營運中'), 'case status badge rendered');
-    expect(body.includes('data-auto-open'), 'expandable detail rendered');
-    expect(body.includes('case-gallery'), 'case gallery rendered');
-    expect(body.includes('case-point-st'), 'case points tagged with their station');
+    expect(body.includes('bento'), 'case bento rendered');
+    expect((body.match(/data-lightbox/g) ?? []).length === 3, 'three lightbox screenshots rendered');
+    expect(body.includes('帳，系統自己對'), 'case reconciliation card rendered');
     expect(body.includes('<main'), 'main landmark rendered');
     expect((body.match(/<h1/g) ?? []).length === 1, 'exactly one h1');
     expect(body.includes('umimididi.com'), 'live-site link rendered');
     expect(body.includes('其他作品'), 'other work rendered');
     expect(body.includes('SECURITY'), 'cve category badge rendered');
-    expect(body.includes('專業服務'), 'services section rendered');
-    expect(body.includes('id="stack"'), 'tech stack section rendered');
+    expect(body.includes('我能幫您做什麼'), 'services section rendered');
+    expect(body.includes('id="process"') && body.includes('合作流程'), 'process section rendered');
+    expect(body.includes('stack-details'), 'footer tech stack rendered');
     expect(body.includes('綠界科技 ECPay'), 'local logistics chip rendered');
     expect(body.includes('id="faq"'), 'faq section rendered');
-    expect(body.includes('要怎麼跟你溝通需求'), 'communication question rendered');
-    expect(body.includes('結案後系統如果壞掉'), 'maintenance question rendered');
+    expect(body.includes('要怎麼跟您溝通'), 'communication question rendered');
+    expect(body.includes('系統上線後壞掉怎麼辦'), 'maintenance question rendered');
     expect(body.includes('data-anim="order-flow"'), 'order flow animation rendered');
     expect(body.includes('data-anim="monitor"'), 'monitoring animation rendered');
     // Phones hold a still until this is tapped; it is CSS-hidden on desktop.
@@ -117,7 +120,16 @@ async function main() {
     // off or reduced motion on still gets a finished diagram.
     expect(body.includes('自動開立發票') && body.includes('已開立'), 'order flow settled state rendered');
     expect(body.includes('API 服務已恢復正常'), 'monitoring settled state rendered');
-    expect(body.includes('有專案想討論嗎'), 'contact card rendered');
+    expect(body.includes('公司裡有哪件事，每天都在重複做'), 'contact card rendered');
+    expect((body.match(/data-booking/g) ?? []).length >= 2, 'at least two booking triggers rendered');
+    // Absolute URL built from SITE. The Dockerfile defaults SITE to
+    // http://localhost, so the image under test is http; production builds
+    // (SITE unset or https) emit https://yuzen.tw/og.png.
+    expect(/property="og:image" content="https?:\/\/[^"]*\/og\.png"/.test(body), 'absolute og:image share card');
+    expect(
+      !['80% 作業時間', '數據爬蟲', '24 小時賺錢', 'whoami'].some((t) => body.includes(t)),
+      'removed copy is gone',
+    );
     expect(body.includes('id="booking-dialog"'), 'booking dialog rendered');
     expect(
       ['web-development', 'consulting', 'automation', 'other'].every((v) =>

@@ -4,14 +4,15 @@ const FORMSPREE_ENDPOINT = import.meta.env.PUBLIC_FORMSPREE_ENDPOINT ?? '';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /**
- * Booking dialog: opened from the contact CTA, submits to Formspree over
- * fetch so the visitor stays on the page.
+ * Booking dialog: opened from every [data-booking] trigger (each is a plain
+ * link to #contact, so without JS it still lands on the contact card), and
+ * submits to Formspree over fetch so the visitor stays on the page.
  */
 export function initContactForm(): void {
   const dialog = document.getElementById('booking-dialog') as HTMLDialogElement | null;
-  const openBtn = document.getElementById('booking-open');
+  const triggers = document.querySelectorAll<HTMLElement>('[data-booking]');
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
-  if (!dialog || !openBtn || !form) return;
+  if (!dialog || !form) return;
 
   const closeButtons = dialog.querySelectorAll<HTMLElement>('[data-close-dialog]');
   const status = form.querySelector<HTMLElement>('[data-form-status]');
@@ -51,7 +52,12 @@ export function initContactForm(): void {
   });
   dialog.addEventListener('close', clearAll);
 
-  openBtn.addEventListener('click', () => dialog.showModal());
+  triggers.forEach((t) =>
+    t.addEventListener('click', (e) => {
+      e.preventDefault();
+      dialog.showModal();
+    }),
+  );
   closeButtons.forEach((b) => b.addEventListener('click', () => dialog.close()));
 
   // Click on the backdrop (outside the panel) dismisses

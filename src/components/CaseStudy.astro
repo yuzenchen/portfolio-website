@@ -1,99 +1,99 @@
 ---
-const highlights = [
-  {
-    title: '三種角色，一套系統',
-    body: '訪客瀏覽下單、經銷商專屬組合包與批量訂貨、管理者後台（組合包／加價購管理、即時定價預覽、訂單列表、團購頁）。',
-  },
-  {
-    title: '付款對帳自動化',
-    body: '定時掃描逾時未完成的付款，主動向 LINE Pay 查詢並自動更正訂單狀態，不需人工對帳。',
-  },
-  {
-    title: '7-11 超商取貨物流串接',
-    body: '整合綠界科技 ECPay 物流 API，後台一鍵產出托運單，物流狀態自動回寫訂單。',
-  },
-];
+/* Screenshots open in the shared lightbox (src/scripts/lightbox.ts). Each one
+   is a plain link to the image file, so without JS the click still shows it. */
+const mainShot = {
+  src: '/case-dashboard.jpg',
+  label: '營運 Dashboard',
+  alt: "Wama' House 營運 Dashboard 截圖",
+};
 
-const shots = [
-  { src: '/case-dashboard.jpg', label: '營運 Dashboard' },
-  { src: '/case-inventory.jpg', label: '庫存管理' },
-  { src: '/case-orders.jpg', label: '訂單 / 物流' },
+const sideShots = [
+  { src: '/case-orders.jpg', label: '訂單 / 物流', alt: '訂單與物流管理畫面截圖' },
+  { src: '/case-inventory.jpg', label: '庫存管理', alt: '庫存管理畫面截圖' },
 ];
 ---
 <section id="case">
   <div class="sec-head">
     <span class="sec-num">01</span>
-    <h2>精選案例</h2>
+    <h2>實際案例</h2>
     <span class="sec-note">/ 從零到上線</span>
   </div>
 
-  <article class="case">
-    <div class="case-shot">
-      <div class="case-shot-main">
-        <img src="/petsnack.png" alt="Wama' House 寵物零食電商" loading="lazy" decoding="async" />
+  <div class="case-title">
+    <h3>Wama&#39; House 寵物零食電商</h3>
+    <span class="case-status">已上線營運中</span>
+  </div>
+  <p class="case-lead">從零打造的完整電商系統。老闆現在不用自己對帳，也不用手動開托運單。</p>
+
+  <div class="bento">
+    <div class="bento-row bento-row--top">
+      <div class="bento-card bento-card--shots bento-card--main">
+        <a href={mainShot.src} class="shot-link" data-lightbox data-label={mainShot.label}>
+          <img src={mainShot.src} alt={mainShot.alt} loading="lazy" decoding="async" />
+          <!-- The image alt already names the shot; these two are visual only -->
+          <span class="shot-zoom" aria-hidden="true">點擊放大</span>
+          <span class="shot-label" aria-hidden="true">{mainShot.label}</span>
+        </a>
       </div>
 
-      <!-- Backend screenshots live under the storefront shot and reveal with
-           the points on the right, so the left column doesn't sit empty.
-           Plain links keep the full image reachable without JS. -->
-      <div class="case-gallery-reveal">
-        <div class="case-gallery-inner">
-          <div class="case-gallery">
-            {shots.map(({ src, label }, i) => (
-              <a href={src} target="_blank" rel="noopener noreferrer" class="case-thumb" data-label={label} style={`--i: ${i}`}>
-                <!-- Not lazy: the collapsed wrapper has zero height, so a lazy
-                     image would only start loading as the reveal begins and
-                     would pop in mid-animation. ~120 kB for all three. -->
-                <span class="case-thumb-img">
-                  <img src={src} alt={label} decoding="async" />
-                  <span class="case-thumb-zoom">點擊放大</span>
-                </span>
-                <span class="case-thumb-label">{label}</span>
-              </a>
-            ))}
+      <div class="bento-card">
+        <svg class="bento-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 11l3 3 8-8" /><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h9" /></svg>
+        <h4>帳，系統自己對</h4>
+        <dl class="ba">
+          <div class="ba-item">
+            <dt class="ba-label">原本</dt>
+            <dd class="ba-text">匯出明細、逐筆比對、手動更正，每次約 2&nbsp;小時。</dd>
           </div>
-        </div>
+          <div class="ba-item ba-item--now">
+            <dt class="ba-label">現在</dt>
+            <dd class="ba-text">系統定時檢查未完成的付款，自動向 LINE Pay 查詢並更正訂單，20&nbsp;分鐘完成。</dd>
+          </div>
+        </dl>
       </div>
     </div>
 
-    <div class="case-body">
-      <div class="case-title">
-        <h3>Wama&#39; House 寵物零食電商</h3>
-        <span class="case-status">已上線營運中</span>
-      </div>
-      <p class="case-lead">前端、後端、金流、物流與部署，從零到上線的完整電商系統。</p>
-
-      <!-- Button + grid-row reveal so the height animates; the disclosure
-           script toggles .is-open on click and when scrolled into view. -->
-      <div class="case-more" data-auto-open>
-        <button type="button" class="case-toggle" aria-expanded="false" aria-controls="case-detail">
-          <span class="case-toggle-caret"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3.5 10.5 8 6 12.5" /></svg></span>我做了什麼
-        </button>
-
-        <div class="case-reveal" id="case-detail">
-          <div class="case-reveal-inner">
-            <div class="case-points">
-              {highlights.map(({ title, body }, i) => (
-                <div class="case-point" style={`--i: ${i}`}>
-                  <h4>{title}</h4>
-                  <p>{body}</p>
-                </div>
-              ))}
-            </div>
+    <div class="bento-row bento-row--bottom">
+      <div class="bento-card">
+        <svg class="bento-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8l9-5 9 5v8l-9 5-9-5z" /><path d="M3 8l9 5 9-5" /><path d="M12 13v8" /></svg>
+        <h4>貨，一鍵就能出</h4>
+        <dl class="ba">
+          <div class="ba-item">
+            <dt class="ba-label">原本</dt>
+            <dd class="ba-text">每張超商托運單手動建立，物流進度另外查。</dd>
           </div>
-        </div>
+          <div class="ba-item ba-item--now">
+            <dt class="ba-label">現在</dt>
+            <dd class="ba-text">後台一鍵產出 7-11 托運單，物流狀態自動更新到訂單。</dd>
+          </div>
+        </dl>
       </div>
 
-      <a href="https://umimididi.com" target="_blank" rel="noopener noreferrer" class="case-link">
-        查看線上網站 ↗
-      </a>
-    </div>
-  </article>
+      <div class="bento-card">
+        <svg class="bento-icon" viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="3" /><circle cx="17" cy="9" r="2.5" /><path d="M2 20c0-3.3 2.7-6 6-6s6 2.7 6 6" /><path d="M15 14.5c3 0 5.5 2.2 5.5 5.5" /></svg>
+        <h4>三種角色，一套系統</h4>
+        <p class="bento-text">一般客人直接下單，經銷商有專屬的組合包與批量訂貨頁，老闆在後台管理商品、定價、訂單和團購。</p>
+      </div>
 
+      <div class="bento-card bento-card--shots bento-card--side">
+        {sideShots.map(({ src, label, alt }) => (
+          <a href={src} class="shot-link" data-lightbox data-label={label}>
+            <img src={src} alt={alt} loading="lazy" decoding="async" />
+            <span class="shot-zoom" aria-hidden="true">點擊放大</span>
+            <span class="shot-label" aria-hidden="true">{label}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <a href="https://umimididi.com" target="_blank" rel="noopener noreferrer" class="case-link">
+    查看線上網站（Wama&#39; House 官方商店）↗
+  </a>
 </section>
 
 <dialog id="shot-lightbox" class="lightbox" aria-label="截圖預覽">
   <button type="button" class="lightbox-close" data-close-lightbox aria-label="關閉"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8" /></svg></button>
-  <img id="lightbox-img" src="" alt="" />
+  <!-- No src until a screenshot is opened; lightbox.ts sets it -->
+  <img id="lightbox-img" alt="" />
   <span id="lightbox-caption" class="lightbox-caption"></span>
 </dialog>

@@ -14,6 +14,7 @@
     "test:unit": "vitest run",
     "test:unit:watch": "vitest",
     "test:smoke": "node tests/smoke/smoke.mjs",
+    "og": "node scripts/og/render.mjs",
     "docker:build": "docker build -t portfolio-website:local .",
     "docker:run": "docker run --rm -p 8080:80 --name portfolio-website-local portfolio-website:local"
   },

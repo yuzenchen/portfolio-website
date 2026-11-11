@@ -65,47 +65,80 @@ html {
 nav {
   position: relative;
   z-index: 2;
+  padding: 22px 0;
+}
+
+/* Same column as the hero and sections, so the brand lines up with the h1
+   and the contact pill with the race panel's right edge. */
+.nav-inner {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 22px var(--pad-x);
+  gap: 8px 28px;
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
 }
 
-.nav-logo {
+.nav-brand {
   display: inline-flex;
   align-items: center;
+  gap: 12px;
+  min-height: 44px;
 }
 
-.nav-logo img {
+.nav-brand img {
   display: block;
+  flex: none;
   width: 42px;
   height: 42px;
 }
 
+.nav-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.nav-brand-name {
+  font: 700 16px/1.3 var(--font-sans);
+  color: var(--text);
+}
+
+.nav-brand-tag {
+  font: 400 12px/1.4 var(--font-mono);
+  color: var(--accent);
+}
+
 .nav-links {
   display: flex;
-  gap: 26px;
+  flex-wrap: wrap;
   align-items: center;
-  font: 400 13px var(--font-mono);
-  color: var(--muted);
+  gap: 0 28px;
+  margin-left: auto;
 }
 
 .nav-links a {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 44px;
-  color: var(--muted);
+  font: 400 15px var(--font-sans);
+  color: var(--soft);
 }
 
 .nav-contact {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   padding: 0 18px;
   background: var(--accent);
-  color: var(--bg) !important;
-  font-weight: 600;
+  color: var(--bg);
+  font: 600 13px var(--font-mono);
   border-radius: var(--r-pill);
 }
 
-/* ── Hero: the race ───────────────────────────────────────────────── */
+/* ── Hero: copy beside the race ───────────────────────────────────── */
 .hero {
   position: relative;
   z-index: 2;
@@ -114,36 +147,26 @@ nav {
   padding: 56px var(--pad-x) 0;
 }
 
-.hero-top {
+.hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(260px, 330px);
+  grid-template-columns: minmax(0, 1.15fr) minmax(360px, 0.85fr);
   gap: 48px;
-  align-items: end;
+  align-items: center;
 }
 
-.hero-prompt {
-  margin: 0 0 18px;
-  font: 400 13px var(--font-mono);
-  color: var(--accent);
-}
-
-#cursor {
-  display: inline-block;
-  width: 0.55em;
-  height: 1em;
-  background: var(--accent);
-  transform: translateY(0.2em);
-  margin-left: 6px;
-  animation: blink 1s step-end infinite;
-}
-
+/* Each line is ten glyphs and must never wrap inside itself. Below 1024px
+   the copy has the full content width, so the size tracks the viewport;
+   beside the race it tracks the copy column (see the 1024px query). */
 .hero h1 {
   margin: 0;
-  font-size: clamp(40px, 5.2vw, 60px);
+  font-size: clamp(26px, 8.5vw, 52px);
   font-weight: 900;
-  line-height: 1.16;
+  line-height: 1.25;
   letter-spacing: -0.01em;
-  text-wrap: balance;
+}
+
+.hero-line {
+  display: block;
 }
 
 .hero .hl {
@@ -151,20 +174,25 @@ nav {
 }
 
 .hero-desc {
-  text-wrap: pretty;
-  margin: 0 0 24px;
-  font-size: 15px;
+  max-width: 32em;
+  margin: 20px 0 28px;
+  font-size: 17px;
   line-height: 1.8;
-  color: var(--muted);
+  color: var(--soft);
+  text-wrap: pretty;
 }
 
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
+  align-items: center;
+  gap: 16px;
 }
 
 .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   padding: 14px 28px;
   background: var(--accent);
   color: var(--bg);
@@ -174,119 +202,165 @@ nav {
   box-shadow: var(--shadow-hard);
 }
 
-.btn-dashed {
-  padding: 14px 28px;
-  border: 1.5px dashed var(--border-hover);
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: 16px;
   color: var(--text);
-  font-size: 15px;
-  border-radius: var(--r-pill);
+  border-bottom: 1px solid var(--border-hover);
+  transition:
+    border-color 0.15s,
+    opacity 0.15s;
 }
 
-/* The track: one panel, two lanes, five stations each. Mint only ever
-   means "automated and done"; the manual lane stays in the greys. */
+.hero-link:hover,
+.hero-link:focus-visible {
+  border-bottom-color: var(--accent);
+}
+
+/* The race: one panel, two lanes, five steps each. Mint only ever means
+   "automated"; the manual lane stays in the greys. The clocks are static. */
 .race {
-  margin: 44px 0 0;
-  padding: 24px 28px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  min-width: 0;
+  margin: 0;
+  padding: 28px;
   background: var(--panel);
   border: 1px solid var(--border);
   border-radius: var(--r-card);
 }
 
+/* Captions on the left, the replay button on the right. The button always
+   takes its space, so showing it after a run never resizes the panel. */
 .race-head {
   display: flex;
-  flex-wrap: wrap;
+  align-items: flex-start;
   justify-content: space-between;
-  gap: 6px 24px;
-  margin-bottom: 10px;
-  font: 500 12.5px var(--font-mono);
+  gap: 12px;
+}
+
+.race-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  font: 400 13px var(--font-mono);
   color: var(--muted);
+}
+
+.race-scale {
+  font-size: 12px;
+}
+
+/* Caption reads as three short lines: what, whose numbers, time scale */
+.race-source {
+  display: block;
 }
 
 .lane {
-  display: grid;
-  /* Clock column sizes to its content; .lane-time reserves the widest
-     reading so the stations never shift while the clock runs. */
-  grid-template-columns: 56px minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 20px;
-  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .lane + .lane {
-  border-top: 1px dashed var(--border-dash);
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+
+.lane-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 4px 12px;
 }
 
 .lane-name {
-  font: 600 14px var(--font-mono);
-  color: var(--muted);
-}
-
-.lane--auto .lane-name {
-  color: var(--accent);
-}
-
-.lane-stations {
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 10px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.st {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 46px;
-  padding: 6px 8px;
-  border: 1px dashed var(--border-dash);
-  border-radius: 10px;
-  font-size: 13.5px;
-  line-height: 1.35;
-  text-align: center;
-  word-break: keep-all;
-  overflow-wrap: anywhere;
-  color: var(--faint);
-  transition:
-    background-color 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
-    border-color 0.3s cubic-bezier(0.22, 0.61, 0.36, 1),
-    color 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
-}
-
-/* Manual work in progress: hatched and crawling, like a queue */
-.lane--manual .st.is-active {
-  border-style: solid;
-  border-color: var(--border-hover);
-  color: var(--text);
-  background: repeating-linear-gradient(-45deg, var(--panel) 0 8px, #1d2631 8px 16px) 0 0 / 22.6px 22.6px;
-  animation: grind 0.9s linear infinite;
-}
-
-.lane--manual .st.is-done {
-  border-style: solid;
-  border-color: var(--border-hover);
+  font-size: 15px;
+  font-weight: 500;
   color: var(--soft);
 }
 
-/* The steps that cost the two hours stay hatched once the race is over,
-   so the finished still (no JS, reduced motion) still shows where the time
-   went. Static here; only the live active station crawls. */
-.lane--manual .st.is-done.is-slow {
-  background: repeating-linear-gradient(-45deg, var(--panel) 0 8px, #1d2631 8px 16px);
+.lane--auto .lane-name {
+  font-weight: 700;
+  color: var(--accent);
 }
 
-/* Arrival: a solid mint rule draws under the automated lane as it lands */
-.lane--auto .lane-stations {
+/* Number in mono, unit in the sans face: no monospace gap between them */
+.lane-clock {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  white-space: nowrap;
+  color: var(--soft);
+}
+
+.lane-clock-num {
+  font: 600 30px/1.1 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.lane-clock-unit {
+  font: 500 20px/1.1 var(--font-sans);
+}
+
+.lane--auto .lane-clock {
+  color: var(--accent);
+}
+
+.lane-bar {
   position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  margin-bottom: 4px;
 }
 
-.lane--auto .lane-stations::after {
+.seg {
+  height: 10px;
+  border-radius: var(--r-pill);
+  background: var(--border);
+  transition: background-color 0.3s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.lane--manual .seg.is-done {
+  background: var(--border-hover);
+}
+
+/* Manual work in progress: hatched and crawling, like a queue. The steps
+   that cost the two hours stay hatched (static) once the race is over, so
+   the finished still (no JS, reduced motion) shows where the time went.
+   The inset rule keeps the segment's shape against the panel stripes. */
+.lane--manual .seg.is-active,
+.lane--manual .seg.is-done.is-slow {
+  background: repeating-linear-gradient(-45deg, var(--panel) 0 8px, #1d2631 8px 16px) 0 0 / 22.6px 22.6px;
+  box-shadow: inset 0 0 0 1px var(--border-hover);
+}
+
+.lane--manual .seg.is-active {
+  animation: grind 0.9s linear infinite;
+}
+
+.lane--auto .seg.is-done {
+  background: var(--accent);
+}
+
+.lane--auto .seg.is-active {
+  background: rgba(69, 214, 168, 0.5);
+}
+
+/* Arrival: a solid mint rule draws under the automated bar as it lands */
+.lane--auto .lane-bar::after {
   content: '';
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -9px;
+  bottom: -8px;
   height: 2px;
   border-radius: 1px;
   background: var(--accent);
@@ -295,92 +369,43 @@ nav {
   transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.lane--auto.is-finished .lane-stations::after {
+.lane--auto.is-finished .lane-bar::after {
   transform: scaleX(1);
 }
 
-.lane--auto .st.is-active {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-.lane--auto .st.is-done {
-  border-style: solid;
-  border-color: var(--accent);
-  background: rgba(69, 214, 168, 0.12);
-  color: var(--accent);
-}
-
-.lane-clock {
+/* The steps are the lane's accessible content; the arrows are decoration */
+.lane-steps {
   margin: 0;
-  text-align: right;
+  padding: 0;
+  list-style: none;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
 }
 
-.lane-time {
-  display: block;
-  /* Wide enough for the longest mid-run reading, "1 hr 59 min" (11 ch) */
-  min-width: 11ch;
-  font: 600 clamp(24px, 2.4vw, 34px) var(--font-mono);
-  font-variant-numeric: tabular-nums;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+/* Inline blocks so a step name never splits across lines; the list wraps
+   between steps instead, and the arrow trails its step so a wrapped line
+   never starts with one. */
+.lane-steps li {
+  display: inline-block;
+  transition: color 0.3s;
+}
+
+.lane-steps li:not(:last-child)::after {
+  content: "→" / "";
+  margin: 0 6px;
+}
+
+.lane-steps li.is-done {
   color: var(--soft);
-  white-space: nowrap;
 }
 
-.lane--auto .lane-time {
-  color: var(--accent);
-}
-
-.lane-unit {
-  display: block;
-  margin-top: 4px;
-  font: 400 12px var(--font-mono);
-  color: var(--muted);
-}
-
-/* Phones only: names the station a lane is on, since the bar has no room */
-.lane-now {
-  display: none;
-}
-
-.race-foot {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px 24px;
-  margin-top: 6px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-}
-
-.race-facts {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 36px;
-  margin: 0;
-}
-
-.race-facts div {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-}
-
-.race-facts dt {
-  font: 400 12.5px var(--font-mono);
-  color: var(--muted);
-}
-
-.race-facts dd {
-  margin: 0;
-  font: 600 15px var(--font-mono);
-  font-variant-numeric: tabular-nums;
+.lane-steps li.is-active {
   color: var(--text);
 }
 
 .race-replay {
+  flex: none;
   min-height: 44px;
   padding: 0 20px;
   background: none;
@@ -396,8 +421,73 @@ nav {
   background: rgba(69, 214, 168, 0.12);
 }
 
-.race-replay[hidden] {
-  display: none;
+.race-replay[inert] {
+  visibility: hidden;
+}
+
+/* ── Results ──────────────────────────────────────────────────────── */
+.results {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 40px;
+  padding: 0 var(--pad-x);
+}
+
+.result {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  padding: 28px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+}
+
+.result-label {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.result-value {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
+.result-num {
+  font-size: 56px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--accent);
+}
+
+.result-unit {
+  font-size: 22px;
+  color: var(--text);
+}
+
+.result-was {
+  font-size: 22px;
+  color: var(--muted);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 /* ── Marquee ──────────────────────────────────────────────────────── */
@@ -412,15 +502,28 @@ nav {
   white-space: nowrap;
 }
 
+/* Two identical halves; each is wider than any common screen, so shifting
+   the track by exactly -50% loops without a seam. */
 .marquee-track {
   display: inline-flex;
-  animation: marquee 22s linear infinite;
+  animation: marquee 46s linear infinite;
 }
 
-.marquee-track span {
-  white-space: pre;
-  font: 500 14px var(--font-mono);
+.marquee-half {
+  display: flex;
+  flex: none;
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  font: 500 15px var(--font-sans);
   color: var(--muted);
+}
+
+.marquee-sep {
+  margin: 0 22px;
+  color: var(--accent);
 }
 
 /* ── Sections ─────────────────────────────────────────────────────── */
@@ -439,8 +542,8 @@ section {
   padding: 60px var(--pad-x) 30px;
 }
 
-#stack {
-  padding: 60px var(--pad-x) 40px;
+#process {
+  padding: 60px var(--pad-x) 30px;
 }
 
 #faq {
@@ -477,65 +580,6 @@ section {
 }
 
 /* ── Case study ───────────────────────────────────────────────────── */
-.case {
-  display: flex;
-  gap: 40px;
-  align-items: flex-start;
-  background: var(--panel-alpha);
-  border: 1px solid var(--border);
-  border-radius: var(--r-card);
-  padding: 28px;
-}
-
-.case-shot {
-  flex: none;
-  width: 42%;
-}
-
-.case-shot-main {
-  position: relative;
-}
-
-/* Offset dashed frame, echoing the old service rows */
-.case-shot-main::before {
-  content: '';
-  position: absolute;
-  inset: 12px -12px -12px 12px;
-  border: 1.5px dashed var(--border-dash);
-  border-radius: var(--r-img);
-}
-
-.case-shot-main img {
-  position: relative;
-  width: 100%;
-  display: block;
-  border-radius: var(--r-img);
-  border: 1px solid var(--border);
-  transform: rotate(-1.2deg);
-}
-
-/* Gallery grows open beneath the storefront shot, in step with the points */
-/* Same curve and duration as the points column so both sides grow in step */
-.case-gallery-reveal {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
-}
-
-.case.is-open .case-gallery-reveal {
-  grid-template-rows: 1fr;
-}
-
-.case-gallery-inner {
-  min-height: 0;
-  overflow: hidden;
-}
-
-.case-body {
-  flex: 1;
-  min-width: 0;
-}
-
 /* Title first; the live status rides at the end of the title line */
 .case-title {
   display: flex;
@@ -547,6 +591,8 @@ section {
 
 .case-title h3 {
   margin: 0;
+  font-size: 26px;
+  font-weight: 900;
 }
 
 .case-status {
@@ -568,144 +614,142 @@ section {
   background: var(--accent);
 }
 
-.case-body h3 {
-  margin: 0 0 10px;
-  font-size: 26px;
-  font-weight: 900;
-}
-
 .case-lead {
-  margin: 0 0 20px;
-  font-size: 15px;
-  line-height: 1.85;
-  color: var(--muted);
+  max-width: 40em;
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--soft);
 }
 
-/* ── Case disclosure ("我做了什麼") ─────────────────────────────────
-   A button + grid-row reveal instead of <details>, so the height can
-   actually animate. Items then print in one after another, terminal-style. */
-.case-more {
-  border-top: 1px solid var(--border);
-  padding-top: 16px;
+/* ── Case bento ───────────────────────────────────────────────────── */
+.bento {
+  margin-top: 28px;
 }
 
-.case-toggle {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  gap: 9px;
-  background: none;
-  border: none;
-  padding: 0;
-  font: 500 14px var(--font-mono);
-  color: var(--accent);
-  cursor: pointer;
-  user-select: none;
-}
-
-.case-toggle-caret {
-  display: inline-flex;
-  transition: transform 0.25s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-
-.case-more.is-open .case-toggle-caret {
-  transform: rotate(90deg);
-}
-
-/* 0fr → 1fr is the one way to transition to an auto height in CSS */
-.case-reveal {
+.bento-row {
   display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  gap: 16px;
 }
 
-.case-more.is-open .case-reveal {
-  grid-template-rows: 1fr;
+.bento-row--top {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
 }
 
-.case-reveal-inner {
-  min-height: 0;
-  overflow: hidden;
+.bento-row--bottom {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 16px;
 }
 
-.case-points {
+.bento-card {
+  min-width: 0;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+  padding: 28px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.bento-card:hover,
+.bento-card:focus-within {
+  border-color: var(--border-hover);
+  transform: translateY(-2px);
+}
+
+.bento-icon {
+  display: block;
+  color: var(--accent);
+}
+
+.bento-card h4 {
+  margin: 16px 0 18px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.bento-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--soft);
+}
+
+/* 原本 / 現在 pairs, shared with the other-work cards */
+.ba {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  margin-top: 18px;
-}
-
-/* Each item starts hidden; opening staggers them by --i. Points (right)
-   and thumbnails (left) share the same schedule so both columns fill in
-   together. */
-.case-point,
-.case-thumb {
-  opacity: 0;
-  transform: translateY(6px);
-  transition: opacity 0.2s, transform 0.2s;
-}
-
-/* Timed so the last item lands exactly as the containers finish growing
-   (0.06 + 2 x 0.07 + 0.4 = 0.6s), instead of popping in afterwards. */
-.case-more.is-open .case-point,
-.case.is-open .case-thumb {
-  animation: printLine 0.4s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-  animation-delay: calc(0.06s + var(--i) * 0.07s);
-}
-
-.case-point h4 {
-  margin: 0 0 5px;
-  font-size: 15px;
-  font-weight: 700;
-}
-
-.case-point p {
+  gap: 14px;
   margin: 0;
-  font-size: 13.5px;
-  line-height: 1.8;
+}
+
+.ba-label {
+  margin-bottom: 4px;
+  font: 400 12px var(--font-mono);
   color: var(--muted);
 }
 
-/* Stacked in the narrow left column; captions overlay the image so the
-   stack stays compact next to the three points. */
-.case-gallery {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 10px;
-  margin-top: 18px;
+.ba-text {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.75;
+  color: var(--soft);
 }
 
-.case-thumb {
+.ba-item--now .ba-label {
+  color: var(--accent);
+}
+
+.ba-item--now .ba-text {
+  color: var(--text);
+}
+
+/* Screenshot cards: each link is a grid row, so the shots stretch to fill
+   the card when a neighbour in the same row is taller. The image sits
+   absolutely inside its link, and the link's min-height sets the floor. */
+.bento-card--shots {
+  display: grid;
+  grid-auto-rows: minmax(0, 1fr);
+  gap: 12px;
+  padding: 20px;
+}
+
+.bento-card--main {
+  --shot-h: 320px;
+}
+
+.bento-card--side {
+  --shot-h: 150px;
+}
+
+.shot-link {
   position: relative;
   display: block;
-  border: 1px solid var(--border);
-  border-radius: 10px;
+  min-height: var(--shot-h);
   overflow: hidden;
+  border-radius: var(--r-img);
   background: var(--img-bg);
-  transition: border-color 0.2s;
   cursor: zoom-in;
 }
 
-.case-thumb:hover {
-  border-color: var(--accent);
+.shot-link:hover {
   opacity: 1;
 }
 
-.case-thumb-img {
-  position: relative;
-  display: block;
-}
-
-.case-thumb img {
+.shot-link img {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  height: 104px;
+  height: 100%;
   object-fit: cover;
   object-position: top left;
   display: block;
+  border-radius: var(--r-img);
+  background: var(--img-bg);
 }
 
 /* Hover affordance so it reads as clickable */
-.case-thumb-zoom {
+.shot-zoom {
   position: absolute;
   inset: 0;
   display: flex;
@@ -718,16 +762,16 @@ section {
   transition: opacity 0.2s;
 }
 
-.case-thumb:hover .case-thumb-zoom,
-.case-thumb:focus-visible .case-thumb-zoom {
+.shot-link:hover .shot-zoom,
+.shot-link:focus-visible .shot-zoom {
   opacity: 1;
 }
 
 /* Caption sits over the image as a small pill instead of its own row */
-.case-thumb-label {
+.shot-label {
   position: absolute;
-  left: 8px;
-  bottom: 8px;
+  left: 10px;
+  bottom: 10px;
   font: 500 11px var(--font-mono);
   color: var(--soft);
   background: rgba(13, 17, 23, 0.85);
@@ -735,6 +779,10 @@ section {
   border-radius: var(--r-pill);
   padding: 3px 9px;
   pointer-events: none;
+}
+
+.bento + .case-link {
+  margin-top: 20px;
 }
 
 /* ── Screenshot lightbox ──────────────────────────────────────────── */
@@ -801,6 +849,17 @@ section {
   margin-top: 8px;
   font: 500 13px var(--font-mono);
   color: var(--accent);
+}
+
+/* Case copy breaks only at punctuation and spaces, never inside a word
+   (完成, 另外查, 電商); anywhere is the fallback for a clause that cannot fit. */
+.case-title h3,
+.case-lead,
+.bento-card p,
+.ba-text,
+.other-body h4 {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 
 /* ── Other work ───────────────────────────────────────────────────── */
@@ -965,53 +1024,90 @@ section {
   white-space: nowrap;
 }
 
-/* ── Tech stack ───────────────────────────────────────────────────── */
-.stack {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.stack-row {
-  display: flex;
-  gap: 28px;
-  align-items: baseline;
-  padding: 18px 0;
-  border-top: 1px solid var(--border);
-}
-
-.stack-row:last-child {
-  border-bottom: 1px solid var(--border);
-}
-
-.stack-row dt {
-  flex: none;
-  width: 130px;
-  font: 500 13px var(--font-mono);
-  color: var(--faint);
-}
-
-.stack-row dd {
-  margin: 0;
-  flex: 1;
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.stack-chip {
-  font: 400 12.5px var(--font-mono);
-  padding: 6px 13px;
+/* ── Process: four steps on one track ────────────────────────────── */
+/* The markers and dashed track echo the hero's race lanes. */
+.process-panel {
+  padding: 32px 28px;
+  background: var(--panel);
   border: 1px solid var(--border);
-  border-radius: var(--r-pill);
-  color: var(--soft);
-  background: var(--panel-alpha);
+  border-radius: var(--r-card);
 }
 
-/* The Taiwan-specific integrations are the differentiator — mark them */
-.stack-chip--accent {
-  border-color: var(--accent);
-  color: var(--accent);
+.process-steps {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* One track behind all markers, first centre to last centre: each marker
+   sits at the left of its column, so its centre is 7px in, and the last
+   one's centre is one column width (less 7px) short of the right edge. */
+.process-steps::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 7px;
+  right: calc((100% - 3 * 24px) / 4 - 7px);
+  border-top: 2px dashed var(--border-hover);
+}
+
+.process-step {
+  position: relative;
+  min-width: 0;
+}
+
+.process-marker {
+  position: relative;
+  z-index: 1;
+  display: block;
+  box-sizing: border-box;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.process-body {
+  margin-top: 18px;
+}
+
+.process-num {
+  display: block;
+  font: 400 12px var(--font-mono);
+  color: var(--muted);
+}
+
+.process-title {
+  margin: 6px 0 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.process-desc {
+  margin: 8px 0 0;
+  font-size: 14.5px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+
+.process-title,
+.process-desc {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.btn-primary.process-cta {
+  margin-top: 16px;
+  padding: 10px 20px;
+  font-size: 14px;
 }
 
 /* ── FAQ ──────────────────────────────────────────────────────────── */
@@ -1250,12 +1346,20 @@ section {
   margin: 0 0 12px;
   font-size: 34px;
   font-weight: 900;
+  text-wrap: balance;
 }
 
 .contact-card p {
   margin: 0 0 26px;
   font-size: 14px;
   color: var(--muted);
+}
+
+/* Break only at punctuation (the h2 splits at its comma on a phone) */
+.contact-card h2,
+.contact-card p {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
 }
 
 .contact-mail {
@@ -1281,15 +1385,17 @@ section {
   color: var(--faint);
 }
 
-/* The CTA is a <button> now (opens the dialog) — reset UA styling */
-button.contact-mail {
+/* The CTA is a link (a [data-booking] trigger) and the dialog's submit is a
+   <button>; both share one look, so reset UA styling and the link hover. */
+.contact-mail {
   border: none;
   font-family: inherit;
   cursor: pointer;
   transition: filter 0.15s;
 }
 
-button.contact-mail:hover {
+.contact-mail:hover {
+  opacity: 1;
   filter: brightness(1.08);
 }
 
@@ -1518,119 +1624,200 @@ button.contact-mail:disabled {
 footer {
   position: relative;
   z-index: 2;
-  padding: 20px var(--pad-x) 30px;
   font: 400 12px var(--font-mono);
   color: var(--faint);
   text-align: center;
 }
 
+.footer-inner {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--pad-x) 30px;
+}
+
+/* Tech stack, folded away: a native disclosure above the copyright */
+.stack-details {
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  text-align: left;
+}
+
+.stack-details summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font: 400 13px var(--font-mono);
+  color: var(--muted);
+  list-style: none;
+  cursor: pointer;
+}
+
+.stack-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.stack-chevron {
+  flex: none;
+  transition: transform 0.15s;
+}
+
+.stack-details[open] .stack-chevron {
+  transform: rotate(90deg);
+}
+
+.stack-list {
+  display: grid;
+  gap: 10px;
+  margin: 8px 0 4px;
+}
+
+.stack-group {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  gap: 4px 20px;
+  align-items: baseline;
+}
+
+.stack-group dt {
+  font: 400 12px var(--font-mono);
+  color: var(--muted);
+}
+
+.stack-group dd {
+  margin: 0;
+  font: 400 13px var(--font-sans);
+  line-height: 1.7;
+  color: var(--soft);
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.footer-copy {
+  margin: 16px 0 0;
+}
+
 /* ── Responsive ───────────────────────────────────────────────────── */
-/* Below 960px five full station names no longer fit their boxes, so the
-   race folds to bars well before the rest of the page goes single column. */
-@media (max-width: 960px) {
-  /* Each lane folds to name + clock over a five-segment bar, with the
-     current station named underneath. Station names stay in the list for
-     screen readers. */
+/* Two columns from 1024px: the h1 sizes from the copy column (1.15 / 2 of
+   the content width less the 48px gap), so each ten-glyph line always fits. */
+@media (min-width: 1024px) {
+  .hero h1 {
+    font-size: clamp(40px, (min(100vw, var(--page-max)) - 2 * var(--pad-x) - 48px) * 0.056, 52px);
+  }
+}
+
+@media (max-width: 1023px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
+  }
+
   .race {
     margin-top: 32px;
-    padding: 18px 18px 16px;
+  }
+}
+
+/* Case bento, tablet: the Dashboard shot takes the full width above its
+   card; the bottom row pairs the two text cards over the side shots. */
+@media (max-width: 1024px) {
+  .bento-row--top {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  .lane {
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      "name clock"
-      "bar bar"
-      "now now";
-    gap: 10px 12px;
-    padding: 14px 0;
+  .bento-row--bottom {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .lane-name {
-    grid-area: name;
+  .bento-card--side {
+    grid-column: 1 / -1;
+  }
+}
+
+/* Four process columns need about 900px before step titles start
+   breaking inside words, so the timeline goes vertical earlier. */
+@media (max-width: 900px) {
+  .process-panel {
+    padding: 22px 20px;
   }
 
-  .lane-clock {
-    grid-area: clock;
+  .process-steps {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0;
   }
 
-  .lane-stations {
-    grid-area: bar;
-    gap: 4px;
+  .process-steps::before {
+    display: none;
   }
 
-  .st {
-    min-height: 8px;
-    height: 8px;
-    padding: 0;
-    border-radius: 4px;
+  .process-step {
+    display: grid;
+    grid-template-columns: 24px minmax(0, 1fr);
+    column-gap: 14px;
+    align-items: start;
+    padding-bottom: 24px;
   }
 
-  .lane--manual .st.is-active {
-    background-size: 11.3px 11.3px;
+  .process-step:last-child {
+    padding-bottom: 0;
   }
 
-  .st-label {
+  .process-step:not(:last-child)::after {
+    content: '';
     position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip: rect(0 0 0 0);
-    white-space: nowrap;
+    top: 7px;
+    bottom: -7px;
+    left: 11px;
+    border-left: 2px dashed var(--border-hover);
   }
 
-  .lane-now {
-    grid-area: now;
-    display: block;
-    margin: 0;
-    font: 400 12.5px var(--font-mono);
-    color: var(--soft);
+  .process-marker {
+    justify-self: center;
   }
 
-  .lane-time {
-    font-size: 26px;
+  .process-body {
+    margin-top: 0;
   }
 
-  .lane-unit {
-    margin-top: 2px;
+  .process-num {
+    line-height: 14px;
   }
 }
 
 @media (max-width: 768px) {
+  /* Row 1: brand + contact pill; row 2: the four links across the width */
   nav {
-    padding: 18px var(--pad-x-sm);
+    padding: 18px 0 8px;
+  }
+
+  .nav-inner {
+    padding: 0 var(--pad-x-sm);
   }
 
   .nav-links {
-    gap: 16px;
-    font-size: 12px;
+    order: 3;
+    flex-basis: 100%;
+    justify-content: space-between;
+    gap: 0 16px;
+    margin-left: 0;
   }
 
   .hero {
-    padding: 36px var(--pad-x-sm) 0;
+    padding: 28px var(--pad-x-sm) 0;
   }
 
-  .hero-top {
-    grid-template-columns: 1fr;
-    gap: 22px;
+  .race {
+    padding: 22px;
   }
 
-  .hero h1 {
-    font-size: 38px;
-    line-height: 1.28;
-  }
-
-  .race-facts {
-    flex-direction: column;
-  }
-
-  .race-replay {
-    width: 100%;
+  .results {
+    grid-template-columns: minmax(0, 1fr);
+    margin-top: 28px;
+    padding: 0 var(--pad-x-sm);
   }
 
   #case,
   #services,
-  #stack,
+  #process,
   #faq,
   #contact,
   .others {
@@ -1642,37 +1829,12 @@ footer {
     font-size: 44px;
   }
 
-  .case {
-    flex-direction: column;
-    gap: 30px;
-    padding: 22px;
+  .bento-row--bottom {
+    grid-template-columns: minmax(0, 1fr);
   }
 
-  /* Single column: flatten the left wrapper so the gallery can be reordered
-     to sit *after* the points — otherwise it would open above the button
-     that revealed it, out of view. */
-  .case-shot {
-    display: contents;
-  }
-
-  .case-shot-main {
-    order: 1;
-  }
-
-  .case-body {
-    order: 2;
-  }
-
-  .case-gallery-reveal {
-    order: 3;
-  }
-
-  .case-gallery {
-    grid-template-columns: 1fr;
-  }
-
-  .case-thumb img {
-    height: 150px;
+  .bento-card--main {
+    --shot-h: 200px;
   }
 
   .other {
@@ -1702,13 +1864,21 @@ footer {
     padding: 22px 0;
   }
 
-  .stack-row {
-    flex-direction: column;
-    gap: 12px;
+  /* Process becomes a vertical timeline: marker column on the left, a
+     dashed line from each marker's centre down to the next one's. */
+  /* The services heading is one word (我能幫您做什麼): keep it whole and let
+     the note drop to its own line instead of splitting the heading. */
+  #services .sec-head {
+    flex-wrap: wrap;
+    row-gap: 6px;
   }
 
-  .stack-row dt {
-    width: auto;
+  #services .sec-head h2 {
+    word-break: keep-all;
+  }
+
+  .stack-group {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .faq-item {
@@ -1777,7 +1947,7 @@ footer {
     grid-template-columns: 1fr;
   }
 
-  footer {
+  .footer-inner {
     padding-left: var(--pad-x-sm);
     padding-right: var(--pad-x-sm);
   }
@@ -1789,23 +1959,31 @@ footer {
     scroll-behavior: auto;
   }
 
-  #cursor {
+  .stack-chevron {
+    transition: none;
+  }
+
+  .lane--manual .seg.is-active {
     animation: none;
+  }
+
+  .seg,
+  .lane-steps li,
+  .lane--auto .lane-bar::after {
+    transition: none;
   }
 
   .marquee-track {
     animation: none;
   }
 
-  .case-reveal,
-  .case-gallery-reveal {
-    transition: none;
+  /* Bento cards keep the border colour change but don't lift */
+  .bento-card {
+    transition: border-color 0.2s ease;
   }
 
-  .case-more.is-open .case-point,
-  .case.is-open .case-thumb {
-    animation: none;
-    opacity: 1;
+  .bento-card:hover,
+  .bento-card:focus-within {
     transform: none;
   }
 }

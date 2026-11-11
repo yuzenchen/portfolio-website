@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-13T00:00:00Z",
+  "generatedAt": "2026-11-12T00:00:00Z",
   "title": "Design System: yuzen.tw",
   "extensions": {
     "colorMeta": {
@@ -153,7 +153,7 @@
     "typographyMeta": {
       "display": {
         "displayName": "Display",
-        "purpose": "Hero headline only; fixed line breaks, key words in mint."
+        "purpose": "Hero headline only: two ten-glyph lines that never wrap inside themselves, the second in mint. clamp(26px, 8.5vw, 52px) below 1024px; sized from the copy column (clamp(40px, …, 52px)) from 1024px."
       },
       "headline": {
         "displayName": "Headline",
@@ -161,11 +161,11 @@
       },
       "title": {
         "displayName": "Title",
-        "purpose": "Service names, case title (26px), FAQ questions (20px), other-work titles (18px)."
+        "purpose": "Service names (22px), case title (26px), bento card titles (22px), process step titles (18px), FAQ questions (20px), other-work titles (18px)."
       },
       "body": {
         "displayName": "Body",
-        "purpose": "Lead copy in Muted Ink."
+        "purpose": "Hero description and case lead (17px, Soft Ink); bento and 原本/現在 text (15px)."
       },
       "body-sm": {
         "displayName": "Body Small",
@@ -173,11 +173,15 @@
       },
       "label": {
         "displayName": "Mono Label",
-        "purpose": "Nav, prompt line, section notes, form labels, chips, captions, footer."
+        "purpose": "Nav tagline, race captions, section notes, 原本/現在 labels, process step numbers, form labels, chips, captions, footer."
       },
       "numeral": {
         "displayName": "Clock Numeral",
-        "purpose": "Race clocks, tabular figures."
+        "purpose": "Static race clocks (2 小時, 20 分鐘) at 30px, tabular figures; the unit is set in Noto Sans TC 500 at 20px."
+      },
+      "result-numeral": {
+        "displayName": "Result Numeral",
+        "purpose": "Result-card figures, 56px mint mono with tabular figures; unit in mono 22px."
       },
       "section-numeral": {
         "displayName": "Section Numeral",
@@ -188,7 +192,7 @@
       {
         "name": "hard-mint-offset",
         "value": "4px 4px 0 #1d5c47",
-        "purpose": "Filled mint primary pills only."
+        "purpose": "Filled mint primary pills only (hero and contact 免費諮詢 15 分鐘, process 預約諮詢, booking submit)."
       },
       {
         "name": "dialog-backdrop",
@@ -200,37 +204,32 @@
       {
         "name": "ease-settle",
         "value": "cubic-bezier(0.22, 0.61, 0.36, 1)",
-        "purpose": "Station colour changes (0.3s), grid-row reveals (0.6s), print-in items (0.4s)."
+        "purpose": "Race segment colour changes (0.3s)."
       },
       {
         "name": "ease-arrive",
         "value": "cubic-bezier(0.16, 1, 0.3, 1)",
-        "purpose": "The mint arrival rule under the automated lane (0.55s)."
-      },
-      {
-        "name": "ease-caret",
-        "value": "cubic-bezier(0.2, 0.7, 0.2, 1)",
-        "purpose": "Disclosure chevron rotation (0.25s)."
+        "purpose": "The mint arrival rule under the automated lane bar (0.55s)."
       },
       {
         "name": "grind",
         "value": "0.9s linear infinite",
-        "purpose": "The active manual station's hatch crawls one stripe period per loop."
-      },
-      {
-        "name": "print-stagger",
-        "value": "calc(0.06s + var(--i) * 0.07s)",
-        "purpose": "Stagger for disclosure points and thumbnails."
+        "purpose": "The active manual segment's hatch crawls one stripe period per loop."
       },
       {
         "name": "race-scale",
         "value": "50ms per reconciliation minute",
-        "purpose": "Time-lapse at the true 6:1 ratio: 2 hr runs 6s, 20 min runs 1s."
+        "purpose": "Time-lapse of the bars and step lists at the true 6:1 ratio (1 second ≈ 20 minutes); the clocks stay static."
       },
       {
-        "name": "blink",
-        "value": "1s step-end infinite",
-        "purpose": "Prompt cursor."
+        "name": "countdown",
+        "value": "1.6s",
+        "purpose": "The first result card counts down from 120 to 20 on scroll-in; the markup holds the final figure."
+      },
+      {
+        "name": "bento-lift",
+        "value": "0.2s ease, translateY(-2px)",
+        "purpose": "Bento cards lift on hover and focus-within; border change only under reduced motion."
       },
       {
         "name": "marquee",
@@ -241,37 +240,50 @@
     "breakpoints": [
       {
         "name": "phone",
-        "value": "768px"
+        "value": "768px",
+        "purpose": "One-column sections, 22px gutters, nav links on a second row."
       },
       {
-        "name": "race-fold",
-        "value": "960px",
-        "purpose": "Hero race folds to bars; five station names no longer fit."
+        "name": "process-vertical",
+        "value": "900px",
+        "purpose": "Process track turns into a vertical timeline."
+      },
+      {
+        "name": "desktop",
+        "value": "1024px",
+        "purpose": "Hero is two columns (copy beside the race) from 1024px up; the case bento top row stacks at 1024px and below."
       }
-    ]
+    ],
+    "shareImage": {
+      "path": "public/og.png",
+      "size": "1200x630",
+      "source": "scripts/og/og.html",
+      "command": "npm run og",
+      "purpose": "og:image / twitter:image as an absolute URL from SITE; regenerate when the hero copy changes."
+    }
   },
   "components": [
     {
       "name": "Primary Pill",
       "kind": "button",
       "refersTo": "button-primary",
-      "description": "Filled mint pill with the hard mint offset; the one primary action per view.",
-      "html": "<a href=\"#\" class=\"ds-btn-primary\">查看案例 →</a>",
+      "description": "Filled mint pill with the hard mint offset; with data-booking it opens the booking dialog.",
+      "html": "<a href=\"#\" class=\"ds-btn-primary\" data-booking>免費諮詢 15 分鐘</a>",
       "css": ".ds-btn-primary { display: inline-block; padding: 14px 28px; background: var(--accent, #45d6a8); color: var(--bg, #0d1117); font-family: 'Noto Sans TC', system-ui, sans-serif; font-size: 15px; font-weight: 700; text-decoration: none; border-radius: 999px; box-shadow: 4px 4px 0 var(--accent-shadow, #1d5c47); transition: filter 0.15s; } .ds-btn-primary:hover { filter: brightness(1.08); } .ds-btn-primary:focus-visible { outline: 2px solid var(--accent, #45d6a8); outline-offset: 2px; }"
     },
     {
-      "name": "Dashed Secondary Pill",
-      "kind": "button",
-      "refersTo": "button-dashed",
-      "description": "Transparent pill with a dashed strong-rule border; pairs with the primary.",
-      "html": "<a href=\"#\" class=\"ds-btn-dashed\">聯絡我</a>",
-      "css": ".ds-btn-dashed { display: inline-block; padding: 14px 28px; border: 1.5px dashed var(--border-hover, #3a4a5c); color: var(--text, #e6edf3); font-family: 'Noto Sans TC', system-ui, sans-serif; font-size: 15px; text-decoration: none; border-radius: 999px; transition: opacity 0.15s; } .ds-btn-dashed:hover { opacity: 0.85; } .ds-btn-dashed:focus-visible { outline: 2px solid var(--accent, #45d6a8); outline-offset: 2px; }"
+      "name": "Hero Text Link",
+      "kind": "link",
+      "refersTo": "text-link",
+      "description": "The hero's secondary action beside the primary pill: Ink text with a Strong Rule underline that turns mint on hover and focus.",
+      "html": "<a href=\"#\" class=\"ds-text-link\">看實際案例 →</a>",
+      "css": ".ds-text-link { display: inline-flex; align-items: center; min-height: 44px; font-family: 'Noto Sans TC', system-ui, sans-serif; font-size: 16px; color: var(--text, #e6edf3); text-decoration: none; border-bottom: 1px solid var(--border-hover, #3a4a5c); transition: border-color 0.15s; } .ds-text-link:hover, .ds-text-link:focus-visible { border-bottom-color: var(--accent, #45d6a8); } .ds-text-link:focus-visible { outline: 2px solid var(--accent, #45d6a8); outline-offset: 2px; }"
     },
     {
       "name": "Mint Outline Pill",
       "kind": "button",
       "refersTo": "button-outline-mint",
-      "description": "Mono mint-outlined pill for secondary in-component actions such as race replay.",
+      "description": "Mono mint-outlined pill for in-component actions: the race replay, which reserves its space in the race head and stays inert until a run completes.",
       "html": "<button type=\"button\" class=\"ds-btn-outline\">重跑一次</button>",
       "css": ".ds-btn-outline { min-height: 44px; padding: 0 20px; background: none; border: 1px solid var(--accent, #45d6a8); border-radius: 999px; font: 500 13px 'IBM Plex Mono', monospace; color: var(--accent, #45d6a8); cursor: pointer; transition: background-color 0.2s; } .ds-btn-outline:hover { background: rgba(69, 214, 168, 0.12); } .ds-btn-outline:focus-visible { outline: 2px solid var(--accent, #45d6a8); outline-offset: 2px; }"
     },
@@ -295,42 +307,58 @@
       "name": "Navigation",
       "kind": "nav",
       "refersTo": "nav",
-      "description": "YZ logo left (the real asset is /logo.png; a placeholder hexagon stands in here), lowercase mono links right, ending in the mint contact pill.",
-      "html": "<nav class=\"ds-nav\"><a href=\"#\" class=\"ds-nav-logo\" aria-label=\"yuzen.tw\"><svg viewBox=\"0 0 42 42\" width=\"42\" height=\"42\" aria-hidden=\"true\"><path d=\"M21 2 38 11.5v19L21 40 4 30.5v-19z\" fill=\"none\" stroke=\"#45d6a8\" stroke-width=\"2\"/><text x=\"21\" y=\"25\" text-anchor=\"middle\" font-family=\"IBM Plex Mono, monospace\" font-size=\"12\" font-weight=\"600\" fill=\"#e6edf3\">YZ</text></svg></a><div class=\"ds-nav-links\"><a href=\"#\">case</a><a href=\"#\">services</a><a href=\"#\" class=\"ds-nav-contact\">contact ↗</a></div></nav>",
-      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 48px; background: var(--bg, #0d1117); } .ds-nav-logo { display: inline-flex; } .ds-nav-links { display: flex; gap: 26px; align-items: center; font: 400 13px 'IBM Plex Mono', monospace; } .ds-nav-links a { display: inline-flex; align-items: center; min-height: 44px; color: var(--muted, #8b96a5); text-decoration: none; transition: opacity 0.15s; } .ds-nav-links a:hover { opacity: 0.85; } .ds-nav-links a:focus-visible { outline: 2px solid var(--accent, #45d6a8); outline-offset: 2px; } .ds-nav-links .ds-nav-contact { padding: 0 18px; background: var(--accent, #45d6a8); color: var(--bg, #0d1117); font-weight: 600; border-radius: 999px; }"
+      "description": "Column-aligned nav: brand block (logo, name over the mono mint tagline 流程自動化 × 系統開發), Chinese links pushed right, then the mint 聯絡我 pill. A placeholder hexagon stands in for /logo.png here.",
+      "html": "<nav class=\"ds-nav\" aria-label=\"主選單\"><a href=\"#\" class=\"ds-nav-brand\"><svg viewBox=\"0 0 42 42\" width=\"42\" height=\"42\" aria-hidden=\"true\"><path d=\"M21 2 38 11.5v19L21 40 4 30.5v-19z\" fill=\"none\" stroke=\"#45d6a8\" stroke-width=\"2\"/><text x=\"21\" y=\"25\" text-anchor=\"middle\" font-family=\"IBM Plex Mono, monospace\" font-size=\"12\" font-weight=\"600\" fill=\"#e6edf3\">YZ</text></svg><span class=\"ds-nav-brand-text\"><span class=\"ds-nav-name\">Yuzen Chen</span><span class=\"ds-nav-tag\">流程自動化 × 系統開發</span></span></a><div class=\"ds-nav-links\"><a href=\"#\">案例</a><a href=\"#\">服務</a><a href=\"#\">合作流程</a><a href=\"#\">常見問題</a></div><a href=\"#\" class=\"ds-nav-contact\">聯絡我</a></nav>",
+      "css": ".ds-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 28px; max-width: 1100px; margin: 0 auto; padding: 22px 48px; background: var(--bg, #0d1117); } .ds-nav-brand { display: inline-flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none; } .ds-nav-brand-text { display: flex; flex-direction: column; } .ds-nav-name { font: 700 16px/1.3 'Noto Sans TC', system-ui, sans-serif; color: var(--text, #e6edf3); } .ds-nav-tag { font: 400 12px/1.4 'IBM Plex Mono', monospace; color: var(--accent, #45d6a8); } .ds-nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0 28px; margin-left: auto; } .ds-nav-links a { display: inline-flex; align-items: center; min-height: 44px; font: 400 15px 'Noto Sans TC', system-ui, sans-serif; color: var(--soft, #c3ccd6); text-decoration: none; } .ds-nav a:focus-visible { outline: 2px solid var(--accent, #45d6a8); outline-offset: 2px; } .ds-nav-contact { display: inline-flex; align-items: center; min-height: 44px; padding: 0 18px; background: var(--accent, #45d6a8); color: var(--bg, #0d1117); font: 600 13px 'IBM Plex Mono', monospace; border-radius: 999px; text-decoration: none; }"
     },
     {
       "name": "Panel Card",
       "kind": "card",
       "refersTo": "panel",
       "description": "Slate panel, 1px hairline, 18px radius, no shadow; FAQ item shown with its tilted Q pill.",
-      "html": "<article class=\"ds-card\"><h3 class=\"ds-card-q\"><span class=\"ds-card-mark\">Q</span>結案後系統如果壞掉怎麼辦？</h3><p class=\"ds-card-a\">專案包含維護與監控，並會配置自動化報錯系統，確保營運不中斷。</p></article>",
+      "html": "<article class=\"ds-card\"><h3 class=\"ds-card-q\"><span class=\"ds-card-mark\">Q</span>系統上線後壞掉怎麼辦？</h3><p class=\"ds-card-a\">專案包含維護與監控，並會配置自動化報錯系統，確保營運不中斷。</p></article>",
       "css": ".ds-card { background: var(--panel-alpha, rgba(21, 27, 35, 0.85)); border: 1px solid var(--border, #232b36); border-radius: 18px; padding: 28px 26px; color: var(--text, #e6edf3); font-family: 'Noto Sans TC', system-ui, sans-serif; transition: border-color 0.25s; } .ds-card:hover { border-color: var(--border-hover, #3a4a5c); } .ds-card-q { display: flex; align-items: baseline; gap: 12px; margin: 0 0 14px; font-size: 20px; font-weight: 900; line-height: 1.55; } .ds-card-mark { flex: none; font: 700 14px 'IBM Plex Mono', monospace; color: var(--bg, #0d1117); background: var(--accent, #45d6a8); border-radius: 999px; padding: 4px 11px; transform: rotate(-2deg); } .ds-card-a { margin: 0; padding-left: 42px; font-size: 14px; line-height: 1.95; color: var(--muted, #8b96a5); }"
     },
     {
-      "name": "Race Track",
+      "name": "Race Panel",
       "kind": "custom",
-      "refersTo": "race-station",
-      "description": "Signature two-lane race in its finished still: manual greys with hatched slow steps, automated mint with the arrival rule.",
-      "html": "<figure class=\"ds-race\"><div class=\"ds-lane\"><span class=\"ds-lane-name\">手動</span><ol class=\"ds-st-row\"><li class=\"ds-st ds-st--m\">匯出帳務明細</li><li class=\"ds-st ds-st--m ds-st--slow\">逐筆比對訂單</li><li class=\"ds-st ds-st--m\">找出逾時付款</li><li class=\"ds-st ds-st--m ds-st--slow\">手動更正狀態</li><li class=\"ds-st ds-st--m\">對帳完成</li></ol><span class=\"ds-clock\">2 hr</span></div><div class=\"ds-lane ds-lane--auto\"><span class=\"ds-lane-name\">自動</span><ol class=\"ds-st-row\"><li class=\"ds-st ds-st--a\">排程啟動</li><li class=\"ds-st ds-st--a\">掃描逾時付款</li><li class=\"ds-st ds-st--a\">向 LINE Pay 查詢</li><li class=\"ds-st ds-st--a\">自動更正狀態</li><li class=\"ds-st ds-st--a\">對帳完成</li></ol><span class=\"ds-clock\">20 min</span></div></figure>",
-      "css": ".ds-race { margin: 0; padding: 24px 28px 20px; background: var(--panel, #151b23); border: 1px solid var(--border, #232b36); border-radius: 18px; font-family: 'Noto Sans TC', system-ui, sans-serif; } .ds-lane { display: grid; grid-template-columns: 56px minmax(0, 1fr) 110px; align-items: center; gap: 20px; padding: 16px 0; } .ds-lane + .ds-lane { border-top: 1px dashed var(--border-dash, #2a3542); } .ds-lane-name { font: 600 14px 'IBM Plex Mono', monospace; color: var(--muted, #8b96a5); } .ds-lane--auto .ds-lane-name { color: var(--accent, #45d6a8); } .ds-st-row { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; } .ds-lane--auto .ds-st-row::after { content: ''; position: absolute; left: 0; right: 0; bottom: -9px; height: 2px; border-radius: 1px; background: var(--accent, #45d6a8); } .ds-st { display: flex; align-items: center; justify-content: center; min-height: 46px; padding: 6px 8px; border: 1px solid; border-radius: 10px; font-size: 13.5px; line-height: 1.35; text-align: center; transition: background-color 0.3s cubic-bezier(0.22, 0.61, 0.36, 1), border-color 0.3s cubic-bezier(0.22, 0.61, 0.36, 1); } .ds-st--m { border-color: var(--border-hover, #3a4a5c); color: var(--soft, #c3ccd6); } .ds-st--slow { background: repeating-linear-gradient(-45deg, var(--panel, #151b23) 0 8px, #1d2631 8px 16px); } .ds-st--a { border-color: var(--accent, #45d6a8); background: rgba(69, 214, 168, 0.12); color: var(--accent, #45d6a8); } .ds-clock { text-align: right; font: 600 30px 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; color: var(--soft, #c3ccd6); white-space: nowrap; } .ds-lane--auto .ds-clock { color: var(--accent, #45d6a8); }"
+      "refersTo": "race-segment",
+      "description": "Signature compact race in the hero's right column, in its finished still: static clocks, five-segment bars (manual greys with hatched slow segments, automated mint with the arrival rule), step lists, replay reserved in the head.",
+      "html": "<figure class=\"ds-race\"><figcaption class=\"ds-race-head\"><span class=\"ds-race-cap\">每次對帳，兩種跑法<br>Wama' House 實測<br>縮時：1 秒約 20 分鐘</span><button type=\"button\" class=\"ds-race-replay\" inert>重跑一次</button></figcaption><div class=\"ds-lane\"><div class=\"ds-lane-row\"><span class=\"ds-lane-name\">人工處理</span><span class=\"ds-clock\"><span class=\"ds-clock-num\">2</span><span class=\"ds-clock-unit\">小時</span></span></div><div class=\"ds-bar\"><span class=\"ds-seg\"></span><span class=\"ds-seg ds-seg--slow\"></span><span class=\"ds-seg\"></span><span class=\"ds-seg ds-seg--slow\"></span><span class=\"ds-seg\"></span></div><ol class=\"ds-steps\"><li>匯出明細</li><li>逐筆比對</li><li>找逾時付款</li><li>手動更正</li><li>完成</li></ol></div><div class=\"ds-lane ds-lane--auto\"><div class=\"ds-lane-row\"><span class=\"ds-lane-name\">系統自動</span><span class=\"ds-clock\"><span class=\"ds-clock-num\">20</span><span class=\"ds-clock-unit\">分鐘</span></span></div><div class=\"ds-bar\"><span class=\"ds-seg\"></span><span class=\"ds-seg\"></span><span class=\"ds-seg\"></span><span class=\"ds-seg\"></span><span class=\"ds-seg\"></span></div><ol class=\"ds-steps\"><li>排程啟動</li><li>掃描逾時付款</li><li>向 LINE Pay 查詢</li><li>自動更正</li><li>完成</li></ol></div></figure>",
+      "css": ".ds-race { display: flex; flex-direction: column; gap: 22px; max-width: 440px; margin: 0; padding: 28px; background: var(--panel, #151b23); border: 1px solid var(--border, #232b36); border-radius: 18px; font-family: 'Noto Sans TC', system-ui, sans-serif; } .ds-race-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; } .ds-race-cap { font: 400 13px/1.6 'IBM Plex Mono', monospace; color: var(--muted, #8b96a5); } .ds-race-replay { min-height: 44px; padding: 0 20px; background: none; border: 1px solid var(--accent, #45d6a8); border-radius: 999px; font: 500 13px 'IBM Plex Mono', monospace; color: var(--accent, #45d6a8); } .ds-race-replay[inert] { visibility: hidden; } .ds-lane { display: flex; flex-direction: column; gap: 12px; } .ds-lane + .ds-lane { padding-top: 22px; border-top: 1px solid var(--border, #232b36); } .ds-lane-row { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; } .ds-lane-name { font-size: 15px; font-weight: 500; color: var(--soft, #c3ccd6); } .ds-lane--auto .ds-lane-name { font-weight: 700; color: var(--accent, #45d6a8); } .ds-clock { display: inline-flex; align-items: baseline; gap: 4px; color: var(--soft, #c3ccd6); } .ds-lane--auto .ds-clock { color: var(--accent, #45d6a8); } .ds-clock-num { font: 600 30px/1.1 'IBM Plex Mono', monospace; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; } .ds-clock-unit { font: 500 20px/1.1 'Noto Sans TC', system-ui, sans-serif; } .ds-bar { position: relative; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; margin-bottom: 4px; } .ds-seg { height: 10px; border-radius: 999px; background: var(--border-hover, #3a4a5c); } .ds-seg--slow { background: repeating-linear-gradient(-45deg, var(--panel, #151b23) 0 8px, #1d2631 8px 16px); box-shadow: inset 0 0 0 1px var(--border-hover, #3a4a5c); } .ds-lane--auto .ds-seg { background: var(--accent, #45d6a8); } .ds-lane--auto .ds-bar::after { content: ''; position: absolute; left: 0; right: 0; bottom: -8px; height: 2px; border-radius: 1px; background: var(--accent, #45d6a8); } .ds-steps { margin: 0; padding: 0; list-style: none; font-size: 13px; line-height: 1.7; color: var(--soft, #c3ccd6); } .ds-steps li { display: inline-block; } .ds-steps li:not(:last-child)::after { content: '→'; margin: 0 6px; }"
+    },
+    {
+      "name": "Result Card",
+      "kind": "card",
+      "refersTo": "result-card",
+      "description": "One of three result cards under the hero; the first counts down 120 → 20, and the markup holds the final figure.",
+      "html": "<div class=\"ds-result\"><p class=\"ds-result-label\">每次對帳</p><p class=\"ds-result-value\"><span class=\"ds-result-was\">120 →</span><span class=\"ds-result-num\">20</span><span class=\"ds-result-unit\">分鐘</span></p></div>",
+      "css": ".ds-result { display: flex; flex-direction: column; gap: 10px; max-width: 320px; padding: 28px; background: var(--panel, #151b23); border: 1px solid var(--border, #232b36); border-radius: 18px; } .ds-result-label { margin: 0; font: 14px 'Noto Sans TC', system-ui, sans-serif; color: var(--muted, #8b96a5); } .ds-result-value { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin: 0; font-family: 'IBM Plex Mono', monospace; font-weight: 600; } .ds-result-num { font-size: 56px; line-height: 1; font-variant-numeric: tabular-nums; color: var(--accent, #45d6a8); } .ds-result-unit { font-size: 22px; color: var(--text, #e6edf3); } .ds-result-was { font-size: 22px; color: var(--muted, #8b96a5); }"
+    },
+    {
+      "name": "Process Track",
+      "kind": "custom",
+      "refersTo": "process-marker",
+      "description": "Four steps on a dashed track with mint markers; horizontal on desktop, a vertical timeline at 900px and below.",
+      "html": "<ol class=\"ds-process\"><li><span class=\"ds-pm\"></span><span class=\"ds-pn\">01</span><h3>免費諮詢 15 分鐘</h3></li><li><span class=\"ds-pm\"></span><span class=\"ds-pn\">02</span><h3>需求訪談與流程圖</h3></li><li><span class=\"ds-pm\"></span><span class=\"ds-pn\">03</span><h3>開發與測試</h3></li><li><span class=\"ds-pm\"></span><span class=\"ds-pn\">04</span><h3>上線與維護</h3></li></ol>",
+      "css": ".ds-process { position: relative; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; margin: 0; padding: 32px 28px; list-style: none; background: var(--panel, #151b23); border: 1px solid var(--border, #232b36); border-radius: 18px; font-family: 'Noto Sans TC', system-ui, sans-serif; } .ds-process::before { content: ''; position: absolute; top: 38px; left: 35px; right: calc((100% - 56px - 72px) / 4 + 21px); border-top: 2px dashed var(--border-hover, #3a4a5c); } .ds-process li { position: relative; } .ds-pm { position: relative; z-index: 1; display: block; width: 14px; height: 14px; border-radius: 50%; background: var(--accent, #45d6a8); margin-bottom: 18px; } .ds-pn { font: 400 12px 'IBM Plex Mono', monospace; color: var(--muted, #8b96a5); } .ds-process h3 { margin: 6px 0 0; font-size: 18px; font-weight: 700; line-height: 1.5; color: var(--text, #e6edf3); word-break: keep-all; }"
     }
   ],
   "narrative": {
     "northStar": "The Night-Shift Terminal",
-    "overview": "The site reads like a terminal left running after hours: near-black ground, slate panels, mono labels and timing digits, and one mint accent that lights up only where something is finished or can be acted on. It is dense the way a console is dense: thin rules, small mono captions, tabular numbers. The Chinese headlines carry the weight in Noto Sans TC Black. The playfulness is small and physical: the screenshot tilts a degree, the Q and stamp pills tilt two, section numbers are outlined, and primary pills cast a hard mint shadow.\n\nThe world is dark by commitment. The palette in `src/styles/tokens.css` is the brand, and there is no light theme. Depth comes from tone and rules, not soft shadows. Dashed rules mean waiting, unfinished, or parallel; solid rules mean settled. The signature component is the hero race track. One real reconciliation runs as two lanes, manual in greys with hatched slow steps and automated in mint with an arrival rule. The service rows reuse the same panel and dashed dividers, so the page reads as one material.\n\nThe YZ hexagon logo (`/logo.png`, 42px in the nav) is the only brand mark. Nothing on the site uses emoji. Typographic arrows such as → and ↗ are part of the voice.",
+    "overview": "The site reads like a terminal left running after hours: near-black ground, slate panels, mono labels and timing digits, and one mint accent that lights up only where something is finished or can be acted on. It is dense the way a console is dense: thin rules, small mono captions, tabular numbers. The Chinese headlines carry the weight in Noto Sans TC Black. The playfulness is small and physical: the Q and stamp pills tilt two degrees, section numbers are outlined, and primary pills cast a hard mint shadow.\n\nThe world is dark by commitment. The palette in `src/styles/tokens.css` is the brand, and there is no light theme. Depth comes from tone and rules, not soft shadows. Dashed rules mean waiting, unfinished, or parallel; solid rules mean settled. The signature component is the compact race panel in the hero's right column. One real reconciliation runs as two lanes, manual in greys with hatched slow segments and automated in mint with an arrival rule. The results row, case bento, service rows and process track reuse the same panel, hairlines and dashed tracks, so the page reads as one material. The earlier version's 80% headline, terminal prompt, typing animation and tech-stack section are gone; the stack now folds away in the footer.\n\nThe YZ hexagon logo (`/logo.png`, 42px in the nav) is the only brand mark. The share image `public/og.png` (1200×630) is rendered from `scripts/og/og.html` with `npm run og` and must be regenerated when the hero copy changes. Nothing on the site uses emoji. Typographic arrows such as → and ↗ are part of the voice.",
     "keyCharacteristics": [
       "Near-black ground (#0d1117), slate panels, a single mint accent.",
-      "Two families: Noto Sans TC for language, IBM Plex Mono for labels, prompts, and numbers.",
+      "Two families: Noto Sans TC for language, IBM Plex Mono for labels, taglines, and numbers.",
       "Tonal layering and 1px rules instead of ambient shadows.",
-      "Pills for every action and tag; 18px cards; 10px fields and stations.",
+      "Pills for every action, tag, and race segment; 18px cards; 10px fields.",
       "Dashed versus solid rules carry meaning: pending versus done.",
-      "Motion is time-lapse and print-in, and it always resolves to a static finished state with no JS or with reduced motion."
+      "Motion is time-lapse and count-down, and it always resolves to a static finished state with no JS or with reduced motion."
     ],
     "rules": [
       {
         "name": "The Mint Means Done Rule",
-        "body": "Inside the race track and any future process or lane diagram, mint marks the automated or finished state and nothing else. Manual and in-progress work stays in the greys. Elsewhere mint is the one action colour. A second accent hue never appears outside the explainers.",
+        "body": "Inside the race panel, the process track, and any future lane diagram, mint marks the automated or finished state and nothing else. Manual and in-progress work stays in the greys. Elsewhere mint is the one action colour. A second accent hue never appears outside the explainers.",
         "section": "colors"
       },
       {
@@ -340,7 +368,7 @@
       },
       {
         "name": "The Measured-in-Mono Rule",
-        "body": "Times, counts, and prompts are set in IBM Plex Mono with tabular figures. Claims and explanations are set in Noto Sans TC.",
+        "body": "Times, counts, and step numbers are set in IBM Plex Mono with tabular figures. Claims and explanations are set in Noto Sans TC.",
         "section": "typography"
       },
       {
@@ -353,10 +381,11 @@
       "Do keep every surface on Night Ground (#0d1117) or Slate Panel (#151b23), and add depth with 1px Hairline borders, not shadows.",
       "Do reserve mint for automated or finished states inside process diagrams. Elsewhere use it as the single action colour; manual and pending states stay grey.",
       "Do use dashed rules for pending or parallel items and solid rules for settled ones.",
-      "Do set times, counts, and prompts in IBM Plex Mono with tabular figures, and headlines in Noto Sans TC 900.",
+      "Do set times, counts, and step numbers in IBM Plex Mono with tabular figures, and headlines in Noto Sans TC 900.",
       "Do make every action and tag a full pill, and give filled mint pills the 4px 4px 0 Deep Mint offset.",
       "Do draw icons as inline SVG at stroke 1.75 with currentColor.",
       "Do render the finished state on the server so animations degrade to a correct still under reduced motion or without JS. On phones, explainer motion plays only on tap.",
+      "Do regenerate `public/og.png` (1200×630) with `npm run og` whenever the hero copy changes.",
       "Do show form errors at the field, in Error Rose text with an Error Line border, and keep targets at least 44px.",
       "Do keep the YZ hexagon logo as the only brand mark."
     ],
@@ -364,6 +393,7 @@
       "Don't use emoji anywhere. The smoke test fails on them; typographic arrows (→ ↗) are fine.",
       "Don't introduce a light theme, light section, or second accent hue in page chrome. The explainer palette stays inside the explainers.",
       "Don't put shadows on cards, panels, images, or dialogs, or use a soft blurred shadow anywhere.",
+      "Don't bring back the 80% headline, the terminal prompt, the typing animation, or a separate tech-stack section; the stack lives in the footer disclosure.",
       "Don't use mint for manual, waiting, or failing states. Errors are Error Rose, and progress is grey.",
       "Don't darken Faint Ink below #808a99; it is the contrast floor for captions on the panel.",
       "Don't use icon fonts, `<img>` icons, or text glyphs as icons in page chrome."
