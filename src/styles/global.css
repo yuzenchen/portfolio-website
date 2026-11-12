@@ -1385,6 +1385,80 @@ section {
   color: var(--faint);
 }
 
+/* LINE: a secondary route under the email. Desktop pairs the button with an
+   add-friend QR; phones drop the QR (they are the device that would scan it). */
+.contact-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin: 22px auto 0;
+  padding-top: 22px;
+  border-top: 1px dashed var(--border-dash);
+  max-width: 460px;
+}
+
+.contact-line-qr {
+  flex: none;
+  display: block;
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
+  /* The SVG's own light quiet zone; the ring reads it as a card on the panel */
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+.contact-line-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  text-align: left;
+}
+
+.contact-card .contact-line-note {
+  margin: 0;
+  font-size: 14px;
+  color: var(--soft);
+}
+
+.contact-line-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 22px;
+  border: 1.5px solid var(--border-hover);
+  border-radius: var(--r-pill);
+  background: var(--panel);
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 700;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.contact-line-btn:hover {
+  opacity: 1;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.contact-line-btn svg {
+  color: var(--accent);
+}
+
+@media (max-width: 768px) {
+  .contact-line-qr,
+  .contact-line-scan {
+    display: none;
+  }
+
+  .contact-line-body {
+    align-items: center;
+    text-align: center;
+  }
+}
+
 /* The CTA is a link (a [data-booking] trigger) and the dialog's submit is a
    <button>; both share one look, so reset UA styling and the link hover. */
 .contact-mail {

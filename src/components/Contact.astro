@@ -9,6 +9,11 @@ const services = [
   // something else entirely — needs a way through to the message box.
   { value: 'other', label: '其他' },
 ];
+
+// LINE official account. The message link pre-fills a first line so the owner
+// can tell a chat came from the site; the QR (public/line-qr.svg, a static
+// asset) encodes the add-friend link for desktop visitors to scan.
+const lineMessageUrl = `https://line.me/R/oaMessage/@732byypo/?${encodeURIComponent('我從官網來，想詢問：')}`;
 ---
 <section id="contact">
   <div class="contact-card">
@@ -18,6 +23,16 @@ const services = [
     <a href="#contact" class="contact-mail" data-booking>免費諮詢 15&nbsp;分鐘</a>
     <div class="contact-github">
       <a href="mailto:mail@yuzen.tw">mail@yuzen.tw</a>
+    </div>
+    <div class="contact-line">
+      <img class="contact-line-qr" src="/line-qr.svg" width="120" height="120" alt="LINE 加好友 QR code" loading="lazy" decoding="async" />
+      <div class="contact-line-body">
+        <p class="contact-line-note">或用 LINE 直接留言給我<span class="contact-line-scan">，手機掃描即可加好友</span></p>
+        <a class="contact-line-btn" href={lineMessageUrl} target="_blank" rel="noopener">
+          <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2.5C4.7 2.5 2 4.6 2 7.3c0 2.4 2.2 4.4 5.1 4.7l-.6 2 3-2c2.6-.4 4.5-2.3 4.5-4.7 0-2.7-2.7-4.8-6-4.8z" /></svg>
+          LINE 詢問<span aria-hidden="true">&nbsp;↗</span><span class="sr-only">（在新分頁開啟）</span>
+        </a>
+      </div>
     </div>
   </div>
 </section>

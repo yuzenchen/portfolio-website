@@ -122,6 +122,11 @@ async function main() {
     expect(body.includes('API 服務已恢復正常'), 'monitoring settled state rendered');
     expect(body.includes('公司裡有哪件事，每天都在重複做'), 'contact card rendered');
     expect((body.match(/data-booking/g) ?? []).length >= 2, 'at least two booking triggers rendered');
+    expect(
+      body.includes('href="https://line.me/R/oaMessage/@732byypo/?%E6%88%91%E5%BE%9E%E5%AE%98%E7%B6%B2%E4%BE%86%EF%BC%8C%E6%83%B3%E8%A9%A2%E5%95%8F%EF%BC%9A"'),
+      'LINE message link with pre-filled source note',
+    );
+    expect(body.includes('src="/line-qr.svg"'), 'LINE add-friend QR rendered');
     // Absolute URL built from SITE. The Dockerfile defaults SITE to
     // http://localhost, so the image under test is http; production builds
     // (SITE unset or https) emit https://yuzen.tw/og.png.
