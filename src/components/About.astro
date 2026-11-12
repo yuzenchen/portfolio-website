@@ -1,0 +1,65 @@
+---
+const highlights: { label: string; text: string }[] = [
+  { label: '部署自動化', text: '把每週的產品部署從人工改為自動化，上線時間從 2 小時縮短到 10 分鐘' },
+  { label: '成本最佳化', text: '重新規劃雲端與地端資源的整合，每月成本降低 60%' },
+  { label: '帶過 SRE 團隊', text: '負責系統可用性、自動化維運、監控與成本規劃' },
+];
+
+// Newest first. The ｜ separators of the source copy are drawn by the grid
+// layout; screen readers get the parts as separate spans with a comma.
+const jobs: { title: string; company: string; years: string }[] = [
+  { title: 'SRE 主管', company: '新騎資訊', years: '2020–2026' },
+  { title: '基礎架構專員', company: '鉅傑軟體', years: '2019–2020' },
+  { title: '網路資安工程師', company: '玉山證券', years: '2017–2019' },
+  { title: '網路工程師', company: '怡康軟體', years: '2014–2017' },
+];
+---
+<section id="about">
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <h2>關於我</h2>
+  </div>
+  <div class="about-panel">
+    <img
+      class="about-photo"
+      src="/about-yuzen.webp"
+      width="240"
+      height="240"
+      alt="Yuzen Chen 的大頭照"
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="about-body">
+      <p class="about-text">我是 Yuzen Chen，做了 12&nbsp;年的系統維運，從網路工程師一路做到 SRE&nbsp;主管，待過證券業、軟體業與系統整合商。這份工作的核心只有一件事：讓系統穩定運作，並且把需要人盯的事變成自動執行。</p>
+      <p class="about-text">2026&nbsp;年起我全職獨立接案，把同一套做法用在企業的日常作業上。對帳、出貨、報表，都可以像維運一樣交給系統處理。</p>
+      <ul class="about-highlights">
+        {highlights.map(({ label, text }) => (
+          <li><strong>{label}</strong>：{text}</li>
+        ))}
+      </ul>
+      <div class="about-history">
+        <h3>經歷</h3>
+        <ol class="about-jobs">
+          {jobs.map(({ title, company, years }) => (
+            <li>
+              <span class="about-years">{years}</span>
+              <span class="about-role">
+                <span class="about-title">{title}</span><span class="sr-only">，</span>
+                <span class="about-company">{company}</span>
+              </span>
+            </li>
+          ))}
+        </ol>
+        <p class="about-foot">
+          <span>明新科技大學 資訊科技學士</span>
+          <a
+            class="about-link"
+            href="https://www.linkedin.com/in/yuzen-chen-a82149167/"
+            target="_blank"
+            rel="noopener"
+          >完整經歷見 LinkedIn <span aria-hidden="true">↗</span><span class="sr-only">（在新分頁開啟）</span></a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

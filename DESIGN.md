@@ -200,7 +200,7 @@ The palette is a cool blue-black terminal with one saturated mint accent and a r
 - **Label** (mono 400–500, 12–13px): the nav tagline, race captions, section notes, 原本/現在 labels, process step numbers, form labels, chips, captions, the footer.
 - **Numeral** (mono 600, 30px, tabular figures, -0.02em): the race clocks. They are static and read 2 小時 and 20 分鐘; the unit is set in Noto Sans TC 500 at 20px beside the mono number, so there is no monospace gap.
 - **Result Numeral** (mono 600, 56px, tabular figures, mint): the result-card figures, with the unit in mono 22px Ink and the old value (120 →) in Muted Ink.
-- **Section Numeral** (mono 600, 60px; 44px on phones): transparent fill with a 1.5px mint text stroke. This is "01" to "05" ahead of each section title (case, services, process, FAQ, and the contact stamp).
+- **Section Numeral** (mono 600, 60px; 44px on phones): transparent fill with a 1.5px mint text stroke. This is "01" to "06" ahead of each section title (case, services, process, about, FAQ, and the contact stamp).
 
 ### Named Rules
 **The Measured-in-Mono Rule.** Times, counts, and step numbers are set in IBM Plex Mono with tabular figures. Claims and explanations are set in Noto Sans TC.
@@ -257,7 +257,7 @@ Shapes are rounded but not soft. Every button, chip, tag, status badge, stamp, a
 - **Error:** `aria-invalid` turns the border Error Line. A field-level message in Error Rose at 12.5px sits directly under the field. A bordered status box above the actions handles send failures. Errors are never colour-only; they always come with text.
 
 ### Navigation
-The nav sits in the page column (1100px, 48px gutters). On the left is the brand block: the YZ logo (42px) beside "Yuzen Chen" (Noto Sans TC 700, 16px, Ink) over the mono tagline "流程自動化 × 系統開發" (12px, mint). The links are Chinese (案例, 服務, 合作流程, 常見問題; Noto Sans TC 15px, Soft Ink, 28px gap, 44px targets), pushed right, followed by the mint "聯絡我" pill. At 768px and below the brand and pill share the first row and the four links spread across a second row (16px gap). The nav is labelled 主選單, has no background, and is not sticky.
+The nav sits in the page column (1100px, 48px gutters). On the left is the brand block: the YZ logo (42px) beside "Yuzen Chen" (Noto Sans TC 700, 16px, Ink) over the mono tagline "流程自動化 × 系統開發" (12px, mint). The links are Chinese (案例, 服務, 合作流程, 關於我, 常見問題; Noto Sans TC 15px, Soft Ink, 28px gap, 44px targets), pushed right, followed by the mint "聯絡我" pill. At 768px and below the brand and pill share the first row and the five links spread across a second row (16px gap). The nav is labelled 主選單, has no background, and is not sticky.
 
 ### Race Panel (signature)
 A compact Slate Panel (18px radius, 28px padding, 22px on phones) in the hero's right column. Its head holds a three-line mono caption (每次對帳，兩種跑法 / Wama' House 實測 / 縮時：1 秒約 20 分鐘) and the Mint Outline "重跑一次" button, which always reserves its space and stays inert and invisible until a run completes, so the panel never resizes. Two lanes follow, divided by a Hairline: 人工處理 (greys) and 系統自動 (mint, bold name). Each lane has its name and a static clock (2 小時, 20 分鐘), a five-segment 10px pill bar, and the five-step list joined by → arrows. Worked manual segments turn Strong Rule; the active one is hatched and crawls (`grind`, 0.9s linear), and the two slow steps stay hatched in the finished state. Automated segments go solid mint. When the automated lane lands, a 2px mint rule draws in under its bar (scaleX, 0.55s, `cubic-bezier(0.16, 1, 0.3, 1)`). Only the bars and step lists play, on scroll-in, at the real 6:1 ratio (50ms per reconciliation minute); the clocks never count. The server-rendered markup is the finished race, so no-JS and reduced-motion visitors see the result.
@@ -277,6 +277,9 @@ The case head (title, 已上線營運中 status badge, lead) sits over a bento o
 ### Process Track
 One Slate Panel, section 03 合作流程, holding four steps: 免費諮詢 15 分鐘 (with the "預約諮詢" primary pill), 需求訪談與流程圖, 開發與測試 (title only until the owner supplies its text), 上線與維護. On desktop the steps sit in four columns on a horizontal 2px dashed Strong Rule track running from the first marker's centre to the last; each 14px mint marker sits on the track with the mono step number, title and description below. At 900px and below it becomes a vertical timeline: a 24px marker column with a dashed line from each marker down to the next, and the text beside it.
 
+### About
+One Slate Panel (18px radius, 32px 28px padding; 22px 20px on phones), section 04 關於我. On desktop a two-column grid (240px, then the text, 48px gap): the 240px square headshot with a 1.5px Strong Rule border, 16px radius and the hard mint shadow, untilted and unfiltered, beside the bio. Two Soft Ink paragraphs (15.5px, 1.85 line height) lead into three highlights, each marked by an 8px mint square, with the label in bold Ink. Below a 1px dashed rule, a small 經歷 heading (15px, 700) heads the job rows: a 92px mono Faint Ink year column, then the title in Ink and the company in Muted Ink, with no literal separators. The foot line pairs the degree (13px Muted Ink) with the mint "完整經歷見 LinkedIn ↗" link (44px target, opens a new tab). At 768px and below it stacks into one column with a 140px photo on top.
+
 ### FAQ Explainers
 The FAQ explainers are inline SVG diagrams authored at 1280×720 in a viewBox, framed with a Hairline border and a 16px radius. They use the scoped explainer palette. On desktop they loop. At 768px and below they stay still until tapped: a translucent scrim sits over the diagram with a 56px panel badge (1.5px mint ring, play triangle), and a tap plays the timeline once. With reduced motion the diagrams never play and no badge appears.
 
@@ -284,7 +287,7 @@ The FAQ explainers are inline SVG diagrams authored at 1280×720 in a viewBox, f
 Opened by any `data-booking` trigger (hero, process, contact). A native `<dialog>` holds a Slate Panel with a 1.5px dashed mint border and a 22px radius. A 44px close icon sits top right. It contains a two-column field grid (one column on phones) and a centred row with the primary submit and a mono cancel.
 
 ### Contact
-A centred card on the 60% panel with a 1.5px dashed mint border and 22px radius, hung from the tilted "05 / 聯絡" stamp. It asks 公司裡有哪件事，每天都在重複做？, offers the "免費諮詢 15 分鐘" primary pill (`data-booking`), and lists mail@yuzen.tw underneath.
+A centred card on the 60% panel with a 1.5px dashed mint border and 22px radius, hung from the tilted "06 / 聯絡" stamp. It asks 公司裡有哪件事，每天都在重複做？, offers the "免費諮詢 15 分鐘" primary pill (`data-booking`), and lists mail@yuzen.tw underneath.
 
 ### Footer
 A Hairline over a native `<details class="stack-details">` disclosure, "使用的技術" in mono 13px Muted Ink with a rotating chevron. Open, it shows a `<dl>` of four groups (開發, 台灣在地金物流, 部署, 品質) with a 130px mono label column (one column on phones) and the items in Soft Ink joined by middle dots. The copyright line sits below in Faint Ink.

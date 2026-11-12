@@ -546,6 +546,10 @@ section {
   padding: 60px var(--pad-x) 30px;
 }
 
+#about {
+  padding: 60px var(--pad-x) 30px;
+}
+
 #faq {
   padding: 60px var(--pad-x) 30px;
 }
@@ -1108,6 +1112,149 @@ section {
   margin-top: 16px;
   padding: 10px 20px;
   font-size: 14px;
+}
+
+/* ── About: headshot beside the bio ───────────────────────────────── */
+/* Same panel as the process track; the photo is a fixed column. */
+.about-panel {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 48px;
+  align-items: start;
+  padding: 32px 28px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--r-card);
+}
+
+.about-photo {
+  display: block;
+  box-sizing: border-box;
+  width: 240px;
+  height: 240px;
+  object-fit: cover;
+  border: 1.5px solid var(--border-hover);
+  border-radius: var(--r-img);
+  box-shadow: var(--shadow-hard);
+}
+
+.about-body {
+  min-width: 0;
+}
+
+.about-text {
+  margin: 0 0 14px;
+  font-size: 15.5px;
+  line-height: 1.85;
+  color: var(--soft);
+}
+
+.about-text,
+.about-highlights li,
+.about-jobs li,
+.about-foot {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.about-highlights {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-highlights li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--soft);
+}
+
+.about-highlights li::before {
+  content: '';
+  position: absolute;
+  top: 0.65em;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  background: var(--accent);
+}
+
+.about-highlights strong {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.about-history {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px dashed var(--border-dash);
+}
+
+.about-history h3 {
+  margin: 0 0 12px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.about-jobs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-jobs li {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  column-gap: 14px;
+  align-items: baseline;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.about-years {
+  font: 400 13px var(--font-mono);
+  color: var(--faint);
+}
+
+.about-role {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 12px;
+}
+
+.about-title {
+  color: var(--text);
+}
+
+.about-company {
+  color: var(--muted);
+}
+
+.about-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 16px;
+  margin: 16px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.about-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  min-height: 44px;
+  color: var(--accent);
 }
 
 /* ── FAQ ──────────────────────────────────────────────────────────── */
@@ -1858,7 +2005,7 @@ footer {
 }
 
 @media (max-width: 768px) {
-  /* Row 1: brand + contact pill; row 2: the four links across the width */
+  /* Row 1: brand + contact pill; row 2: the five links across the width */
   nav {
     padding: 18px 0 8px;
   }
@@ -1892,6 +2039,7 @@ footer {
   #case,
   #services,
   #process,
+  #about,
   #faq,
   #contact,
   .others {
@@ -1953,6 +2101,17 @@ footer {
 
   .stack-group {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .about-panel {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+    padding: 22px 20px;
+  }
+
+  .about-photo {
+    width: 140px;
+    height: 140px;
   }
 
   .faq-item {

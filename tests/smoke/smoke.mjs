@@ -107,6 +107,10 @@ async function main() {
     expect(body.includes('SECURITY'), 'cve category badge rendered');
     expect(body.includes('我能幫您做什麼'), 'services section rendered');
     expect(body.includes('id="process"') && body.includes('合作流程'), 'process section rendered');
+    expect(body.includes('id="about"') && body.includes('關於我'), 'about section rendered');
+    expect(body.includes('src="/about-yuzen.webp"'), 'about headshot rendered');
+    expect(body.includes('href="https://www.linkedin.com/in/yuzen-chen-a82149167/"'), 'linkedin link rendered');
+    expect(body.includes('href="#about"'), 'nav links to about');
     expect(body.includes('stack-details'), 'footer tech stack rendered');
     expect(body.includes('綠界科技 ECPay'), 'local logistics chip rendered');
     expect(body.includes('id="faq"'), 'faq section rendered');
