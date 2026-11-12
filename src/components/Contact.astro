@@ -10,10 +10,11 @@ const services = [
   { value: 'other', label: '其他' },
 ];
 
-// LINE official account. The message link pre-fills a first line so the owner
-// can tell a chat came from the site; the QR (public/line-qr.svg, a static
-// asset) encodes the add-friend link for desktop visitors to scan.
-const lineMessageUrl = `https://line.me/R/oaMessage/@732byypo/?${encodeURIComponent('我從官網來，想詢問：')}`;
+// LINE official account. The message link opens the chat without prefilled
+// text, so the keyboard stays closed and the account's rich menu shows. The QR
+// (public/line-qr.svg, a static asset) encodes the add-friend link for desktop
+// visitors to scan.
+const lineMessageUrl = 'https://line.me/R/oaMessage/%40732byypo';
 ---
 <section id="contact">
   <div class="contact-card">
