@@ -8,6 +8,15 @@
         "value": "plex mono",
         "createdAt": "2026-10-13T14:25:24.088Z",
         "reason": "Claude: IBM Plex Mono is declared in DESIGN.md typography; flagged file is a non-shipping decision sketch"
+      },
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "src/components/CaseStudy.astro"
+        ],
+        "createdAt": "2026-11-12T08:42:20.172Z",
+        "reason": "Claude: #lightbox-img sits in a closed <dialog>; lightbox.ts sets its src when a screenshot is opened, so it never renders empty"
       }
     ]
   }

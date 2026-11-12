@@ -136,8 +136,24 @@ async function main() {
     // (SITE unset or https) emit https://yuzen.tw/og.png.
     expect(/property="og:image" content="https?:\/\/[^"]*\/og\.png"/.test(body), 'absolute og:image share card');
     expect(
-      !['80% 作業時間', '數據爬蟲', '24 小時賺錢', 'whoami'].some((t) => body.includes(t)),
+      ![
+        '80% 作業時間',
+        '數據爬蟲',
+        '24 小時賺錢',
+        'whoami',
+        '貨運單',
+        '托運單',
+        '/ 從零到上線',
+        '/ 三件事，做到好',
+        '/ 發案前先問清楚',
+      ].some((t) => body.includes(t)),
       'removed copy is gone',
+    );
+    expect(body.includes('寄件單'), 'case copy says 寄件單');
+    expect(body.includes('開發期間您可以隨時上線試用'), 'process step 03 description rendered');
+    expect(
+      body.includes('訪談後您會拿到') && body.includes('監控會比您先發現'),
+      'faq figcaptions address the reader as 您',
     );
     expect(body.includes('id="booking-dialog"'), 'booking dialog rendered');
     expect(

@@ -1,6 +1,4 @@
 ---
-// Step 03 has no description yet: the owner has not supplied the text, so the
-// step renders its title only (no placeholder, no empty paragraph).
 const steps: { num: string; title: string; desc?: string; cta?: boolean }[] = [
   {
     num: '01',
@@ -13,7 +11,11 @@ const steps: { num: string; title: string; desc?: string; cta?: boolean }[] = [
     title: '需求訪談與流程圖',
     desc: '我把您的作業畫成一張白話文流程圖，您確認沒問題才開工。',
   },
-  { num: '03', title: '開發與測試' },
+  {
+    num: '03',
+    title: '開發與測試',
+    desc: '開發期間您可以隨時上線試用，確認做出來的和您要的一樣。',
+  },
   {
     num: '04',
     title: '上線與維護',

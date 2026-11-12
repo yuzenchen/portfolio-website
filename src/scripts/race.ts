@@ -65,6 +65,7 @@ export function initRace(): void {
       } else {
         race.classList.remove('is-running');
         if (replay) replay.inert = false;
+        race.dispatchEvent(new CustomEvent('race:finished'));
       }
     };
     frame = requestAnimationFrame(tick);

@@ -1,6 +1,8 @@
 import { prefersReducedMotion } from './motion';
 
 const DURATION_MS = 1600;
+// Arm the count even if the visitor never scrolls and the race never ends.
+const ARM_FALLBACK_MS = 8000;
 
 /**
  * The counter's value at progress t (0..1), eased out with a cubic so it
@@ -14,8 +16,12 @@ export function countValue(from: number, to: number, t: number): number {
 
 /**
  * Results row: the first card counts down from the old reconciliation time
- * to the new one, once, the first time it is mostly in view. With JS and
- * motion allowed it shows the old figure from boot until then. The markup
+ * to the new one, once. On a wide screen the card is already in view at load,
+ * while the visitor is still watching the hero race, so the count waits until
+ * it is "armed" by whichever comes first: the visitor's first scroll, the
+ * race finishing (race:finished on [data-race]), or an 8 s fallback. It plays
+ * when armed and the card is at least 60% in view. With JS and motion
+ * allowed it shows the old figure from boot until then. The markup
  * already shows the final figure, and the number is aria-hidden (the card
  * carries a full sentence for screen readers), so nothing is lost when
  * this never runs.
@@ -43,14 +49,41 @@ export function initCountdown(): void {
     requestAnimationFrame(tick);
   };
 
+  const race = document.querySelector<HTMLElement>('[data-race]');
+  let armed = false;
+  let inView = false;
+  let done = false;
+
+  const cleanup = (): void => {
+    observer.disconnect();
+    window.removeEventListener('scroll', arm);
+    race?.removeEventListener('race:finished', arm);
+    window.clearTimeout(fallback);
+  };
+
+  const maybePlay = (): void => {
+    if (done || !armed || !inView) return;
+    done = true;
+    cleanup();
+    play();
+  };
+
+  function arm(): void {
+    armed = true;
+    maybePlay();
+  }
+
   const observer = new IntersectionObserver(
     (entries) => {
-      if (entries.some((e) => e.isIntersecting && e.intersectionRatio >= 0.6)) {
-        observer.disconnect();
-        play();
-      }
+      const entry = entries[entries.length - 1];
+      inView = entry.isIntersecting && entry.intersectionRatio >= 0.6;
+      maybePlay();
     },
     { threshold: 0.6 },
   );
+
+  window.addEventListener('scroll', arm, { passive: true });
+  race?.addEventListener('race:finished', arm);
+  const fallback = window.setTimeout(arm, ARM_FALLBACK_MS);
   observer.observe(card);
 }

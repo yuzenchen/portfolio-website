@@ -173,7 +173,7 @@
       },
       "label": {
         "displayName": "Mono Label",
-        "purpose": "Nav tagline, race captions, section notes, 原本/現在 labels, process step numbers, form labels, chips, captions, footer."
+        "purpose": "Nav tagline, race captions, 原本/現在 labels, process step numbers, form labels, chips, captions, footer."
       },
       "numeral": {
         "displayName": "Clock Numeral",

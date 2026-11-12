@@ -578,11 +578,6 @@ section {
   font-weight: 900;
 }
 
-.sec-note {
-  font: 400 13px var(--font-mono);
-  color: var(--faint);
-}
-
 /* ── Case study ───────────────────────────────────────────────────── */
 /* Title first; the live status rides at the end of the title line */
 .case-title {
@@ -2005,6 +2000,25 @@ footer {
 }
 
 @media (max-width: 768px) {
+  /* On a phone, keep-all leaves body copy ragged (it breaks only at
+     punctuation), so body text breaks between characters again; strict
+     line breaking still keeps 。，、： from starting a line. Headings stay
+     on keep-all. */
+  .case-lead,
+  .bento-card p,
+  .ba-text,
+  .svc-desc,
+  .process-desc,
+  .about-text,
+  .about-highlights li,
+  .about-foot,
+  .contact-card p,
+  .stack-group dd {
+    word-break: normal;
+    line-break: strict;
+    text-wrap: pretty;
+  }
+
   /* Row 1: brand + contact pill; row 2: the five links across the width */
   nav {
     padding: 18px 0 8px;
@@ -2088,13 +2102,8 @@ footer {
 
   /* Process becomes a vertical timeline: marker column on the left, a
      dashed line from each marker's centre down to the next one's. */
-  /* The services heading is one word (我能幫您做什麼): keep it whole and let
-     the note drop to its own line instead of splitting the heading. */
-  #services .sec-head {
-    flex-wrap: wrap;
-    row-gap: 6px;
-  }
-
+  /* The services heading is one phrase (我能幫您做什麼): keep it whole
+     instead of splitting it across lines. */
   #services .sec-head h2 {
     word-break: keep-all;
   }

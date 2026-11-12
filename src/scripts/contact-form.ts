@@ -74,9 +74,9 @@ export function initContactForm(): void {
 
     const problems: [string, string][] = [];
     if (!String(data.get('name') ?? '').trim()) problems.push(['name', '請填寫姓名。']);
-    if (!email) problems.push(['email', '請填寫 Email，我會用它回覆你。']);
+    if (!email) problems.push(['email', '請填寫 Email，我會用它回覆您。']);
     else if (!EMAIL_RE.test(email)) problems.push(['email', 'Email 格式不正確，請確認是否少了 @ 或網域。']);
-    if (!String(data.get('message') ?? '').trim()) problems.push(['message', '請簡單說明你的需求。']);
+    if (!String(data.get('message') ?? '').trim()) problems.push(['message', '請簡單說明您的需求。']);
     if (problems.length > 0) {
       problems.forEach(([id, msg]) => fieldError(id, msg));
       form.querySelector<HTMLElement>(`#${problems[0]![0]}`)?.focus();
@@ -103,7 +103,7 @@ export function initContactForm(): void {
       if (resp.ok) {
         form.reset();
         dialog.close();
-        showNotification('已收到你的預約，我會盡快回覆', 'success');
+        showNotification('已收到您的預約，我會盡快回覆', 'success');
       } else {
         setStatus('送出失敗，請稍後再試，或直接寄信到 mail@yuzen.tw。');
       }
